@@ -1,6 +1,6 @@
 # Settings Page Example · 设置页示例
 
-[ENGLISH](#english) · [中文](#zh)
+[ENGLISH](#english) · [中文](#中文)
 
 ---
 
@@ -34,7 +34,7 @@ save button, and a modal overlay.
 
 ---
 
-<h2 id="zh">中文</h2>
+## 中文
 
 ### 提示词（使用前后相同）
 

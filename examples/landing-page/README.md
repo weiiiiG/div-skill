@@ -1,6 +1,6 @@
 # Landing Page Example · 着陆页示例
 
-[ENGLISH](#english) · [中文](#zh)
+[ENGLISH](#english) · [中文](#中文)
 
 ---
 
@@ -35,7 +35,7 @@ and 3 feature cards (icon, title, description).
 
 ---
 
-<h2 id="zh">中文</h2>
+## 中文
 
 ### 提示词（使用前后相同）
 

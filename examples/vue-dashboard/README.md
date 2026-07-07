@@ -1,6 +1,6 @@
 # Vue Dashboard Example · Vue 仪表盘示例
 
-[ENGLISH](#english) · [中文](#zh)
+[ENGLISH](#english) · [中文](#中文)
 
 ---
 
@@ -66,7 +66,7 @@ npm run dev
 
 ---
 
-<h2 id="zh">中文</h2>
+## 中文
 
 ### 提示词（使用前后相同）
 
