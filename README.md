@@ -59,9 +59,11 @@ project/
 <h3>示例</h3>
 <table>
 <tr><th>示例</th><th>类型</th><th>特性</th></tr>
-<tr><td><a href="examples/dashboard/">Dashboard</a></td><td>多文件</td><td>导航、侧栏、统计卡片、数据表</td></tr>
-<tr><td><a href="examples/landing-page/">Landing Page</a></td><td>单 HTML</td><td>Hero + 特性卡片</td></tr>
-<tr><td><a href="examples/settings-page/">Settings Page</a></td><td>单 HTML</td><td>表单 + 模态框弹层</td></tr>
+<tr><td><a href="examples/dashboard/">Dashboard</a></td><td>HTML/CSS</td><td>原生：导航、侧栏、统计卡片、数据表</td></tr>
+<tr><td><a href="examples/landing-page/">Landing Page</a></td><td>HTML/CSS</td><td>原生：Hero + 特性卡片</td></tr>
+<tr><td><a href="examples/settings-page/">Settings Page</a></td><td>HTML/CSS</td><td>原生：表单 + 模态框弹层</td></tr>
+<tr><td><a href="examples/react-dashboard/">React Dashboard</a></td><td>React</td><td>CSS Modules：4 个组件，样式与组件共置</td></tr>
+<tr><td><a href="examples/vue-dashboard/">Vue Dashboard</a></td><td>Vue 3</td><td>SFC + scoped：4 个组件</td></tr>
 </table>
 <h3>规范文档</h3>
 <p>见 <a href="SKILL.md">SKILL.md</a>。</p>
@@ -120,9 +122,11 @@ project/
 <h3>Examples</h3>
 <table>
 <tr><th>Example</th><th>Type</th><th>Features</th></tr>
-<tr><td><a href="examples/dashboard/">Dashboard</a></td><td>Multi-file</td><td>Nav, sidebar, stat cards, data table</td></tr>
-<tr><td><a href="examples/landing-page/">Landing Page</a></td><td>Single HTML</td><td>Hero + feature cards</td></tr>
-<tr><td><a href="examples/settings-page/">Settings Page</a></td><td>Single HTML</td><td>Form + modal overlay</td></tr>
+<tr><td><a href="examples/dashboard/">Dashboard</a></td><td>HTML/CSS</td><td>Vanilla: nav, sidebar, stat cards, data table</td></tr>
+<tr><td><a href="examples/landing-page/">Landing Page</a></td><td>HTML/CSS</td><td>Vanilla: hero + feature cards</td></tr>
+<tr><td><a href="examples/settings-page/">Settings Page</a></td><td>HTML/CSS</td><td>Vanilla: form + modal overlay</td></tr>
+<tr><td><a href="examples/react-dashboard/">React Dashboard</a></td><td>React</td><td>CSS Modules: 4 components with co-located styles</td></tr>
+<tr><td><a href="examples/vue-dashboard/">Vue Dashboard</a></td><td>Vue 3</td><td>SFC + scoped styles: 4 components</td></tr>
 </table>
 <h3>Specification</h3>
 <p>See <a href="SKILL.md">SKILL.md</a>.</p>

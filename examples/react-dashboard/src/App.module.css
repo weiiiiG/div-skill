@@ -1,0 +1,75 @@
+/* ============================================
+   Root — Outer (background/border ONLY)
+   ============================================ */
+.root {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0f1117;
+  color: #e1e4ea;
+}
+
+/* ============================================
+   Root — Inner (flex + padding + gap)
+   ============================================ */
+.rootInner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+}
+
+/* ============================================
+   Main area — Outer
+   ============================================ */
+.mainOuter {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ============================================
+   Main area — Inner (Sidebar | Content)
+   ============================================ */
+.mainInner {
+  display: flex;
+  gap: 0;
+  height: 100%;
+}
+
+/* ============================================
+   Content area — Outer
+   ============================================ */
+.contentOuter {
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ============================================
+   Content area — Inner
+   ============================================ */
+.contentInner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  height: 100%;
+  padding: 24px;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ============================================
+   Stats row — Outer
+   ============================================ */
+.statsOuter {
+  flex: 0 0 auto;
+  overflow: hidden;
+}
+
+/* ============================================
+   Stats row — Inner (grid)
+   ============================================ */
+.statsInner {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(clamp(180px, 20vw, 260px), 1fr));
+  gap: 16px;
+}

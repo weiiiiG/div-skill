@@ -303,7 +303,198 @@ Step 5: 代码拆分
 
 ---
 
-## 四、反例对照 · Anti-Patterns
+## 四、React 集成 · React Integration
+
+> 容器层级和代码拆分在 React 中的映射。规则不变，表达方式适配 React 组件模型。
+
+### 4.1 容器层级在 JSX 中
+
+三层结构在 React 组件中同样适用，通过 JSX 的嵌套 div 实现：
+
+```jsx
+// Card.jsx — 三层结构
+function Card({ title, value, change }) {
+  return (
+    <article className="card">           {/* 外层：背景 + 圆角 + overflow */}
+      <div className="card-body">        {/* 内层：flex 列 + gap + padding */}
+        <span className="card-title">{title}</span>  {/* 子容器 */}
+        <span className="card-value">{value}</span>  {/* 子容器 */}
+        <span className="card-change">{change}</span>{/* 子容器 */}
+      </div>
+    </article>
+  );
+}
+```
+
+```css
+/* Card.module.css — 对应三层结构 */
+.card { overflow: hidden; border-radius: 8px; }               /* 外层 */
+.card-body { display: flex; flex-direction: column; gap: 8px; padding: 16px; }  /* 内层 */
+.card-title, .card-value, .card-change { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  /* 子容器 */
+```
+
+### 4.2 代码拆分方式
+
+React 的组件化天然支持代码拆分，每个组件目录包含组件文件 + CSS 文件：
+
+```
+src/
+├── App.jsx
+├── App.module.css                    # 页面布局（根容器、grid 划分）
+└── components/
+    ├── NavBar/
+    │   ├── NavBar.jsx                # 组件逻辑
+    │   └── NavBar.module.css         # 组件样式（CSS Modules，自动隔离）
+    ├── Sidebar/
+    │   ├── Sidebar.jsx
+    │   └── Sidebar.module.css
+    ├── Card/
+    │   ├── Card.jsx
+    │   └── Card.module.css
+    └── DataTable/
+        ├── DataTable.jsx
+        └── DataTable.module.css
+```
+
+**方式 A — CSS Modules（推荐）：**
+```jsx
+import styles from './NavBar.module.css';
+
+function NavBar() {
+  return (
+    <header className={styles.navbar}>
+      <div className={styles['navbar-inner']}>
+        <span className={styles['navbar-title']}>App</span>
+      </div>
+    </header>
+  );
+}
+```
+
+```css
+/* NavBar.module.css — 三层结构 + 零 margin */
+.navbar { flex: 0 0 auto; background: #1e293b; }
+.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
+.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+```
+
+**方式 B — 全局 CSS（传统引入）：**
+```jsx
+import './NavBar.css';
+```
+
+```
+src/components/NavBar/NavBar.css     /* 全局 CSS，类名需 BEM */
+src/components/NavBar/NavBar.jsx
+```
+
+### 4.3 React 中的规则映射
+
+| DivSkill 规则 | React 中的体现 |
+|---|---|
+| 外层无 display:flex | JSX 外层 `<div>` 只有 className + background，内层再加 flex |
+| 零 margin 在子项 | JSX 中 gap 写在父容器 style/className 上，子组件不设 margin-bottom |
+| 代码拆分 | 每个组件目录：`Component.jsx` + `Component.module.css` |
+| 页面布局 | `App.module.css` 定义根容器 + grid layout |
+| 文本溢出 | CSS Module 中写 `text-overflow: ellipsis` |
+
+### 4.4 React 评估清单
+
+- [ ] 每个组件目录有对应的 CSS 文件（`.module.css` 或同名 `.css`）
+- [ ] JSX 结构遵循外层→内层→子容器三层
+- [ ] CSS Module 中无 `margin-bottom`/`margin-top` 在 flex 子项上
+- [ ] `App.module.css` 有 `height:100vh; width:100vw; overflow:hidden`
+- [ ] 组件 CSS 中无固定 `px` 高度/宽度
+
+---
+
+## 五、Vue 集成 · Vue Integration
+
+> 容器层级和代码拆分在 Vue 中的映射。利用 Vue SFC 的 `<style scoped>` 实现样式隔离。
+
+### 5.1 容器层级在 Vue 模板中
+
+```vue
+<!-- Card.vue — 三层结构 -->
+<template>
+  <article class="card">              <!-- 外层：背景 + 圆角 + overflow -->
+    <div class="card-body">           <!-- 内层：flex 列 + gap + padding -->
+      <span class="card-title">{{ title }}</span>   <!-- 子容器 -->
+      <span class="card-value">{{ value }}</span>   <!-- 子容器 -->
+      <span class="card-change">{{ change }}</span>  <!-- 子容器 -->
+    </div>
+  </article>
+</template>
+
+<style scoped>
+/* 对应三层结构，scoped 自动隔离 */
+.card { overflow: hidden; border-radius: 8px; background: #fff; }               /* 外层 */
+.card-body { display: flex; flex-direction: column; gap: 8px; padding: 16px; }  /* 内层 */
+.card-title, .card-value, .card-change { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  /* 子容器 */
+</style>
+```
+
+### 5.2 代码拆分方式
+
+Vue 的 SFC（Single File Component）天然将模板、逻辑、样式放在同一个 `.vue` 文件中：
+
+```
+src/
+├── App.vue                           # 根组件：根容器 + 页面布局
+│   <style scoped>                    # 根容器样式
+└── components/
+    ├── NavBar.vue                    # 导航栏组件
+    │   <style scoped>                # 导航栏样式（三层结构）
+    ├── Sidebar.vue                   # 侧边栏组件
+    ├── StatCard.vue                  # 统计卡片组件
+    └── DataTable.vue                 # 数据表格组件
+```
+
+**方式 A — `<style scoped>`（推荐）：**
+```vue
+<!-- NavBar.vue -->
+<template>
+  <header class="navbar">             <!-- 外层 -->
+    <div class="navbar-inner">         <!-- 内层 -->
+      <span class="navbar-title">{{ title }}</span>  <!-- 子容器 -->
+    </div>
+  </header>
+</template>
+
+<style scoped>
+.navbar { flex: 0 0 auto; background: #1e293b; }
+.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
+.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>
+```
+
+**方式 B — 分离 CSS 文件：**
+```vue
+<!-- 当样式复杂时，可引入外部 CSS -->
+<style scoped src="./NavBar.css"></style>
+```
+
+### 5.3 Vue 中的规则映射
+
+| DivSkill 规则 | Vue 中的体现 |
+|---|---|
+| 外层无 display:flex | `<template>` 中外层元素只设背景，内层设 flex |
+| 零 margin 在子项 | `<style scoped>` 中用 gap 代替子项 margin |
+| 代码拆分 | 每个组件一个 `.vue` 文件，自带 `<style scoped>` |
+| 页面布局 | `App.vue` 的 `<style scoped>` 定义根容器 + 整体布局 |
+| 样式隔离 | `scoped` 属性自动隔离，类名不需 BEM |
+
+### 5.4 Vue 评估清单
+
+- [ ] 每个组件一个 `.vue` 文件，使用 `<style scoped>`
+- [ ] `<template>` 结构遵循外层→内层→子容器三层
+- [ ] `<style scoped>` 中无 `margin-bottom`/`margin-top` 在 flex 子项上
+- [ ] `App.vue` 的 `<style>` 有 `height:100vh; width:100vw; overflow:hidden`
+- [ ] 组件样式中无固定 `px` 高度/宽度
+
+---
+
+## 六、反例对照 · Anti-Patterns
 
 | 反例 | 问题 | 正确做法 |
 |---|---|---|
@@ -319,7 +510,7 @@ Step 5: 代码拆分
 
 ---
 
-## 五、速查清单 · Checklist
+## 七、速查清单 · Checklist
 
 - [ ] 根容器 `height: 100vh; width: 100vw; overflow: hidden`
 - [ ] 每个区块：外层 → 内层 → 子容器 三层结构
@@ -337,7 +528,7 @@ Step 5: 代码拆分
 
 ---
 
-## 六、常见违规借口 · Rationalizations
+## 八、常见违规借口 · Rationalizations
 
 | 借口 | 为什么是错的 |
 |---|---|

@@ -16,3 +16,7 @@ Thumbs.db
 # Test artifacts
 *.output
 /*.html
+
+# Node
+node_modules/
+dist/
