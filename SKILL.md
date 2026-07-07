@@ -189,13 +189,42 @@ project/
 
 ```
 ① 创建根容器
-   └── index.html 或 App.jsx/App.vue 设置 height:100vh; width:100vw; overflow:hidden
+   └── index.html 或 App 设置 height:100vh; width:100vw; overflow:hidden
    └── 确定 CSS 预处理器（Sass/Less/PostCSS/Tailwind）
 
-② 创建目录结构
-   └── Vanilla HTML: pages/ + components/，HTML 用 <link> 引用各文件
-   └── React: src/components/ComponentName/ComponentName.jsx + .scss
-   └── Vue:   src/components/ComponentName/ComponentName.vue + .scss
+② 创建完整目录结构
+
+   React 项目：
+   src/
+   ├── layout/          AppShell, NavBar, Sidebar（应用框架）
+   ├── pages/           Dashboard, Settings（页面级组件）
+   ├── components/      Card, DataTable（共享可复用组件）
+   ├── hooks/           自定义 hooks（useAuth, useFetch）
+   ├── routes/          路由配置 + 守卫
+   ├── stores/          状态管理（Zustand / Context）
+   ├── api/             API 请求层（axios/fetch 封装）
+   ├── utils/           工具函数（formatDate, classNames）
+   ├── types/           TypeScript 类型定义
+   ├── constants/       常量配置（枚举、默认值）
+   ├── assets/          静态资源（图片、字体、SVG）
+   ├── styles/          全局样式、mixin、变量
+   └── __tests__/       测试文件
+
+   Vue 项目：
+   src/
+   ├── layout/          AppShell, NavBar, Sidebar
+   ├── pages/           Dashboard, Settings
+   ├── components/      Card, DataTable
+   ├── composables/     组合式函数（useAuth, useFetch）
+   ├── router/          路由配置 + 守卫
+   ├── stores/          状态管理（Pinia）
+   ├── api/             API 请求层
+   ├── utils/           工具函数
+   ├── types/           TypeScript 类型
+   ├── constants/       常量配置
+   ├── assets/          静态资源
+   ├── styles/          全局样式
+   └── __tests__/       测试文件
 
 ③ 编写组件
    └── 每个组件遵循 外层→内层→子容器 三层结构
@@ -226,10 +255,27 @@ project/
    └── 检查 inner 容器是否有 gap → 标记缺失 gap 的
    └── 搜索 overflow:hidden → 标记缺失的卡片/面板
 
-③ 审查代码拆分
+③ 审查代码拆分与项目结构
    └── CSS 是否全部在一个文件中？→ 需要拆分
    └── 组件样式是否散落在页面 CSS 中？→ 需要提取
    └── 是否有全局设计变量？→ 可提取为 shared tokens
+   └── 逻辑是否与视图耦合？→ hooks/composables 需要分离
+   └── API 调用是否分散在各组件？→ 需要集中到 api/ 层
+   └── 工具函数是否散落？→ 需要收拢到 utils/
+   └── 类型定义是否内联？→ 需要提取到 types/
+
+④ 审查框架特有模式
+   React:
+   └── hooks 是否按功能拆分?（useAuth、useFetch）
+   └── 状态管理是否合理?（Context/Zustand vs props drilling）
+   └── 路由守卫是否实现?（ProtectedRoute）
+   └── 有无不必要的 re-render?（useMemo、useCallback）
+
+   Vue:
+   └── composables 是否按功能拆分?（useAuth、useFetch）
+   └── 状态管理是否合理?（Pinia vs prop drilling）
+   └── 路由守卫是否实现?（beforeEach、meta）
+   └── 有无模板中复杂的计算逻辑?（提取到 computed/composables）
 ```
 
 ### 3.3 评估清单
@@ -246,6 +292,14 @@ project/
 □ 文本缺少 text-overflow:ellipsis?
 □ 全部 CSS 在单个文件中?
 □ 组件样式混在页面 CSS 中?
+□ 分层结构完整?（layout/pages/components/hooks/routes/stores/api/utils/types）
+□ hooks/composables 是否与视图分离？
+□ API 调用集中在 api/ 层？
+□ 工具函数收拢在 utils/？
+□ 类型定义提取到 types/？
+□ 路由守卫已实现？
+□ 状态管理方案合理？
+□ 常量配置收拢在 constants/？
 ```
 
 ### 3.4 重构流程
@@ -395,6 +449,14 @@ src/
 | `pages/` | 页面级组件，对应一个路由 | 一个页面一个目录 |
 | `components/` | 可复用的通用组件 | 多页面共享 |
 | `routes/` | 路由定义和守卫 | 应用导航 |
+| `hooks/` | 自定义 hooks | 逻辑复用 |
+| `api/` | API 请求封装 | 数据层 |
+| `utils/` | 工具函数 | 通用功能 |
+| `types/` | TypeScript 类型 | 类型安全 |
+| `constants/` | 常量配置 | 集中管理 |
+| `assets/` | 静态资源 | 图片、字体 |
+| `styles/` | 全局样式变量 | 样式复用 |
+| `__tests__/` | 测试文件 | 质量保障 |
 | `stores/` | 全局状态管理 | 跨组件数据共享 |
 
 **方式 — CSS 文件独立（默认 Sass）：**
@@ -468,11 +530,17 @@ src/components/NavBar/NavBar.jsx
 
 ### 4.4 React 评估清单
 
-- [ ] 每个组件目录有对应的 CSS 文件（`.module.css` 或同名 `.css`）
+- [ ] 目录结构完整：layout/pages/components/hooks/routes/stores/api/utils/types/constants/assets/styles/__tests__
+- [ ] 每个组件有对应的 CSS 文件（`.scss` / `.less` / `.css`）
 - [ ] JSX 结构遵循外层→内层→子容器三层
-- [ ] CSS Module 中无 `margin-bottom`/`margin-top` 在 flex 子项上
-- [ ] `App.module.css` 有 `height:100vh; width:100vw; overflow:hidden`
-- [ ] 组件 CSS 中无固定 `px` 高度/宽度
+- [ ] `.scss` 中无 `margin-bottom`/`margin-top` 在 flex 子项上
+- [ ] `App.scss` 有 `height:100vh; width:100vw; overflow:hidden`
+- [ ] 组件样式中无固定 `px` 高度/宽度
+- [ ] hooks 已按功能拆分（useAuth、useFetch 等）
+- [ ] API 调用集中在 `api/` 层
+- [ ] 工具函数收拢在 `utils/`
+- [ ] 类型定义提取到 `types/`
+- [ ] 路由守卫已实现
 
 ---
 
@@ -545,6 +613,14 @@ src/
 | `pages/` | 页面级组件，对应一个路由 | 一个页面一个目录 |
 | `components/` | 可复用的通用组件 | 多页面共享 |
 | `router/` | 路由定义 | 应用导航 |
+| `composables/` | 组合式函数 | 逻辑复用 |
+| `api/` | API 请求封装 | 数据层 |
+| `utils/` | 工具函数 | 通用功能 |
+| `types/` | TypeScript 类型 | 类型安全 |
+| `constants/` | 常量配置 | 集中管理 |
+| `assets/` | 静态资源 | 图片、字体 |
+| `styles/` | 全局样式变量 | 样式复用 |
+| `__tests__/` | 测试文件 | 质量保障 |
 | `stores/` | 全局状态管理 | 跨组件数据共享 |
 
 **引用方式：**
@@ -596,12 +672,18 @@ import './NavBar.scss'     /* 或通过 <style src> 引入 */
 
 ### 5.4 Vue 评估清单
 
+- [ ] 目录结构完整：layout/pages/components/composables/router/stores/api/utils/types/constants/assets/styles/__tests__
 - [ ] 每个组件目录：`Component.vue` + `Component.scss`
 - [ ] `.vue` 文件不含 `<style>` 块（样式在独立文件）
 - [ ] `<template>` 结构遵循外层→内层→子容器三层
 - [ ] `*.scss` 中无 `margin-bottom`/`margin-top` 在 flex 子项上
 - [ ] `App.scss` 有 `height:100vh; width:100vw; overflow:hidden`
 - [ ] 组件样式中无固定 `px` 高度/宽度
+- [ ] composables 已按功能拆分（useAuth、useFetch 等）
+- [ ] API 调用集中在 `api/` 层
+- [ ] 工具函数收拢在 `utils/`
+- [ ] 类型定义提取到 `types/`
+- [ ] 路由守卫已实现
 
 ---
 
