@@ -35,9 +35,7 @@ and 3 feature cards (icon, title, description).
 
 ---
 
-<a id="zh"></a>
-
-## 中文
+<h2 id="zh">中文</h2>
 
 ### 提示词（使用前后相同）
 
