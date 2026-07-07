@@ -75,8 +75,8 @@ project/
 | [Dashboard](examples/dashboard/) | HTML/CSS | Nav, sidebar, stat cards, data table |
 | [Landing Page](examples/landing-page/) | HTML/CSS | Hero + feature cards |
 | [Settings Page](examples/settings-page/) | HTML/CSS | Form + modal overlay |
-| [React Dashboard](examples/react-dashboard/) | React + Sass | 4 components, co-located .scss |
-| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | Separate .vue + .scss |
+| [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
+| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
 
 ### Specification
 
@@ -153,8 +153,8 @@ project/
 | [Dashboard](examples/dashboard/) | HTML/CSS | 导航、侧栏、统计卡片、数据表 |
 | [Landing Page](examples/landing-page/) | HTML/CSS | Hero + 特性卡片 |
 | [Settings Page](examples/settings-page/) | HTML/CSS | 表单 + 模态框弹层 |
-| [React Dashboard](examples/react-dashboard/) | React + Sass | 4 个组件，独立 .scss |
-| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | 分离 .vue + .scss |
+| [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
+| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
 
 ### 规范文档
 
