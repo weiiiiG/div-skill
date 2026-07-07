@@ -1,6 +1,6 @@
 ---
 name: div-skill
-description: "Use when building or refactoring page layouts — the output needs three-layer containers (outer/inner/child), zero margin on flex children, no fixed px, and code split by page and component. Triggers: user wants to build a dashboard/admin panel/landing page; existing CSS overflows, overlaps, or breaks on resize; all code is in one file; React/Vue project has no clear file structure; user says 'organize this project', 'fix the layout', 'split the code', 'refactor the styles', 'elements overlap', or 'not responsive'. Only handles layout and code organization — functionality (data fetching, interaction, state) needs separate implementation."
+description: "构建或重构页面布局时使用。产出需要：三层容器结构（外层/内层/子容器）、flex 子项零 margin、无固定 px、按页面和组件拆分代码。触发词：用户要建仪表盘/后台/着陆页；现有 CSS 溢出/重叠/缩放下错位；所有代码在一个文件里；React/Vue 项目没有清晰文件结构；用户说'整理项目'、'修复布局'、'拆分代码'、'重构样式'、'元素重叠'、'不响应式'。仅处理布局和代码组织 — 功能（数据请求、交互、状态）需另行实现。"
 ---
 
 # div-skill
@@ -9,7 +9,7 @@ description: "Use when building or refactoring page layouts — the output needs
 
 ---
 
-## 一、容器层级架构 · Container Hierarchy
+## 一、容器层级架构
 
 ### 三层结构（必须遵守）
 
@@ -97,7 +97,7 @@ description: "Use when building or refactoring page layouts — the output needs
 
 ---
 
-## 二、代码拆分规范 · Code Splitting
+## 二、代码拆分规范
 
 按**页面 (Page)** 和**组件 (Component)** 拆分前端代码。每个页面/组件拥有自己的文件（JS/TS、CSS/SCSS、模板一起拆分），不局限于 CSS。
 
@@ -121,7 +121,7 @@ project/
 
 ---
 
-## 三、项目初始化与存量改造 · Init & Refactor
+## 三、项目初始化与存量改造
 
 ### 初始化新项目
 
@@ -236,7 +236,7 @@ Step 6 改后验证 →
 
 ---
 
-## 四、React 集成 · React Integration
+## 四、React 集成
 
 ```jsx
 // Card.jsx — 三层结构
@@ -302,7 +302,7 @@ src/
 
 ---
 
-## 五、Vue 集成 · Vue Integration
+## 五、Vue 集成
 
 ```vue
 <!-- Card.vue — 仅模板，无 <style> 块 -->
@@ -355,7 +355,7 @@ src/
 
 ---
 
-## 六、反例对照 · Anti-Patterns
+## 六、反例对照
 
 | 反例 | 问题 | 正确做法 |
 |---|---|---|
@@ -371,7 +371,7 @@ src/
 
 ---
 
-## 七、速查清单 · Checklist
+## 七、速查清单
 
 - [ ] 根容器 `height:100vh; width:100vw; overflow:hidden`
 - [ ] 每个区块：外层 → 内层 → 子容器 三层结构
@@ -388,7 +388,7 @@ src/
 
 ---
 
-## 八、常见违规借口 · Rationalizations
+## 八、常见违规借口
 
 | 借口 | 为什么是错的 |
 |---|---|
