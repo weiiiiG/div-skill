@@ -1,6 +1,6 @@
 # Settings Page Example · 设置页示例
 
-[ENGLISH](#english) · [中文](#中文)
+[ENGLISH](#english) · [中文](#zh)
 
 ---
 
@@ -33,6 +33,8 @@ save button, and a modal overlay.
 | Modal z-index | `.modal-overlay { position:fixed; z-index:1000; }` |
 
 ---
+
+<a id="zh"></a>
 
 ## 中文
 

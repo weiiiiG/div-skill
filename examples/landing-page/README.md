@@ -1,6 +1,6 @@
 # Landing Page Example · 着陆页示例
 
-[ENGLISH](#english) · [中文](#中文)
+[ENGLISH](#english) · [中文](#zh)
 
 ---
 
@@ -34,6 +34,8 @@ and 3 feature cards (icon, title, description).
 | Outer pure bg | Background on outer, flex+gap on inner |
 
 ---
+
+<a id="zh"></a>
 
 ## 中文
 

@@ -1,6 +1,6 @@
 # React Dashboard Example · React 仪表盘示例
 
-[ENGLISH](#english) · [中文](#中文)
+[ENGLISH](#english) · [中文](#zh)
 
 ---
 
@@ -64,6 +64,8 @@ npm run dev
 ```
 
 ---
+
+<a id="zh"></a>
 
 ## 中文
 
