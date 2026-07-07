@@ -1,8 +1,12 @@
 # div-skill
 
-> **Div**ine **Skill** of CSS — solves layout at two levels: **containerization** for page element layout, **code splitting** for CSS file organization.
+> **Div**ine **Skill** of CSS — two specs that together define how to structure CSS in any web project:
+> * **Container Hierarchy:** a three-layer pattern (outer→inner→child) that fills the viewport, prevents overflow, and eliminates margin-based spacing bugs.
+> * **Code Splitting:** split CSS by page and component, each file owns its own styles — no more monolithic `<style>` blocks.
 >
-> 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
+> 一套 CSS 布局规范，包含两个核心：
+> * **容器层级架构**：外层→内层→子容器三层结构，撑满视口、杜绝溢出、消灭 margin 间距 bug。
+> * **代码拆分**：按页面和组件拆分 CSS，每个文件只负责自己的样式 — 告别巨石 `<style>`。
 
 ---
 
