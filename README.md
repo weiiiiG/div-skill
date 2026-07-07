@@ -6,14 +6,14 @@
 
 <div align="center">
 
-[🇬🇧 English](#en) · [🇨🇳 中文](#zh)
+**ENGLISH** · [中文](#zh)
 
 </div>
 
 ---
 
 <details open>
-<summary><strong>🇬🇧 English</strong></summary>
+<summary><strong>ENGLISH</strong></summary>
 
 <br>
 
@@ -92,7 +92,7 @@ MIT
 </details>
 
 <details>
-<summary><strong>🇨🇳 中文</strong></summary>
+<summary><strong>中文</strong></summary>
 
 <br>
 
