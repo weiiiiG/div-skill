@@ -1,6 +1,6 @@
 ---
 name: div-skill
-description: Use when building CSS layouts for web pages — dashboards, landing pages, admin panels, settings forms, or any multi-container page structure. Triggers: creating CSS layout from scratch, reviewing CSS for overflow/overlap issues, splitting CSS into page/component files, or ensuring responsive layouts without fixed pixel sizing. Solves container nesting chaos and monolithic CSS bloat.
+description: "Use when: (1) building any page layout from scratch — dashboard, admin panel, landing page, settings form, etc.; (2) existing CSS has overflow, overlap, or viewport fill issues; (3) all styles are dumped in one file and need splitting into pages/ and components/; (4) refactoring a legacy project — need to containerize elements and split monolithic CSS by page and component. Triggers: elements overflowing containers, fixed px heights breaking on resize, margin-based spacing causing layout bugs, single giant CSS file, component styles mixed with page layout, React/Vue project with disorganized file structure."
 ---
 
 # div-skill
