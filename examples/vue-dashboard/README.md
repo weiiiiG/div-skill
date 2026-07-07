@@ -1,140 +1,51 @@
-# Vue Dashboard Example · Vue 仪表盘示例
+# Vue Dashboard 示例
 
-[ENGLISH](#english) · [中文](#中文)
+> 同一提示词，使用 div-skill 前后的代码对比。
 
----
-
-## ENGLISH
-
-### Prompt (same for both)
-
-```
-Build a Vue 3 dashboard with: NavBar (logo + title + avatar), Sidebar (nav links),
-StatCard (label + value + change), DataTable (rows with status badges).
-Use Sass for styling, Vite for build. Separate .vue and .scss files.
-```
-
-### Without SKILL
-
-| Violation | Example Code |
-|---|---|
-| Fixed px | `.navbar { height: 60px; }` in scoped style |
-| Margin on children | App.vue `margin-bottom: 24px` |
-| Outer flex | Component root with bg + display:flex |
-| No overflow | Card content spills |
-| SFC embedded | All styles in .vue `<style>` block |
-
-### With SKILL
-
-| Fix | Code |
-|---|---|
-| Three-layer | `.card(outer) → .card-body(inner) → children` |
-| Root fullscreen | `height:100vh; width:100vw; overflow:hidden` |
-| No fixed px | `flex:0 0 auto; min-height:56px` |
-| Zero margin | All spacing via `gap` |
-| Style separation | .vue files have no `<style>`, styles in separate .scss |
-| Cards/table | `overflow:hidden` + `table-layout:fixed` |
-
-### File Structure
-
-```
-src/
-├── layout/
-│   ├── AppShell.vue + AppShell.scss    # Root layout, router-view
-│   ├── NavBar.vue + NavBar.scss        # Navigation bar
-│   └── Sidebar.vue + Sidebar.scss      # Sidebar navigation
-├── pages/
-│   └── Dashboard.vue + Dashboard.scss  # Dashboard page
-├── components/
-│   ├── Card.vue + Card.scss            # Shared stat card
-│   └── DataTable.vue + DataTable.scss  # Shared data table
-├── router/
-│   └── index.js                        # Vue Router config
-├── stores/
-│   └── dashboard.js                    # Pinia store
-├── App.vue + App.scss                  # Root container
-├── main.js
-└── index.css
-
-### Run
-
-```
-cd examples/vue-dashboard
-npm install
-npm run dev
-```
-
----
-
-## 中文
-
-### 提示词（使用前后相同）
+## 提示词
 
 ```
 用 Vue 3 构建仪表盘：NavBar（logo + 标题 + 头像）、Sidebar（导航链接）、
-StatCard（标签 + 数值 + 变化）、DataTable（行 + 状态徽章）。
-使用 Sass + Vite。.vue 和 .scss 分文件。
+StatCard（标签 + 数值 + 变化）、DataTable（行 + 状态徽章）。使用 Sass + Vite。
 ```
 
-### 未使用 SKILL
+## 使用前（无 SKILL）
 
-| 违规 | 示例代码 |
-|---|---|
-| 固定 px | `.navbar { height: 60px; }` 在 scoped 中 |
-| 子项 margin | App.vue 中 `margin-bottom: 24px` |
-| 外层 flex | 组件根元素有背景 + display:flex |
-| 无 overflow | 卡片内容溢出 |
-| SFC 内嵌 | 所有样式在 .vue 的 `<style>` 中 |
+```vue
+<!-- App.vue -->
+<template>
+  <div class="app"><NavBar/><Sidebar/><main><DashboardView/></main></div>
+</template>
+<style>
+.app { display: flex; }
+main { flex: 1; padding: 24px; }
+</style>
 
-### 使用 SKILL
-
-| 修复 | 代码 |
-|---|---|
-| 三层结构 | `.card(外层) → .card-body(内层) → 子容器` |
-| 根全屏 | `height:100vh; width:100vw; overflow:hidden` |
-| 无固定 px | `flex:0 0 auto; min-height:56px` |
-| 零 margin | 全部 `gap` |
-| 样式分离 | .vue 不含 `<style>`，样式在独立 .scss |
-| 卡片/表格 | `overflow:hidden` + `table-layout:fixed` |
-
-### 文件结构
-
-```
-src/
-├── layout/
-│   ├── AppShell.vue + AppShell.scss    # 根布局，router-view
-│   ├── NavBar.vue + NavBar.scss        # 导航栏
-│   └── Sidebar.vue + Sidebar.scss      # 侧边栏
-├── pages/
-│   └── Dashboard.vue + Dashboard.scss  # Dashboard 页面
-├── components/
-│   ├── Card.vue + Card.scss            # 共享卡片组件
-│   └── DataTable.vue + DataTable.scss  # 共享表格组件
-├── composables/
-│   └── useAuth.js                      # 组合式函数
-├── router/
-│   └── index.js                        # Vue Router 配置
-├── stores/
-│   └── dashboard.js                    # Pinia 状态管理
-├── api/
-│   └── users.js                        # API 请求层
-├── utils/
-│   └── format.js                       # 工具函数
-├── types/
-│   └── index.ts                        # TypeScript 类型
-├── constants/
-│   └── index.js                        # 常量配置
-├── styles/
-│   └── _variables.scss                 # 全局样式变量
-├── App.vue + App.scss                  # 根容器
-├── main.js
-└── index.css                           # 全局 reset
+<!-- StatCard.vue -->
+<style scoped>
+.card { background: #fff; padding: 20px; border-radius: 8px; }
+.label { font-size: 13px; color: #64748b; margin-bottom: 6px; }
+.value { font-size: 24px; margin-bottom: 4px; }
+</style>
 ```
 
-### 运行
+**问题：** 固定 px 高度、margin 做间距、外层混用 flex+padding、无 overflow hidden、无 min-width:0、无 text-overflow、样式内嵌在 .vue 的 `<style scoped>` 中。
 
+## 使用后（有 SKILL）
+
+```scss
+/* layout/NavBar.scss — 三层结构 */
+.navbar-outer { background: #1e293b; }                                      /* 外层 */
+.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }  /* 内层 */
+.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }                /* 子容器 */
+
+/* components/StatCard.scss */
+.stat-card-outer { overflow: hidden; border-radius: 8px; background: #fff; }                    /* 外层 */
+.stat-card-inner { display: flex; flex-direction: column; padding: 20px; gap: 8px; }            /* 内层 */
+.stat-card-value { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }             /* 子容器 */
+
+/* App.scss */
+.app { height: 100vh; width: 100vw; overflow: hidden; }
 ```
-cd examples/vue-dashboard
-npm install
-npm run dev
-```
+
+**修复：** 三层结构、`clamp()` 代替固定宽、`gap` 代替 margin、外层纯背景、样式与模板分离（.vue 不含 `<style>`，样式在独立 .scss）、完整目录结构（layout/pages/components/composables/router/stores/api/utils/types/constants）。

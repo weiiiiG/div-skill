@@ -1,0 +1,20 @@
+/* components/StatCard.css — 统计卡片组件样式 */
+
+/* 子容器：在 grid 中由父容器定位 */
+.stat-card { min-width: 0; }
+
+/* 外层：背景 + 圆角 + 溢出隐藏（无 display:flex） */
+.stat-card-outer { background: #fff; border: 1px solid #e2e8f0; border-radius: 10px; overflow: hidden; }
+
+/* 内层：flex 列 + height:100% + padding + gap */
+.stat-card-body { display: flex; flex-direction: column; height: 100%; padding: 20px; gap: 6px; }
+
+/* 子容器：溢出控制 + 无 margin */
+.stat-card-label { font-size: 12px; font-weight: 600; color: #64748b; text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.stat-card-value { font-size: 28px; font-weight: 700; color: #0f172a; line-height: 1.2; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.stat-card-change { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+.stat-card-change.up { color: #10b981; }
+.stat-card-change.down { color: #ef4444; }
