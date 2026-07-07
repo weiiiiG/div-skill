@@ -44,7 +44,7 @@ description: Use when building CSS layouts for web pages — dashboards, landing
 
 | # | 规则 | 正确写法 | 错误写法 |
 |---|---|---|---|
-| 1 | 无固定 px | `flex: 0 0 auto; min-height: 44px` | `height: 56px` |
+| 1 | 无固定 px（含 grid track） | `flex: 0 0 auto; min-height: 44px` / `grid-template-columns: clamp(200px,20vw,320px) 1fr` | `height: 56px` / `grid-template-columns: 240px 1fr` |
 | 2 | 响应式固定宽 | `clamp(200px, 20vw, 320px)` | `width: 240px` |
 | 3 | 等分多列 | `grid-template-columns: 1fr 1fr 1fr` | `width: 33.33%` |
 | 4 | 子项间距 | 父容器 `gap: 12px` | 子项 `margin-bottom: 12px` |
@@ -184,6 +184,7 @@ project/
 | 反例 | 问题 | 正确做法 |
 |---|---|---|
 | `height: 56px` | 固定 px，不可缩放 | `flex: 0 0 auto; min-height: 44px` |
+| `grid-template-columns: 240px 1fr` | grid track 固定 px | `grid-template-columns: clamp(200px,20vw,320px) 1fr` |
 | `margin-bottom: 24px` 在子项上 | 间距溢出父容器 | 父容器 `gap: 24px` |
 | 图标用 `margin-left: 8px` | 图标也是 flex 子项，margin 违规 | 父容器加 `gap` |
 | 子项无 `min-width: 0` | flex 子项不收缩，内容溢出 | 子项 `min-width: 0` |
@@ -200,7 +201,7 @@ project/
 - [ ] 每个区块：外层 → 内层 → 子容器 三层结构
 - [ ] 外层无 `display:flex/grid`，无 `padding/gap`，无 `float`
 - [ ] 内层有 `display:flex/grid` + `gap`（padding 单独不够）
-- [ ] 无固定 `px` 定高度/宽度（装饰性元素除外）
+- [ ] 无固定 `px` 定高度/宽度（含 grid track 尺寸，装饰性元素除外）
 - [ ] 无 `margin` 做 flex/grid 子项间距（包括图标）
 - [ ] 所有 flex/grid 子项有 `min-width: 0` / `min-height: 0`
 - [ ] 文本溢出有 `text-overflow: ellipsis` + `overflow: hidden` + `white-space: nowrap`
