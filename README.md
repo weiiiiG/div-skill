@@ -4,8 +4,6 @@
 >
 > 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
 
-> ⚠️ div-skill **只解决布局问题**（容器结构 + CSS 文件组织）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
-
 ---
 
 - [中文](#中文) · [ENGLISH](#english)
@@ -20,6 +18,18 @@
 
 1. **容器混乱** — 元素溢出、重叠、撑不满视口
 2. **CSS 巨石** — 全部样式塞在一个 `<style>` 块中，无法维护
+
+### 使用场景
+
+| 场景 | 说明 |
+|---|---|
+| **新建页面** | 从零开始构建仪表盘、后台、着陆页、设置页 —— 直接按三层结构组织容器、按页面/组件拆分 CSS |
+| **存量项目改造** | 已有代码布局混乱、溢出频发、CSS 集中在一个文件 —— 先评估缺陷再逐步容器化和拆分 |
+| **React 项目** | 组件缺少统一布局规范、样式散落、目录结构混乱 —— 按 layout/pages/components/hooks/routes/stores/api 分层 |
+| **Vue 项目** | 模板中容器嵌套混乱、样式内嵌在 SFC、缺少文件组织 —— 分离 .vue 和 .scss、按 composables/router/stores 分层 |
+| **团队规范** | 多人协作时 CSS 风格不统一、review 成本高 —— 用速查清单统一约束，新人上手即遵循规范 |
+
+> div-skill **只解决布局问题**（容器结构 + CSS 文件组织）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
 
 ### 解决方案
 
@@ -98,6 +108,16 @@ Two common pains in frontend CSS:
 
 1. **Container chaos** — elements overflow, overlap, or don't fill the viewport
 2. **Monolithic CSS** — all styles in one `<style>` block, impossible to maintain
+
+### Usage Scenarios
+
+| Scenario | Description |
+|---|---|
+| **New project** | Build a dashboard, admin panel, landing page from scratch — use three-layer containers, split CSS by page/component |
+| **Legacy refactor** | Existing code has overflow issues, monolithic CSS — evaluate defects, containerize and split step by step |
+| **React project** | Components lack layout rules, styles scattered, messy structure — organize into layout/pages/components/hooks/routes/stores/api |
+| **Vue project** | Template nesting chaos, styles embedded in SFC — separate .vue and .scss, use composables/router/stores layers |
+| **Team standard** | Multiple devs, inconsistent CSS, high review cost — use checklist for unified rules, new hires follow standard from day one |
 
 ### The Solution
 
