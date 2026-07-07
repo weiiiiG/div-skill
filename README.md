@@ -8,16 +8,16 @@
 
 ## Overview · 概述
 
-DivSkill defines two complementary specifications that together form a complete CSS architecture:
+DivSkill defines two complementary specifications in a single [SKILL.md](SKILL.md) that together form a complete CSS architecture:
 
-**DivSkill 定义了两个互补的规范，共同构成完整的 CSS 架构：**
+**DivSkill 在单个 [SKILL.md](SKILL.md) 中定义了两个互补的规范，共同构成完整的 CSS 架构：**
 
-### [1. Container Hierarchy Architecture](spec/container-hierarchy-architecture.md)
+### 1. Container Hierarchy Architecture · 容器层级架构
 A three-layer nested container pattern that ensures all containers fill the viewport, content never overflows, and elements never overlap when shrinking. From outside to inside: **Outer Container → Inner Container → Child Container**.
 
 一种从外到内、层层递进的容器嵌套模式。确保所有容器撑满视口、内容不溢出、缩小时不重叠。由外到内：**外层容器 → 内层容器 → 子容器**。
 
-### [2. CSS File Organization](spec/css-file-organization.md)
+### 2. CSS File Organization · CSS 文件组织
 A layered file structure that prevents monolithic CSS files: **Design Tokens → Base Styles → Component Styles → Page Styles**, aggregated through a single entry point.
 
 一种分层文件结构，避免将全部 CSS 塞进一个文件：**设计令牌 → 基础样式 → 组件样式 → 页面样式**，通过单一入口文件聚合。
@@ -166,10 +166,11 @@ project/
 
 ---
 
-## Specifications · 规范文档
+## Specification · 规范文档
 
-- [Container Hierarchy Architecture (EN)](spec/container-hierarchy-architecture.md) — [中文版](spec/container-hierarchy-architecture.md#chinese)
-- [CSS File Organization (EN)](spec/css-file-organization.md) — [中文版](spec/css-file-organization.md#chinese)
+完整规范请阅读 [SKILL.md](SKILL.md)（中英双语）。
+
+The full specification is in [SKILL.md](SKILL.md) (bilingual Chinese/English).
 
 ---
 
