@@ -1,11 +1,11 @@
 ---
 name: div-skill
-description: "Use when building or refactoring page layouts — the output needs three-layer containers (outer/inner/child), zero margin on flex children, no fixed px, and files files split by page and component. Triggers: user wants to build a dashboard/admin panel/landing page; existing CSS overflows, overlaps, or breaks on resize; all styles are in one file; React/Vue project has no clear file structure; user says 'organize this project', 'fix the layout', 'split the code', 'refactor the styles', 'elements overlap', or 'not responsive'. Only handles layout and code organization — functionality (data fetching, interaction, state) needs separate implementation."
+description: "Use when building or refactoring page layouts — the output needs three-layer containers (outer/inner/child), zero margin on flex children, no fixed px, and code split by page and component. Triggers: user wants to build a dashboard/admin panel/landing page; existing CSS overflows, overlaps, or breaks on resize; all code is in one file; React/Vue project has no clear file structure; user says 'organize this project', 'fix the layout', 'split the code', 'refactor the styles', 'elements overlap', or 'not responsive'. Only handles layout and code organization — functionality (data fetching, interaction, state) needs separate implementation."
 ---
 
 # div-skill
 
-> 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决前端代码（页面、组件、JS、CSS）的文件组织。
+> 一套前端容器与布局规范：**容器层级架构**解决页面元素的布局，**代码拆分**解决前端代码（页面、组件、JS、CSS）的文件组织。
 
 ---
 
@@ -209,7 +209,7 @@ project/
 Step 0 摸底 → 改前先理清目录结构、数据流、状态联动、路由、依赖关系
    ⚠️ 没摸清之前不动手。把摸底结果写在注释或文档中。
 
-Step 1 容器化 → 根容器 + 拆分三层结构 + 删除 outer 上的 flex/grid
+Step 1 容器层级架构 → 根容器 + 拆分三层结构 + 删除 outer 上的 flex/grid
    ⚠️ 只在外层包裹容器，不改内部元素的内容和属性
 Step 2 修复尺寸 → 固定 px 替换为 min-height/clamp()/1fr
    ⚠️ 只改 CSS 属性值，不改 HTML 结构和 JS 逻辑

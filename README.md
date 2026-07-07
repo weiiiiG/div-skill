@@ -1,6 +1,6 @@
 # div-skill
 
-> **Div**ine **Skill** of CSS — a frontend container and code organization specification:
+> div-skill — a frontend container and code organization specification:
 > * **Container Hierarchy:** a three-layer pattern (outer→inner→child) that fills the viewport, prevents overflow, and eliminates margin-based spacing bugs.
 > * **Code Splitting:** split code by page and component (JS, CSS, templates together), each page/component owns its own files — no more monolithic blobs.
 >
@@ -126,8 +126,8 @@ Two common pains in frontend layout and code organization:
 
 | Scenario | Description |
 |---|---|
-| **New project** | Build a dashboard, admin panel, landing page from scratch — use three-layer containers, split CSS by page/component |
-| **Legacy refactor** | Existing code has overflow issues, monolithic CSS — evaluate defects, containerize and split step by step. See [refactoring example](examples/refactoring/) |
+| **New project** | Build a dashboard, admin panel, landing page from scratch — use three-layer containers, split code by page/component |
+| **Legacy refactor** | Existing code has layout issues, monolithic files — evaluate defects, containerize and split step by step. See [refactoring example](examples/refactoring/) |
 | **React project** | Components lack layout rules, styles scattered, messy structure — organize into layout/pages/components/hooks/routes/stores/api |
 | **Vue project** | Template nesting chaos, styles embedded in SFC — separate .vue and .scss, use composables/router/stores layers |
 | **Team standard** | Multiple devs, inconsistent CSS, high review cost — use checklist for unified rules, new hires follow standard from day one |
