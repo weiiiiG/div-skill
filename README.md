@@ -27,20 +27,20 @@
 
 | 场景 | 说明 |
 |---|---|
-| **新建页面** | 从零开始构建仪表盘、后台、着陆页、设置页 —— 直接按三层结构组织容器、按页面/组件拆分 CSS |
+| **新建页面** | 从零开始构建仪表盘、后台、着陆页、设置页 —— 直接按三层结构组织容器、按页面/组件拆分代码 |
 | **存量项目改造** | 已有代码布局混乱、溢出频发、CSS 集中在一个文件 —— 先评估缺陷再逐步容器化和拆分。参考[重构示例](examples/refactoring/) |
 | **React 项目** | 组件缺少统一布局规范、样式散落、目录结构混乱 —— 按 layout/pages/components/hooks/routes/stores/api 分层 |
 | **Vue 项目** | 模板中容器嵌套混乱、样式内嵌在 SFC、缺少文件组织 —— 分离 .vue 和 .scss、按 composables/router/stores 分层 |
 | **团队规范** | 多人协作时 CSS 风格不统一、review 成本高 —— 用速查清单统一约束，新人上手即遵循规范 |
 
-> div-skill **只解决布局问题**（容器结构 + CSS 文件组织）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
+> div-skill **只解决布局和代码组织问题**（容器结构 + 页面/组件代码拆分）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
 
 ### 重构安全承诺
 
 对已有项目做容器化和代码拆分时，div-skill 遵循**只动结构、不动功能**的原则：
 
 1. **改前摸底** — 先读取项目代码，理清目录结构、数据流、状态联动、路由和依赖关系，画出完整文件树
-2. **只改布局** — 只添加/调整容器层级、拆分 CSS 文件、替换固定 px 为响应式单位、替换 margin 为 gap。**不修改** JavaScript 逻辑、API 调用、状态管理、组件 props、路由配置
+2. **只改布局** — 只添加/调整容器层级、拆分代码文件、替换固定 px 为响应式单位、替换 margin 为 gap。**不修改** JavaScript 逻辑、API 调用、状态管理、组件 props、路由配置
 3. **改后验证** — 验证页面渲染、交互功能、数据流、路由跳转、import 路径均正常后，才确认重构完成
 
 > 参考[重构示例](examples/refactoring/)：一个带计数器、导航、通知徽章的页面，重构后 JS 代码零改动，所有交互功能保持不变。
@@ -73,15 +73,15 @@
 
 #### 2. 代码拆分
 
-按页面和组件拆分 CSS：
+按页面和组件拆分代码（JS + CSS + 模板一起拆分）：
 
 ```
 project/
 ├── index.html
-├── pages/                  # 一个页面一个 CSS 文件
+├── pages/                  # 一个页面一个目录
 │   ├── dashboard.css
 │   └── settings.css
-└── components/             # 一个组件一个 CSS 文件
+└── components/             # 一个组件一个目录
     ├── NavBar.css
     ├── Sidebar.css
     ├── Card.css
@@ -89,9 +89,9 @@ project/
 ```
 
 **规则：**
-- 一个页面一个 CSS 文件，一个组件一个 CSS 文件
-- 组件样式只能写在 `components/组件名.css` 中
-- 页面布局只能写在 `pages/页面名.css` 中
+- 一个页面一个目录，一个组件一个目录
+- 组件代码（JS + CSS + 模板）只放在自己的目录中
+- 页面布局代码只放在 `pages/` 目录中
 - HTML 直接 `<link>` 引用各文件（无聚合入口）
 
 ### 示例
@@ -132,14 +132,14 @@ Two common pains in frontend CSS:
 | **Vue project** | Template nesting chaos, styles embedded in SFC — separate .vue and .scss, use composables/router/stores layers |
 | **Team standard** | Multiple devs, inconsistent CSS, high review cost — use checklist for unified rules, new hires follow standard from day one |
 
-> div-skill handles **layout only** (container structure + CSS file organization). Functionality (data fetching, interaction logic, state management) needs separate implementation.
+> div-skill handles **layout and code organization only** (container structure + page/component code splitting). Functionality (data fetching, interaction logic, state management) needs separate implementation.
 
 ### Refactoring Safety Guarantee
 
 When containerizing and splitting code for an existing project, div-skill follows a **structure-only, no-functional-change** principle:
 
 1. **Assess first** — read the project, analyze directory structure, data flow, state linkage, routes, and dependencies before touching any code
-2. **Layout only** — adjust containers, split CSS files, replace fixed px with responsive units, replace margin with gap. **Do not change** JavaScript logic, API calls, state management, component props, or route configs
+2. **Layout only** — adjust containers, split code files, replace fixed px with responsive units, replace margin with gap. **Do not change** JavaScript logic, API calls, state management, component props, or route configs
 3. **Verify after** — confirm rendering, interaction, data flow, routing, and import paths all work before considering the refactoring complete
 
 > See the [refactoring example](examples/refactoring/): a page with counter, navigation, and notification badge — zero JS changes after refactoring, all interactions preserved.
@@ -172,15 +172,15 @@ Outer Container      (width/height, background, border — NO flex/grid, NO padd
 
 #### 2. Code Splitting
 
-Split CSS by page and component:
+Split code by page and component (JS + CSS + templates):
 
 ```
 project/
 ├── index.html
-├── pages/                  # One CSS file per page
+├── pages/                  # One directory per page
 │   ├── dashboard.css
 │   └── settings.css
-└── components/             # One CSS file per component
+└── components/             # One directory per component
     ├── NavBar.css
     ├── Sidebar.css
     ├── Card.css
@@ -188,10 +188,9 @@ project/
 ```
 
 **Rules:**
-- One CSS file per page, one per component
-- Component styles go ONLY in `components/ComponentName.css`
-- Page layout goes ONLY in `pages/pagename.css`
-- HTML `<link>`s each file directly (no aggregator)
+- One directory per page, one directory per component
+- Component code (JS + CSS + templates) goes in its own directory
+- Page layout code goes in the `pages/` directory
 
 ### Examples
 
