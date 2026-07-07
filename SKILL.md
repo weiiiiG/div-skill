@@ -96,6 +96,17 @@ description: Use when building CSS layouts for web pages — dashboards, landing
 > .card-value { /* 无 margin */ }
 > ```
 
+> ⚠️ **图标也属于 flex 子项：** 不要用 `margin-left: 8px` 或 `margin-right: 8px` 给图标做间距。图标同样是 flex 子项，间距应该由父容器的 `gap` 统一控制。即使只是"图标 + 文字"这种简单组合，也应该用父容器 `gap` 代替子项上的 margin：
+> ```css
+> /* ❌ 错误 */
+> .card-header { display: flex; }
+> .card-icon { margin-left: 8px; }
+> 
+> /* ✅ 正确 */
+> .card-header { display: flex; gap: 8px; }
+> .card-icon { /* 无 margin */ }
+> ```
+
 **特例：** `margin: 0 auto` 居中、负 margin 微调（只能用于绝对定位元素的精确定位，不能用于容器间距）。
 
 ### 1.5 内容不能决定容器大小
@@ -378,6 +389,7 @@ html, body { height: 100%; font-family: var(--font-family-base); color: var(--co
 | "nav 高度写 56px 没问题，设计稿就是 56px" | 设计稿是固定尺寸，页面需要适配不同字号/缩放级别 |
 | "用 margin 更直观" | margin 不可被父容器控制，gap 统一管理间距 |
 | "卡片内的 `margin-bottom` 只是内容间距" | 所有 flex/grid 子项间距应由父容器 gap 控制，不是子项自己的 margin |
+| "图标用 `margin-left` 做间距没问题" | 图标也是 flex 子项，margin 同样违规。父容器加 `gap` 统一控制 |
 | "卡片内容少，`display:flex` 多余" | 没有 display:flex 的子项会退化为 block 流，再用 margin 做间距更麻烦 |
 | "`min-width: 0` 不写也能跑" | 等加长文本时 flex 子项会溢出，到时候排查很困难 |
 | "卡片内容少，不需要 `overflow: hidden`" | 内容少只是当前状态，未来迁移/更新后可能出现溢出 |
