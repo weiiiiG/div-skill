@@ -1,30 +1,39 @@
-import styles from './Sidebar.module.css';
+import './Sidebar.scss';
 
-const links = [
-  { label: 'Dashboard', icon: '#home-icon', active: true },
-  { label: 'Analytics', icon: '#chart-icon' },
-  { label: 'Users', icon: '#users-icon' },
-  { label: 'Settings', icon: '#gear-icon' },
+const menuItems = [
+  { icon: '⌂', label: 'Overview', active: true },
+  { icon: '□', label: 'Analytics' },
+  { icon: '☰', label: 'Orders' },
+  { icon: '★', label: 'Customers' },
 ];
 
-function Sidebar() {
+const secondaryItems = [
+  { icon: '⚙', label: 'Settings' },
+  { icon: '❓', label: 'Help' },
+];
+
+export default function Sidebar() {
   return (
-    <div className={styles.outer}>
-      <div className={styles.inner}>
-        <nav className={styles.nav}>
-          {links.map((link) => (
-            <a
-              key={link.label}
-              href="#"
-              className={`${styles.link} ${link.active ? styles.linkActive : ''}`}
-            >
-              <span className={styles.linkText}>{link.label}</span>
-            </a>
-          ))}
-        </nav>
+    <aside className="sidebar">
+      <div className="sidebar__inner">
+        <div className="sidebar__section-title">Main Menu</div>
+        {menuItems.map((item) => (
+          <div
+            key={item.label}
+            className={`sidebar__item${item.active ? ' sidebar__item--active' : ''}`}
+          >
+            <span className="sidebar__item-icon">{item.icon}</span>
+            <span className="sidebar__item-label">{item.label}</span>
+          </div>
+        ))}
+        <div className="sidebar__divider" />
+        {secondaryItems.map((item) => (
+          <div key={item.label} className="sidebar__item">
+            <span className="sidebar__item-icon">{item.icon}</span>
+            <span className="sidebar__item-label">{item.label}</span>
+          </div>
+        ))}
       </div>
-    </div>
+    </aside>
   );
 }
-
-export default Sidebar;

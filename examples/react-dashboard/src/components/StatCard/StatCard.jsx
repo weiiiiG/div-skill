@@ -1,17 +1,20 @@
-import styles from './StatCard.module.css';
+import './StatCard.scss';
 
-function StatCard({ label, value, change, positive }) {
+export default function StatCard({ label, value, change, changeUp, icon, iconClass }) {
   return (
-    <div className={styles.outer}>
-      <div className={styles.inner}>
-        <span className={styles.label}>{label}</span>
-        <span className={styles.value}>{value}</span>
-        <span className={`${styles.change} ${positive ? styles.positive : styles.negative}`}>
+    <div className="stat-card">
+      <div className="stat-card__inner">
+        <div className="stat-card__top">
+          <div className="stat-card__info">
+            <div className="stat-card__label">{label}</div>
+            <div className="stat-card__value">{value}</div>
+          </div>
+          <div className={`stat-card__icon ${iconClass}`}>{icon}</div>
+        </div>
+        <div className={`stat-card__change ${changeUp ? 'stat-card__change--up' : 'stat-card__change--down'}`}>
           {change}
-        </span>
+        </div>
       </div>
     </div>
   );
 }
-
-export default StatCard;

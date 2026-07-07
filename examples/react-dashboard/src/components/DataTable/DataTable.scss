@@ -1,0 +1,120 @@
+/* ================================================
+   Outer — background/border ONLY
+   ================================================ */
+.data-table {
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  border-radius: 12px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+/* ================================================
+   Inner — flex column + gap + padding
+   ================================================ */
+.data-table__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ================================================
+   Children — overflow hidden, no margin
+   ================================================ */
+.data-table__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f0f0f0;
+  gap: 8px;
+  flex: 0 0 auto;
+  overflow: hidden;
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #1a1a2e;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.data-table__view-all {
+  flex: 0 0 auto;
+  font-size: 0.8125rem;
+  color: #e94560;
+  cursor: pointer;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.data-table__scroll {
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.data-table__email {
+  color: #8c8c8c;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: 10px 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #8c8c8c;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #f0f0f0;
+    position: sticky;
+    top: 0;
+    background: #fafafa;
+  }
+
+  td {
+    padding: 12px 20px;
+    font-size: 0.8125rem;
+    color: #333;
+    border-bottom: 1px solid #f5f5f5;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  tr:hover td {
+    background: #fafafa;
+  }
+}
+
+.data-table__status {
+  display: inline-flex;
+  padding: 2px 10px;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+
+  &--completed {
+    background: #f6ffed;
+    color: #52c41a;
+  }
+
+  &--pending {
+    background: #fff7e6;
+    color: #fa8c16;
+  }
+
+  &--cancelled {
+    background: #fff2f0;
+    color: #ff4d4f;
+  }
+}

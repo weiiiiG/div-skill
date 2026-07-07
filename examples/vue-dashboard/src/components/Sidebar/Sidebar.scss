@@ -1,0 +1,40 @@
+/* ===== Sidebar Outer ===== */
+.sidebar {
+  background: #1a1a2e;
+  flex: 0 0 clamp(200px, 18vw, 260px);
+  overflow: hidden;
+}
+
+/* ===== Sidebar Inner ===== */
+.sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(12px, 1.5vh, 16px) clamp(8px, 1vw, 12px);
+  gap: 2px;
+  height: 100%;
+}
+
+/* ===== Children ===== */
+.sidebar__link {
+  display: block;
+  padding: clamp(8px, 1vh, 10px) clamp(12px, 1.5vw, 16px);
+  color: #a0aec0;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: clamp(13px, 1.1vw, 14px);
+  font-weight: 500;
+  transition: background 0.15s, color 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+  }
+
+  &--active {
+    background: rgba(79, 70, 229, 0.2);
+    color: #818cf8;
+  }
+}

@@ -1,0 +1,73 @@
+/* ===== DataTable Outer ===== */
+.data-table {
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  flex: 1;
+  min-height: 0;
+}
+
+/* ===== DataTable Inner ===== */
+.data-table__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* ===== Table ===== */
+.data-table__table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    padding: clamp(10px, 1vw, 12px) clamp(14px, 1.5vw, 20px);
+    font-size: clamp(11px, 0.9vw, 12px);
+    font-weight: 600;
+    color: #6b7280;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+  }
+
+  td {
+    padding: clamp(10px, 1vw, 14px) clamp(14px, 1.5vw, 20px);
+    font-size: clamp(13px, 1vw, 14px);
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+  }
+}
+
+/* ===== Table row child ===== */
+.data-table__row {
+  &:last-child td {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background: #f9fafb;
+  }
+}
+
+/* ===== Status badge ===== */
+.data-table__status {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px clamp(6px, 0.6vw, 10px);
+  border-radius: 9999px;
+  font-size: clamp(11px, 0.9vw, 12px);
+  font-weight: 600;
+  white-space: nowrap;
+
+  &--active {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  &--inactive {
+    background: #f3f4f6;
+    color: #6b7280;
+  }
+}

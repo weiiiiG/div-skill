@@ -1,37 +1,43 @@
-import styles from './DataTable.module.css';
+import './DataTable.scss';
 
-function StatusBadge({ status }) {
-  const cls =
-    status === 'Active'
-      ? styles.badgeActive
-      : status === 'Inactive'
-      ? styles.badgeInactive
-      : styles.badgePending;
-  return <span className={`${styles.badge} ${cls}`}>{status}</span>;
-}
+const data = [
+  { name: 'Alice Johnson', email: 'alice@example.com', amount: '$320.00', status: 'Completed' },
+  { name: 'Bob Smith', email: 'bob@example.com', amount: '$150.00', status: 'Pending' },
+  { name: 'Carol White', email: 'carol@example.com', amount: '$480.00', status: 'Completed' },
+  { name: 'Dan Brown', email: 'dan@example.com', amount: '$210.00', status: 'Cancelled' },
+  { name: 'Eve Davis', email: 'eve@example.com', amount: '$645.00', status: 'Completed' },
+  { name: 'Frank Miller', email: 'frank@example.com', amount: '$95.00', status: 'Pending' },
+];
 
-function DataTable({ columns, rows }) {
+export default function DataTable() {
   return (
-    <div className={styles.outer}>
-      <div className={styles.inner}>
-        <h2 className={styles.heading}>Recent Users</h2>
-        <div className={styles.tableWrap}>
-          <table className={styles.table}>
+    <div className="data-table">
+      <div className="data-table__inner">
+        <div className="data-table__header">
+          <h3>Recent Orders</h3>
+          <span className="data-table__view-all">View All</span>
+        </div>
+        <div className="data-table__scroll">
+          <table>
             <thead>
               <tr>
-                {columns.map((col) => (
-                  <th key={col} className={styles.th}>{col}</th>
-                ))}
+                <th>Customer</th>
+                <th>Email</th>
+                <th>Amount</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
-              {rows.map((row, i) => (
-                <tr key={i} className={styles.tr}>
-                  <td className={styles.td}>{row.name}</td>
-                  <td className={styles.td}>{row.email}</td>
-                  <td className={styles.td}>{row.role}</td>
-                  <td className={styles.td}><StatusBadge status={row.status} /></td>
-                  <td className={styles.td}>{row.lastActive}</td>
+              {data.map((row) => (
+                <tr key={row.email}>
+                  <td>{row.name}</td>
+                  <td className="data-table__email">{row.email}</td>
+                  <td>{row.amount}</td>
+                  <td>
+                    <span className={`data-table__status data-table__status--${row.status.toLowerCase()}`}>
+                      {row.status}
+                    </span>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -41,5 +47,3 @@ function DataTable({ columns, rows }) {
     </div>
   );
 }
-
-export default DataTable;

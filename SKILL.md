@@ -179,13 +179,38 @@ project/
 
 ---
 
-## 三、存量项目评估与重构 · Evaluation & Refactoring
+## 三、项目初始化与存量改造 · Init & Refactor
 
-> 对已有代码先评估结构缺陷，然后进行容器化和代码拆分。
+> 两个使用场景：**初始化新项目**时按规范创建结构，**改造存量项目**时先评估缺陷再修复。
 
-### 3.1 评估流程
+### 3.1 初始化新项目
 
-拿到一个已有的 HTML/CSS 项目后，按以下顺序检查：
+从头创建一个遵循 DivSkill 规范的项目结构：
+
+```
+① 创建根容器
+   └── index.html 或 App.jsx/App.vue 设置 height:100vh; width:100vw; overflow:hidden
+   └── 确定 CSS 预处理器（Sass/Less/PostCSS/Tailwind）
+
+② 创建目录结构
+   └── Vanilla HTML: pages/ + components/，HTML 用 <link> 引用各文件
+   └── React: src/components/ComponentName/ComponentName.jsx + .scss
+   └── Vue:   src/components/ComponentName/ComponentName.vue + .scss
+
+③ 编写组件
+   └── 每个组件遵循 外层→内层→子容器 三层结构
+   └── 外层：背景/边框/定位（无 display:flex/grid）
+   └── 内层：display:flex/grid + gap + height:100%
+   └── 子容器：overflow 控制 + text-overflow:ellipsis
+
+④ 引入页面
+   └── HTML 或 App 根组件加载各 CSS 文件
+   └── 确认无 margin 做间距，无固定 px 做布局
+```
+
+### 3.2 存量项目评估流程
+
+拿到已有代码后，按以下顺序检查：
 
 ```
 ① 审查 HTML 结构
@@ -207,7 +232,7 @@ project/
    └── 是否有全局设计变量？→ 可提取为 shared tokens
 ```
 
-### 3.2 评估清单
+### 3.3 评估清单
 
 ```
 □ 根容器有 height:100vh; width:100vw; overflow:hidden?
@@ -223,7 +248,7 @@ project/
 □ 组件样式混在页面 CSS 中?
 ```
 
-### 3.3 重构流程
+### 3.4 重构流程
 
 按顺序执行，每一步完成后进入下一步：
 
@@ -257,7 +282,7 @@ Step 5: 代码拆分
    └── 在 HTML 中添加各文件的 <link>
 ```
 
-### 3.4 重构示例
+### 3.5 重构示例
 
 **重构前（典型问题代码）：**
 ```html
@@ -326,8 +351,8 @@ function Card({ title, value, change }) {
 }
 ```
 
-```css
-/* Card.module.css — 对应三层结构 */
+```scss
+/* Card.scss — 对应三层结构 */
 .card { overflow: hidden; border-radius: 8px; }               /* 外层 */
 .card-body { display: flex; flex-direction: column; gap: 8px; padding: 16px; }  /* 内层 */
 .card-title, .card-value, .card-change { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  /* 子容器 */
@@ -335,34 +360,55 @@ function Card({ title, value, change }) {
 
 ### 4.2 代码拆分方式
 
-React 的组件化天然支持代码拆分，每个组件目录包含组件文件 + CSS 文件：
+React 的组件化天然支持代码拆分，每个组件目录包含组件文件 + 独立 CSS 文件：
 
 ```
 src/
 ├── App.jsx
-├── App.module.css                    # 页面布局（根容器、grid 划分）
+├── App.scss                           # 页面布局（根容器、grid 划分）
 └── components/
     ├── NavBar/
-    │   ├── NavBar.jsx                # 组件逻辑
-    │   └── NavBar.module.css         # 组件样式（CSS Modules，自动隔离）
-    ├── Sidebar/
-    │   ├── Sidebar.jsx
-    │   └── Sidebar.module.css
-    ├── Card/
-    │   ├── Card.jsx
-    │   └── Card.module.css
-    └── DataTable/
-        ├── DataTable.jsx
-        └── DataTable.module.css
+    │   ├── NavBar.jsx                 # 组件逻辑
+    │   └── NavBar.scss                # 组件样式，JSX 中 import
+    ├── Sidebar/   Sidebar.jsx + Sidebar.scss
+    ├── Card/      Card.jsx + Card.scss
+    └── DataTable/ DataTable.jsx + DataTable.scss
 ```
 
-**方式 A — CSS Modules（推荐）：**
+**方式 — CSS 文件独立（默认 Sass）：**
 ```jsx
-import styles from './NavBar.module.css';
+import './NavBar.scss';
 
 function NavBar() {
   return (
-    <header className={styles.navbar}>
+    <header className="navbar">            {/* 外层 */}
+      <div className="navbar-inner">       {/* 内层 */}
+        <span className="navbar-title">App</span>  {/* 子容器 */}
+      </div>
+    </header>
+  );
+}
+```
+
+```scss
+/* NavBar.scss — 三层结构 + 零 margin */
+.navbar { flex: 0 0 auto; background: #1e293b; }
+.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
+.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+```
+
+**CSS 预处理器支持：**
+
+| 项目使用 | 文件扩展名 | 引入方式 |
+|---|---|---|
+| Sass/SCSS | `*.scss` | `import './NavBar.scss'` |
+| Less | `*.less` | `import './NavBar.less'` |
+| Stylus | `*.styl` | `import './NavBar.styl'` |
+| PostCSS | `*.css` | `import './NavBar.css'` |
+| CSS Modules | `*.module.css` | `import styles from './NavBar.module.css'` |
+| Tailwind | `*.css` | 类名写于 JSX，三层结构不变 |
+
+> 规则不变，仅文件扩展名和引用方式不同。无论使用哪种 CSS，容器层级的三层结构和零 margin 规则同样适用。
       <div className={styles['navbar-inner']}>
         <span className={styles['navbar-title']}>App</span>
       </div>
@@ -410,12 +456,12 @@ src/components/NavBar/NavBar.jsx
 
 ## 五、Vue 集成 · Vue Integration
 
-> 容器层级和代码拆分在 Vue 中的映射。利用 Vue SFC 的 `<style scoped>` 实现样式隔离。
+> 容器层级和代码拆分在 Vue 中的映射。Vue 组件使用独立 CSS 文件（不依赖 SFC 的 `<style>` 块），样式与模板分离。
 
 ### 5.1 容器层级在 Vue 模板中
 
 ```vue
-<!-- Card.vue — 三层结构 -->
+<!-- Card.vue — 仅模板 + 逻辑，无 <style> -->
 <template>
   <article class="card">              <!-- 外层：背景 + 圆角 + overflow -->
     <div class="card-body">           <!-- 内层：flex 列 + gap + padding -->
@@ -426,70 +472,92 @@ src/components/NavBar/NavBar.jsx
   </article>
 </template>
 
-<style scoped>
-/* 对应三层结构，scoped 自动隔离 */
-.card { overflow: hidden; border-radius: 8px; background: #fff; }               /* 外层 */
-.card-body { display: flex; flex-direction: column; gap: 8px; padding: 16px; }  /* 内层 */
-.card-title, .card-value, .card-change { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  /* 子容器 */
-</style>
+<script setup>
+defineProps(['title', 'value', 'change'])
+</script>
+
+<style src="./Card.scss" scoped></style>
+<!-- 或通过 js import：import './Card.scss' -->
+```
+
+```scss
+/* Card.scss — 对应三层结构 */
+.card { overflow: hidden; border-radius: 8px; background: #fff; }
+.card-body { display: flex; flex-direction: column; gap: 8px; padding: 16px; }
+.card-title, .card-value, .card-change { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 ```
 
 ### 5.2 代码拆分方式
 
-Vue 的 SFC（Single File Component）天然将模板、逻辑、样式放在同一个 `.vue` 文件中：
+Vue 组件使用独立 CSS 文件，与模板分离：
 
 ```
 src/
-├── App.vue                           # 根组件：根容器 + 页面布局
-│   <style scoped>                    # 根容器样式
+├── App.vue
+├── App.scss                           # 页面布局（根容器）
 └── components/
-    ├── NavBar.vue                    # 导航栏组件
-    │   <style scoped>                # 导航栏样式（三层结构）
-    ├── Sidebar.vue                   # 侧边栏组件
-    ├── StatCard.vue                  # 统计卡片组件
-    └── DataTable.vue                 # 数据表格组件
+    ├── NavBar/
+    │   ├── NavBar.vue                 # 模板 + 逻辑
+    │   └── NavBar.scss                # 组件样式（默认 Sass）
+    ├── Sidebar/   Sidebar.vue + Sidebar.scss
+    ├── Card/      Card.vue + Card.scss
+    └── DataTable/ DataTable.vue + DataTable.scss
 ```
 
-**方式 A — `<style scoped>`（推荐）：**
+**引用方式：**
 ```vue
-<!-- NavBar.vue -->
+<!-- NavBar.vue — 仅模板，样式在外部文件 -->
 <template>
-  <header class="navbar">             <!-- 外层 -->
-    <div class="navbar-inner">         <!-- 内层 -->
-      <span class="navbar-title">{{ title }}</span>  <!-- 子容器 -->
+  <header class="navbar">
+    <div class="navbar-inner">
+      <span class="navbar-title">{{ title }}</span>
     </div>
   </header>
 </template>
 
-<style scoped>
+<script setup>
+defineProps(['title'])
+import './NavBar.scss'     /* 或通过 <style src> 引入 */
+</script>
+
+<style src="./NavBar.scss" scoped></style>
+```
+
+```scss
+/* NavBar.scss — 三层结构 + 零 margin */
 .navbar { flex: 0 0 auto; background: #1e293b; }
 .navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
 .navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-</style>
 ```
 
-**方式 B — 分离 CSS 文件：**
-```vue
-<!-- 当样式复杂时，可引入外部 CSS -->
-<style scoped src="./NavBar.css"></style>
-```
+**CSS 预处理器支持：**
+
+| 项目使用 | 文件扩展名 | 引入方式 |
+|---|---|---|
+| Sass/SCSS | `*.scss` | `import './NavBar.scss'` 或 `<style src>` |
+| Less | `*.less` | `import './NavBar.less'` |
+| PostCSS | `*.css` | `import './NavBar.css'` |
+| Tailwind | `*.css` | 类名写于 template，三层结构不变 |
+
+> 无论使用哪种 CSS 预处理器，容器层级的三层结构和零 margin 规则同样适用。
 
 ### 5.3 Vue 中的规则映射
 
 | DivSkill 规则 | Vue 中的体现 |
 |---|---|
 | 外层无 display:flex | `<template>` 中外层元素只设背景，内层设 flex |
-| 零 margin 在子项 | `<style scoped>` 中用 gap 代替子项 margin |
-| 代码拆分 | 每个组件一个 `.vue` 文件，自带 `<style scoped>` |
-| 页面布局 | `App.vue` 的 `<style scoped>` 定义根容器 + 整体布局 |
-| 样式隔离 | `scoped` 属性自动隔离，类名不需 BEM |
+| 零 margin 在子项 | `*.scss` 中用 gap 代替子项 margin |
+| 代码拆分 | 每个组件目录：`Component.vue` + `Component.scss` |
+| 页面布局 | `App.vue` + `App.scss` 定义根容器 + 整体布局 |
+| 样式与模板分离 | `.vue` 文件不含 `<style>`，样式在独立 `*.scss` 中 |
 
 ### 5.4 Vue 评估清单
 
-- [ ] 每个组件一个 `.vue` 文件，使用 `<style scoped>`
+- [ ] 每个组件目录：`Component.vue` + `Component.scss`
+- [ ] `.vue` 文件不含 `<style>` 块（样式在独立文件）
 - [ ] `<template>` 结构遵循外层→内层→子容器三层
-- [ ] `<style scoped>` 中无 `margin-bottom`/`margin-top` 在 flex 子项上
-- [ ] `App.vue` 的 `<style>` 有 `height:100vh; width:100vw; overflow:hidden`
+- [ ] `*.scss` 中无 `margin-bottom`/`margin-top` 在 flex 子项上
+- [ ] `App.scss` 有 `height:100vh; width:100vw; overflow:hidden`
 - [ ] 组件样式中无固定 `px` 高度/宽度
 
 ---
