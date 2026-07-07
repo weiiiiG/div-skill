@@ -1,99 +1,39 @@
-<div>
+# React Dashboard Example · React 仪表盘示例
 
-<h1>React Dashboard Example · React 仪表盘示例</h1>
+[ENGLISH](#english) · [中文](#中文)
 
-<p align="center"><a href="#en">ENGLISH</a> · <a href="#zh">中文</a></p>
+---
 
-<div id="zh">
-<h2>中文</h2>
-<h3>给 AI 的提示词</h3>
-<pre>
-用 React + Sass 构建仪表盘，遵循 DivSkill 规则：
-- 三层结构：外层(背景) → 内层(flex+gap) → 子容器(overflow, 无 margin)
-- 根容器全屏固定，无固定 px 布局
-- ZERO margin —— 所有间距用父容器 gap（图标也一样）
-- 外层不能用 display:flex/grid
-- 内层必须有 display+gap
-- 卡片 overflow:hidden，表格 table-layout:fixed
-- 每个组件：独立目录，Component.jsx + Component.scss
-- 组件样式只在其 .scss 文件中
-</pre>
+## ENGLISH
 
-<h3>未使用 SKILL</h3>
-<table>
-<tr><th>违规</th><th>React 中的表现</th></tr>
-<tr><td>固定 px</td><td><code>.navbar { height: 60px; }</code> 在 SCSS 中</td></tr>
-<tr><td>margin 在子项</td><td><code>.value { margin-bottom: 8px; }</code></td></tr>
-<tr><td>外层 flex</td><td>组件根元素有背景 + display:flex</td></tr>
-<tr><td>无 min-width:0</td><td>flex 子项溢出</td></tr>
-<tr><td>内联样式</td><td><code>&lt;div style={{ marginLeft: 'auto' }}&gt;</code></td></tr>
-</table>
+### Prompt Given to AI
 
-<h3>使用 SKILL</h3>
-<table>
-<tr><th>修复</th><th>代码</th></tr>
-<tr><td>无固定 px</td><td><code>flex:0 0 auto; min-height:56px</code></td></tr>
-<tr><td>JSX 三层</td><td><code>&lt;article className="card"&gt; → &lt;div className="card-body"&gt; → children</code></td></tr>
-<tr><td>零 margin</td><td>全部 gap，margin-left:auto 换 flex:1</td></tr>
-<tr><td>外层纯背景</td><td>外层 class 只有 background，内层 class 有 flex+gap</td></tr>
-<tr><td>卡片 overflow</td><td><code>overflow: hidden</code></td></tr>
-<tr><td>表格固定</td><td><code>table-layout: fixed</code></td></tr>
-</table>
+Build a React + Sass dashboard. DivSkill rules: three-layer, root fullscreen, no fixed px, zero margin on flex children, outer no display:flex, inner must have display+gap, cards overflow:hidden, table table-layout:fixed. Each component: own dir with Component.jsx + Component.scss. Component styles only in .scss file.
 
-<h3>文件结构</h3>
-<pre>
-src/
-├── main.jsx
-├── App.jsx + App.scss              # 根布局
-└── components/
-    ├── NavBar/     NavBar.jsx + NavBar.scss
-    ├── Sidebar/    Sidebar.jsx + Sidebar.scss
-    ├── StatCard/   StatCard.jsx + StatCard.scss
-    └── DataTable/  DataTable.jsx + DataTable.scss
-</pre>
+### Without SKILL
 
-<h3>运行</h3>
-<pre>cd examples/react-dashboard && npm install && npm run dev</pre>
-</div>
+| Violation | In React |
+|---|---|
+| Fixed px | `.navbar { height: 60px; }` in SCSS |
+| Margin on children | `.value { margin-bottom: 8px; }` |
+| Outer flex | Component root with bg + display:flex |
+| No min-width:0 | Flex children overflow |
+| Inline styles | `<div style={{ marginLeft: 'auto' }}>` |
 
-<div id="en">
-<h2>ENGLISH</h2>
-<h3>Prompt Given to AI</h3>
-<pre>
-Build a React + Sass dashboard following DivSkill rules:
-- Three-layer: Outer(bg) → Inner(flex+gap) → Child(overflow, no margin)
-- Root: fixed fullscreen, NO fixed px on layout
-- ZERO margin on flex/grid children (icons too)
-- Outer: NO display:flex/grid
-- Inner: MUST have display+gap
-- Cards: overflow:hidden, table: table-layout:fixed
-- Each component: own dir, Component.jsx + Component.scss
-- Component styles ONLY in .scss file
-</pre>
+### With SKILL
 
-<h3>Without SKILL</h3>
-<table>
-<tr><th>Violation</th><th>In React</th></tr>
-<tr><td>Fixed px</td><td><code>.navbar { height: 60px; }</code> in SCSS</td></tr>
-<tr><td>Margin on children</td><td><code>.value { margin-bottom: 8px; }</code></td></tr>
-<tr><td>Outer flex</td><td>Component root with bg + display:flex</td></tr>
-<tr><td>No min-width:0</td><td>Flex children overflow</td></tr>
-<tr><td>Inline styles</td><td><code>&lt;div style={{ marginLeft: 'auto' }}&gt;</code></td></tr>
-</table>
+| Fix | Code |
+|---|---|
+| No fixed px | `flex:0 0 auto; min-height:56px` |
+| JSX three-layer | `<article className="card"> → <div className="card-body"> → children` |
+| Zero margin | All gap, margin-left:auto → flex:1 |
+| Outer bg only | Outer class: background. Inner class: flex+gap |
+| Card overflow | `overflow: hidden` |
+| Table fixed | `table-layout: fixed` |
 
-<h3>With SKILL</h3>
-<table>
-<tr><th>Fix</th><th>Code</th></tr>
-<tr><td>No fixed px</td><td><code>flex:0 0 auto; min-height:56px</code></td></tr>
-<tr><td>JSX three-layer</td><td><code>&lt;article className="card"&gt; → &lt;div className="card-body"&gt; → children</code></td></tr>
-<tr><td>Zero margin</td><td>All gap, margin-left:auto → flex:1</td></tr>
-<tr><td>Outer bg only</td><td>Outer class: background. Inner class: flex+gap</td></tr>
-<tr><td>Card overflow</td><td><code>overflow: hidden</code></td></tr>
-<tr><td>Table fixed</td><td><code>table-layout: fixed</code></td></tr>
-</table>
+### File Structure
 
-<h3>File Structure</h3>
-<pre>
+```
 src/
 ├── main.jsx
 ├── App.jsx + App.scss
@@ -102,19 +42,62 @@ src/
     ├── Sidebar/    Sidebar.jsx + Sidebar.scss
     ├── StatCard/   StatCard.jsx + StatCard.scss
     └── DataTable/  DataTable.jsx + DataTable.scss
-</pre>
+```
 
-<h3>Run</h3>
-<pre>cd examples/react-dashboard && npm install && npm run dev</pre>
-</div>
+### Run
 
-<style>
-#zh { display: none; }
-#en { display: block; }
-#zh:target { display: block; }
-#zh:target ~ #en { display: none; }
-#en:target { display: block; }
-#en:target ~ #zh { display: none; }
-</style>
+```
+cd examples/react-dashboard
+npm install
+npm run dev
+```
 
-</div>
+---
+
+## 中文
+
+### 给 AI 的提示词
+
+用 React + Sass 构建仪表盘。DivSkill 规则：三层结构、根全屏、无固定 px、零 margin、外层不用 display:flex、内层必须有 display+gap、卡片 overflow:hidden、表格 table-layout:fixed。每个组件独立目录，Component.jsx + Component.scss，样式只写在 .scss 中。
+
+### 未使用 SKILL
+
+| 违规 | React 中的表现 |
+|---|---|
+| 固定 px | `.navbar { height: 60px; }` 在 SCSS 中 |
+| margin 在子项 | `.value { margin-bottom: 8px; }` |
+| 外层 flex | 组件根元素有背景 + display:flex |
+| 无 min-width:0 | flex 子项溢出 |
+| 内联样式 | `<div style={{ marginLeft: 'auto' }}>` |
+
+### 使用 SKILL
+
+| 修复 | 代码 |
+|---|---|
+| 无固定 px | `flex:0 0 auto; min-height:56px` |
+| JSX 三层 | `<article className="card"> → <div className="card-body"> → children` |
+| 零 margin | 全部 gap，margin-left:auto 换 flex:1 |
+| 外层纯背景 | 外层 class 只有 background，内层 class 有 flex+gap |
+| 卡片 overflow | `overflow: hidden` |
+| 表格固定 | `table-layout: fixed` |
+
+### 文件结构
+
+```
+src/
+├── main.jsx
+├── App.jsx + App.scss              # 根布局
+└── components/
+    ├── NavBar/     NavBar.jsx + NavBar.scss
+    ├── Sidebar/    Sidebar.jsx + Sidebar.scss
+    ├── StatCard/   StatCard.jsx + StatCard.scss
+    └── DataTable/  DataTable.jsx + DataTable.scss
+```
+
+### 运行
+
+```
+cd examples/react-dashboard
+npm install
+npm run dev
+```
