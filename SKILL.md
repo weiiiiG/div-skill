@@ -52,6 +52,20 @@ description: "Use when: building or refactoring CSS layouts for any web page —
 .root { overflow: hidden; } → .card { overflow: hidden; } → .panel { overflow-y: auto; } → .text { text-overflow: ellipsis; ... }
 ```
 
+### 响应式适配
+
+布局保护已内置在规则中，无需额外断点：
+
+| 规则 | 响应式效果 |
+|---|---|
+| `clamp(200px,20vw,320px)` | 侧栏宽度随视口缩放，不溢出不坍塌 |
+| `1fr` / `repeat(3,1fr)` | 网格列自适应可用空间 |
+| `min-height:44px` 而非 `height:56px` | 导航高度可增长，不裁剪内容 |
+| `min-width:0` | flex 子项在窄屏时收缩 |
+| `overflow-y:auto` + `overflow:hidden` | 内容滚动但不破坏布局 |
+
+> 如需断点响应式（如移动端折叠侧栏），在媒体查询中调整 grid-template 或 display 即可，容器层级结构不变。
+
 ### 示例：导航栏
 
 ```html
@@ -270,6 +284,13 @@ src/
 | Less | `*.less` | `import './NavBar.less'` |
 | CSS Modules | `*.module.css` | `import styles from './NavBar.module.css'` |
 | Tailwind | `*.css` | 类名写 JSX，三层结构不变 |
+| CSS-in-JS | styled-components / emotion | `styled.div` 中写三层样式，规则不变 |
+
+> **Tailwind:** 外层用 `className="bg-white"`，内层用 `className="flex items-center gap-4"`，子容器做 overflow 控制。三层结构不变，只是把 CSS 值换为 utility class。
+>
+> **CSS-in-JS:** `styled(article)\`overflow:hidden;\`` 是外层，`styled.div\`display:flex;gap:8px;\`` 是内层。标签语义和三层规则不变。
+>
+> **Next.js App Router:** `app/layout.js` 放根容器 + NavBar/Sidebar 布局组件，`app/page.js` 放页面内容。页面布局在 `app/page.module.scss` 中，组件在 `components/` 中。
 
 | div-skill 规则 | React 中的体现 |
 |---|---|
