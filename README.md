@@ -4,18 +4,19 @@
 
 ---
 
+<div class="lang-wrap">
+
+<input type="radio" name="lang" id="lang-en" checked hidden>
+<input type="radio" name="lang" id="lang-zh" hidden>
+
 <div align="center">
-
-**ENGLISH** · [中文](#zh)
-
+  <label for="lang-en" class="lang-btn lang-en-active">ENGLISH</label>
+  <span class="lang-sep"> · </span>
+  <label for="lang-zh" class="lang-btn">中文</label>
 </div>
 
----
-
-<details open>
-<summary><strong>ENGLISH</strong></summary>
-
-<br>
+<!-- ==================== ENGLISH ==================== -->
+<div class="lang-en">
 
 ### The Problem
 
@@ -89,12 +90,10 @@ See [SKILL.md](./SKILL.md).
 
 MIT
 
-</details>
+</div>
 
-<details>
-<summary><strong>中文</strong></summary>
-
-<br>
+<!-- ==================== 中文 ==================== -->
+<div class="lang-zh">
 
 ### 痛点
 
@@ -168,4 +167,19 @@ project/
 
 MIT
 
-</details>
+</div>
+
+<style>
+.lang-wrap .lang-zh { display: none; }
+#lang-zh:checked ~ .lang-en { display: none; }
+#lang-zh:checked ~ .lang-zh { display: block; }
+#lang-zh:checked ~ div .lang-en-active { font-weight: normal; }
+#lang-zh:checked ~ div label[for="lang-zh"] { font-weight: bold; }
+#lang-en:checked ~ div label[for="lang-en"] { font-weight: bold; }
+#lang-en:checked ~ div label[for="lang-zh"] { font-weight: normal; }
+.lang-btn { cursor: pointer; color: #0366d6; text-decoration: none; }
+.lang-btn:hover { text-decoration: underline; }
+.lang-sep { color: #666; }
+</style>
+
+</div>
