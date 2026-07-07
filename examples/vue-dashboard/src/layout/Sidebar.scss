@@ -1,0 +1,68 @@
+.sidebar {
+  flex: 0 0 auto;
+  width: 240px;
+  min-height: 100vh;
+  background: #1a1d23;
+  border-right: 1px solid #2a2d35;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 8px;
+    padding: 16px;
+  }
+
+  &__header {
+    flex: 0 0 auto;
+    min-height: 40px;
+    overflow: hidden;
+  }
+
+  &__logo {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex: 1 1 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  &__link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 6px;
+    color: #9ca3af;
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+    min-width: 0;
+
+    &:hover,
+    &.router-link-active {
+      background: #2a2d35;
+      color: #fff;
+    }
+  }
+
+  &__icon {
+    flex: 0 0 auto;
+    font-size: 1rem;
+  }
+
+  &__label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}

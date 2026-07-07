@@ -1,0 +1,47 @@
+/* Outer layer: background/border ONLY */
+.dashboard {
+  height: 100%;
+  width: 100%;
+}
+
+/* Inner layer: flex column with gap */
+.dashboard__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+  height: 100%;
+}
+
+/* Children: no margin */
+.dashboard__heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  flex: 0 0 auto;
+}
+
+/* Inner grid for stat cards */
+.dashboard__cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(clamp(180px, 20vw, 240px), 1fr));
+  gap: 16px;
+  min-width: 0;
+}
+
+/* Inner for table section */
+.dashboard__tableSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+  flex: 1;
+  min-height: 0;
+}
+
+.dashboard__subheading {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: #1a1a2e;
+  flex: 0 0 auto;
+}

@@ -38,14 +38,22 @@ Use Sass for styling, Vite for build.
 
 ```
 src/
+├── layout/
+│   ├── AppShell.jsx + AppShell.scss    # Root layout, router outlet
+│   ├── NavBar.jsx + NavBar.scss        # Navigation bar
+│   └── Sidebar.jsx + Sidebar.scss      # Sidebar navigation
+├── pages/
+│   └── Dashboard.jsx + Dashboard.scss  # Dashboard page
+├── components/
+│   ├── Card.jsx + Card.scss            # Shared stat card
+│   └── DataTable.jsx + DataTable.scss  # Shared data table
+├── routes/
+│   └── index.jsx                       # Route definitions
+├── stores/
+│   └── useDashboardStore.js            # Zustand state
+├── App.jsx + App.scss                  # Root container
 ├── main.jsx
-├── App.jsx + App.scss
-└── components/
-    ├── NavBar/     NavBar.jsx + NavBar.scss
-    ├── Sidebar/    Sidebar.jsx + Sidebar.scss
-    ├── StatCard/   StatCard.jsx + StatCard.scss
-    └── DataTable/  DataTable.jsx + DataTable.scss
-```
+└── index.css
 
 ### Run
 

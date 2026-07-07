@@ -360,20 +360,42 @@ function Card({ title, value, change }) {
 
 ### 4.2 代码拆分方式
 
-React 的组件化天然支持代码拆分，每个组件目录包含组件文件 + 独立 CSS 文件：
+按**布局 → 页面 → 组件 → 路由 → 状态管理**分层组织：
 
 ```
 src/
-├── App.jsx
-├── App.scss                           # 页面布局（根容器、grid 划分）
-└── components/
-    ├── NavBar/
-    │   ├── NavBar.jsx                 # 组件逻辑
-    │   └── NavBar.scss                # 组件样式，JSX 中 import
-    ├── Sidebar/   Sidebar.jsx + Sidebar.scss
-    ├── Card/      Card.jsx + Card.scss
-    └── DataTable/ DataTable.jsx + DataTable.scss
+├── layout/                        # 应用布局（App shell、导航、侧栏）
+│   ├── AppShell.jsx + .scss       # 根布局：三层结构 + 路由出口
+│   ├── NavBar.jsx + .scss         # 导航栏布局组件
+│   └── Sidebar.jsx + .scss        # 侧边栏布局组件
+├── pages/                         # 页面级组件（对应路由）
+│   ├── Dashboard/
+│   │   ├── Dashboard.jsx + .scss  # Dashboard 页面布局
+│   │   └── components/            # 页面私有组件（非共享）
+│   └── Settings/
+│       └── Settings.jsx + .scss
+├── components/                    # 共享/复用组件
+│   ├── Card/
+│   │   ├── Card.jsx + .scss       # 通用卡片，可在任何页面复用
+│   └── DataTable/
+│       ├── DataTable.jsx + .scss
+├── routes/                        # 路由配置
+│   ├── index.jsx                  # 路由定义
+│   └── ProtectedRoute.jsx         # 路由守卫（可选）
+└── stores/                        # 状态管理
+    ├── useUserStore.js            # Zustand / Context
+    └── useDashboardStore.js
 ```
+
+**分层职责：**
+
+| 层级 | 职责 | 属于 |
+|---|---|---|
+| `layout/` | 应用框架：导航、侧栏、页脚 | 全局布局，贯穿所有页面 |
+| `pages/` | 页面级组件，对应一个路由 | 一个页面一个目录 |
+| `components/` | 可复用的通用组件 | 多页面共享 |
+| `routes/` | 路由定义和守卫 | 应用导航 |
+| `stores/` | 全局状态管理 | 跨组件数据共享 |
 
 **方式 — CSS 文件独立（默认 Sass）：**
 ```jsx
@@ -489,20 +511,41 @@ defineProps(['title', 'value', 'change'])
 
 ### 5.2 代码拆分方式
 
-Vue 组件使用独立 CSS 文件，与模板分离：
+按**布局 → 页面 → 组件 → 路由 → 状态管理**分层组织：
 
 ```
 src/
-├── App.vue
-├── App.scss                           # 页面布局（根容器）
-└── components/
-    ├── NavBar/
-    │   ├── NavBar.vue                 # 模板 + 逻辑
-    │   └── NavBar.scss                # 组件样式（默认 Sass）
-    ├── Sidebar/   Sidebar.vue + Sidebar.scss
-    ├── Card/      Card.vue + Card.scss
-    └── DataTable/ DataTable.vue + DataTable.scss
+├── layout/                        # 应用布局（App shell、导航、侧栏）
+│   ├── AppShell.vue + .scss       # 根布局：三层结构 + 路由出口
+│   ├── NavBar.vue + .scss         # 导航栏布局组件
+│   └── Sidebar.vue + .scss        # 侧边栏布局组件
+├── pages/                         # 页面级组件（对应路由）
+│   ├── Dashboard/
+│   │   ├── Dashboard.vue + .scss  # Dashboard 页面布局
+│   │   └── components/            # 页面私有组件
+│   └── Settings/
+│       └── Settings.vue + .scss
+├── components/                    # 共享/复用组件
+│   ├── Card/
+│   │   ├── Card.vue + .scss       # 通用卡片
+│   └── DataTable/
+│       ├── DataTable.vue + .scss
+├── router/                        # 路由配置
+│   └── index.js                   # Vue Router 定义
+└── stores/                        # 状态管理
+    ├── useUserStore.js            # Pinia
+    └── useDashboardStore.js
 ```
+
+**分层职责：**
+
+| 层级 | 职责 | 属于 |
+|---|---|---|
+| `layout/` | 应用框架：导航、侧栏、页脚 | 全局布局，贯穿所有页面 |
+| `pages/` | 页面级组件，对应一个路由 | 一个页面一个目录 |
+| `components/` | 可复用的通用组件 | 多页面共享 |
+| `router/` | 路由定义 | 应用导航 |
+| `stores/` | 全局状态管理 | 跨组件数据共享 |
 
 **引用方式：**
 ```vue

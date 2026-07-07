@@ -1,0 +1,109 @@
+.data-table {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  height: 100%;
+  overflow: hidden;
+
+  &__inner {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0;
+    min-height: 0;
+  }
+
+  &__header {
+    flex: 0 0 auto;
+    padding: 16px 20px;
+    border-bottom: 1px solid #e5e7eb;
+    overflow: hidden;
+  }
+
+  &__title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #111827;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__wrapper {
+    flex: 1 1 0;
+    overflow: auto;
+    min-height: 0;
+  }
+
+  &__table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+  }
+
+  th {
+    padding: 12px 16px;
+    text-align: left;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+    background: #f9fafb;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  td {
+    padding: 12px 16px;
+    font-size: 0.875rem;
+    color: #374151;
+    border-bottom: 1px solid #f3f4f6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  &__cell--name {
+    font-weight: 500;
+  }
+
+  &__status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    &--active {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    &--inactive {
+      background: #f3f4f6;
+      color: #6b7280;
+    }
+  }
+
+  &__action {
+    padding: 4px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    background: #fff;
+    color: #374151;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: background 0.15s;
+
+    &:hover {
+      background: #f3f4f6;
+    }
+  }
+}

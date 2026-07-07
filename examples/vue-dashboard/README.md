@@ -39,14 +39,22 @@ Use Sass for styling, Vite for build. Separate .vue and .scss files.
 
 ```
 src/
+├── layout/
+│   ├── AppShell.vue + AppShell.scss    # Root layout, router-view
+│   ├── NavBar.vue + NavBar.scss        # Navigation bar
+│   └── Sidebar.vue + Sidebar.scss      # Sidebar navigation
+├── pages/
+│   └── Dashboard.vue + Dashboard.scss  # Dashboard page
+├── components/
+│   ├── Card.vue + Card.scss            # Shared stat card
+│   └── DataTable.vue + DataTable.scss  # Shared data table
+├── router/
+│   └── index.js                        # Vue Router config
+├── stores/
+│   └── dashboard.js                    # Pinia store
+├── App.vue + App.scss                  # Root container
 ├── main.js
-├── App.vue + App.scss
-└── components/
-    ├── NavBar/     NavBar.vue + NavBar.scss
-    ├── Sidebar/    Sidebar.vue + Sidebar.scss
-    ├── StatCard/   StatCard.vue + StatCard.scss
-    └── DataTable/  DataTable.vue + DataTable.scss
-```
+└── index.css
 
 ### Run
 
