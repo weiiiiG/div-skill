@@ -3,7 +3,7 @@ name: div-skill
 description: Use when building CSS layouts for web pages — dashboards, landing pages, admin panels, settings forms, or any multi-container page structure. Triggers: creating CSS layout from scratch, reviewing CSS for overflow/overlap issues, splitting CSS into page/component files, or ensuring responsive layouts without fixed pixel sizing. Solves container nesting chaos and monolithic CSS bloat.
 ---
 
-# DivSkill
+# div-skill
 
 > **Div**ine **Skill** of CSS — 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
 >
@@ -185,7 +185,7 @@ project/
 
 ### 3.1 初始化新项目
 
-从头创建一个遵循 DivSkill 规范的项目结构：
+从头创建一个遵循 div-skill 规范的项目结构：
 
 ```
 ① 创建根容器
@@ -436,7 +436,7 @@ src/components/NavBar/NavBar.jsx
 
 ### 4.3 React 中的规则映射
 
-| DivSkill 规则 | React 中的体现 |
+| div-skill 规则 | React 中的体现 |
 |---|---|
 | 外层无 display:flex | JSX 外层 `<div>` 只有 className + background，内层再加 flex |
 | 零 margin 在子项 | JSX 中 gap 写在父容器 style/className 上，子组件不设 margin-bottom |
@@ -543,7 +543,7 @@ import './NavBar.scss'     /* 或通过 <style src> 引入 */
 
 ### 5.3 Vue 中的规则映射
 
-| DivSkill 规则 | Vue 中的体现 |
+| div-skill 规则 | Vue 中的体现 |
 |---|---|
 | 外层无 display:flex | `<template>` 中外层元素只设背景，内层设 flex |
 | 零 margin 在子项 | `*.scss` 中用 gap 代替子项 margin |

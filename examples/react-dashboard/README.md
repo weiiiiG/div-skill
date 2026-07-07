@@ -6,30 +6,33 @@
 
 ## ENGLISH
 
-### Prompt Given to AI
+### Prompt (same for both)
 
-Build a React + Sass dashboard. DivSkill rules: three-layer, root fullscreen, no fixed px, zero margin on flex children, outer no display:flex, inner must have display+gap, cards overflow:hidden, table table-layout:fixed. Each component: own dir with Component.jsx + Component.scss. Component styles only in .scss file.
+```
+Build a React dashboard with: NavBar (logo + title + avatar), Sidebar (nav links),
+StatCard (label + value + change), DataTable (rows with status badges).
+Use Sass for styling, Vite for build.
+```
 
 ### Without SKILL
 
-| Violation | In React |
+| Violation | Example Code |
 |---|---|
-| Fixed px | `.navbar { height: 60px; }` in SCSS |
+| Fixed px in SCSS | `.navbar { height: 60px; }` |
 | Margin on children | `.value { margin-bottom: 8px; }` |
 | Outer flex | Component root with bg + display:flex |
 | No min-width:0 | Flex children overflow |
-| Inline styles | `<div style={{ marginLeft: 'auto' }}>` |
+| Inline style spacing | `<div style={{ marginLeft: 'auto' }}>` |
 
 ### With SKILL
 
 | Fix | Code |
 |---|---|
 | No fixed px | `flex:0 0 auto; min-height:56px` |
-| JSX three-layer | `<article className="card"> → <div className="card-body"> → children` |
-| Zero margin | All gap, margin-left:auto → flex:1 |
-| Outer bg only | Outer class: background. Inner class: flex+gap |
-| Card overflow | `overflow: hidden` |
-| Table fixed | `table-layout: fixed` |
+| JSX three-layer | `article.card → div.card-body → children` |
+| Zero margin | All `gap`, `margin-left:auto` → `flex:1` |
+| Outer pure bg | Background on outer class, flex+gap on inner |
+| Cards/table | `overflow:hidden` + `table-layout:fixed` |
 
 ### File Structure
 
@@ -56,37 +59,39 @@ npm run dev
 
 ## 中文
 
-### 给 AI 的提示词
+### 提示词（使用前后相同）
 
-用 React + Sass 构建仪表盘。DivSkill 规则：三层结构、根全屏、无固定 px、零 margin、外层不用 display:flex、内层必须有 display+gap、卡片 overflow:hidden、表格 table-layout:fixed。每个组件独立目录，Component.jsx + Component.scss，样式只写在 .scss 中。
+```
+用 React 构建仪表盘：NavBar（logo + 标题 + 头像）、Sidebar（导航链接）、
+StatCard（标签 + 数值 + 变化）、DataTable（行 + 状态徽章）。使用 Sass + Vite。
+```
 
 ### 未使用 SKILL
 
-| 违规 | React 中的表现 |
+| 违规 | 示例代码 |
 |---|---|
-| 固定 px | `.navbar { height: 60px; }` 在 SCSS 中 |
-| margin 在子项 | `.value { margin-bottom: 8px; }` |
+| SCSS 中固定 px | `.navbar { height: 60px; }` |
+| 子项 margin | `.value { margin-bottom: 8px; }` |
 | 外层 flex | 组件根元素有背景 + display:flex |
 | 无 min-width:0 | flex 子项溢出 |
-| 内联样式 | `<div style={{ marginLeft: 'auto' }}>` |
+| 内联样式间距 | `<div style={{ marginLeft: 'auto' }}>` |
 
 ### 使用 SKILL
 
 | 修复 | 代码 |
 |---|---|
 | 无固定 px | `flex:0 0 auto; min-height:56px` |
-| JSX 三层 | `<article className="card"> → <div className="card-body"> → children` |
-| 零 margin | 全部 gap，margin-left:auto 换 flex:1 |
-| 外层纯背景 | 外层 class 只有 background，内层 class 有 flex+gap |
-| 卡片 overflow | `overflow: hidden` |
-| 表格固定 | `table-layout: fixed` |
+| JSX 三层 | `article.card → div.card-body → 子容器` |
+| 零 margin | 全部 `gap`，`margin-left:auto` 换 `flex:1` |
+| 外层纯背景 | 外层只有 background，内层 flex+gap |
+| 卡片/表格保护 | `overflow:hidden` + `table-layout:fixed` |
 
 ### 文件结构
 
 ```
 src/
 ├── main.jsx
-├── App.jsx + App.scss              # 根布局
+├── App.jsx + App.scss
 └── components/
     ├── NavBar/     NavBar.jsx + NavBar.scss
     ├── Sidebar/    Sidebar.jsx + Sidebar.scss
