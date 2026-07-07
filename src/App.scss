@@ -1,0 +1,62 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background: #0f1219;
+  color: #e2e8f0;
+}
+
+/* ── Outer: background/border ONLY, NO display:flex/grid, NO padding/gap ── */
+.app__outer {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: #0f1219;
+}
+
+/* ── Inner: MUST have display:flex/grid + gap ── */
+.app__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* ── App body: NavBar fixed-height, rest fills ── */
+.app__nav {
+  flex: 0 0 auto;
+  min-height: 56px;
+}
+
+.app__body {
+  display: flex;
+  flex: 1 1 100%;
+  gap: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app__sidebar {
+  flex: 0 0 auto;
+  min-width: clamp(200px, 16vw, 280px);
+}
+
+.app__main {
+  flex: 1 1 100%;
+  min-width: 0;
+  overflow: hidden;
+}

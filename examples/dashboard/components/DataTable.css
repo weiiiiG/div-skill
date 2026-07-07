@@ -6,10 +6,13 @@
 /* 内层 */
 .table-card-body { display: flex; flex-direction: column; height: 100%; padding: 0; }
 
-/* 子容器 */
-.table-header { flex: 0 0 auto; padding: 16px 20px; border-bottom: 1px solid #e2e8f0; overflow: hidden; }
+/* 子容器：表头外层 — 自身尺寸在 flex 中固定 */
+.table-header { flex: 0 0 auto; border-bottom: 1px solid #e2e8f0; }
 
-.table-header h3 { font-size: 15px; font-weight: 600; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+/* 表头内层 — padding + flex 行布局 */
+.table-header-inner { display: flex; align-items: center; padding: 16px 20px; }
+
+.table-header-inner h3 { margin: 0; font-size: 15px; font-weight: 600; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
 /* 子容器：可滚动表格区域 */
 .table-scroll { overflow-x: auto; min-width: 0; }

@@ -9,8 +9,10 @@
   min-height: 0;
 }
 
-/* Inner: overflow scroll wrapper */
+/* Inner: flex column so table is a flex child with proper overflow */
 .datatable__inner {
+  display: flex;
+  flex-direction: column;
   overflow: auto;
   height: 100%;
   min-width: 0;

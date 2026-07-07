@@ -12,8 +12,11 @@
 /* 子容器：导航标题 */
 .sidebar-heading { padding: 8px 16px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; color: #64748b; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
-/* 子容器：可滚动导航区域 */
-.sidebar-nav { flex: 1; overflow-y: auto; min-height: 0; display: flex; flex-direction: column; gap: 2px; padding: 0 8px; }
+/* 可滚动导航区域 — 外层（仅 overflow + 自身尺寸） */
+.sidebar-nav { flex: 1; overflow-y: auto; min-height: 0; }
+
+/* 可滚动导航区域 — 内层（flex 列布局 + 间距） */
+.sidebar-nav-inner { display: flex; flex-direction: column; padding: 0 8px; gap: 2px; }
 
 .sidebar-link { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 6px; color: #94a3b8; font-size: 13px; cursor: pointer; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 

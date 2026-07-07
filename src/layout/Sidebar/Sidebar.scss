@@ -1,0 +1,66 @@
+/* ── Outer: background/border ONLY ── */
+.sidebar__outer {
+  background: #1a1f2e;
+  border-right: 1px solid #2a3040;
+}
+
+/* ── Inner: flex column + gap ── */
+.sidebar__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: clamp(8px, 1.5vh, 20px) 0;
+  height: 100%;
+}
+
+/* ── Nav: flex column + gap ── */
+.sidebar__nav {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 100%;
+  min-height: 0;
+  overflow: hidden;
+}
+
+/* ── Item ── */
+.sidebar__item {
+  display: flex;
+  align-items: center;
+  gap: clamp(8px, 1vw, 14px);
+  padding: clamp(8px, 1.2vh, 14px) clamp(12px, 1.5vw, 24px);
+  text-decoration: none;
+  color: #94a3b8;
+  font-size: clamp(13px, 0.9vw, 15px);
+  transition: background 0.15s, color 0.15s;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-radius: 0;
+  min-width: 0;
+}
+
+.sidebar__item:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: #e2e8f0;
+}
+
+.sidebar__item--active {
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  font-weight: 600;
+}
+
+.sidebar__icon {
+  flex: 0 0 auto;
+  font-size: 16px;
+  width: 20px;
+  text-align: center;
+}
+
+.sidebar__label {
+  flex: 0 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

@@ -1,18 +1,20 @@
-/* Outer layer: background/border ONLY */
+/* Outer layer: background/border ONLY — no fixed px, use min-height */
 .navbar {
   flex: 0 0 auto;
+  min-height: 56px;
   background: #ffffff;
   border-bottom: 1px solid #e0e0e0;
 }
 
-/* Inner layer: flex row + padding + gap */
+/* Inner layer: flex row + padding + gap — height:100% fills min-height */
 .navbar__inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 24px;
   gap: 16px;
-  height: 64px;
+  height: 100%;
+  min-height: 0;
 }
 
 /* Children: no margin, grouped into left/right */

@@ -796,6 +796,9 @@ import './NavBar.scss'     /* 或通过 <style src> 引入 */
 | 借口 | 为什么是错的 |
 |---|---|
 | "nav 高度 56px 没问题" | 页面需要适配不同字号/缩放级别 |
+| "height: 64px 写在内层，不是外层" | 内层也不应有固定 px，内层用 `height: 100%`，固定值在 outer 用 `min-height` |
+| "子容器加 padding 方便" | padding 属于内层容器职责，子容器只做 overflow 控制 |
+| "内层忘了加 display，但有 overflow 就够了" | 没有 display:flex/grid 的内层不能作为布局容器，必须加上 |
 | "margin 更直观" | margin 不可被父容器控制，gap 统一管理 |
 | "图标用 margin-left 做间距而已" | 图标也是 flex 子项，应使用父容器 gap |
 | "`min-width: 0` 不写也能跑" | 加长文本时 flex 子项溢出，排查困难 |
