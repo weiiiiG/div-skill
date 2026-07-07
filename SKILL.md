@@ -200,7 +200,7 @@ Step 1 容器化 → 根容器 + 拆分三层结构 + 删除 outer 上的 flex/g
 Step 2 修复尺寸 → 固定 px 替换为 min-height/clamp()/1fr
    ⚠️ 只改 CSS 属性值，不改 HTML 结构和 JS 逻辑
 Step 3 修复间距 → margin 替换为父容器 gap
-   ⚠️ margin:0 auto 居中可以保留，其他 margin 替换为 gap
+   ⚠️ margin:0 auto 居中可以保留。拆分 CSS 时，原文件中的 margin-bottom/margin-top 需要一并转换为父容器的 gap，不能原样迁移到新文件
 Step 4 修复保护 → 加 min-width:0 / overflow:hidden / text-overflow / table-layout:fixed
    ⚠️ 这些是新增保护性样式，不应删除或修改原有功能样式
 Step 5 代码拆分 → 组件提取到 components/、页面布局到 pages/
