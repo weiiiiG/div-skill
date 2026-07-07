@@ -125,8 +125,8 @@ project/
 <tr><td><a href="examples/dashboard/">Dashboard</a></td><td>HTML/CSS</td><td>Vanilla: nav, sidebar, stat cards, data table</td></tr>
 <tr><td><a href="examples/landing-page/">Landing Page</a></td><td>HTML/CSS</td><td>Vanilla: hero + feature cards</td></tr>
 <tr><td><a href="examples/settings-page/">Settings Page</a></td><td>HTML/CSS</td><td>Vanilla: form + modal overlay</td></tr>
-<tr><td><a href="examples/react-dashboard/">React Dashboard</a></td><td>React</td><td>CSS Modules: 4 components with co-located styles</td></tr>
-<tr><td><a href="examples/vue-dashboard/">Vue Dashboard</a></td><td>Vue 3</td><td>SFC + scoped styles: 4 components</td></tr>
+<tr><td><a href="examples/react-dashboard/">React Dashboard</a></td><td>React</td><td>Sass: 4 components with co-located .scss</td></tr>
+<tr><td><a href="examples/vue-dashboard/">Vue Dashboard</a></td><td>Vue 3</td><td>Sass: separate .vue + .scss, no style blocks</td></tr>
 </table>
 <h3>Specification</h3>
 <p>See <a href="SKILL.md">SKILL.md</a>.</p>
@@ -135,7 +135,6 @@ project/
 </div>
 
 <style>
-/* zh must come BEFORE en in DOM for ~ selector to work */
 #zh { display: none; }
 #en { display: block; }
 #zh:target { display: block; }
