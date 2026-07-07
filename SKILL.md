@@ -1,11 +1,11 @@
 ---
 name: div-skill
-description: "Use when building or refactoring page layouts — the output needs three-layer containers (outer/inner/child), zero margin on flex children, no fixed px, and files split by page and component. Triggers: user wants to build a dashboard/admin panel/landing page; existing CSS overflows, overlaps, or breaks on resize; all styles are in one file; React/Vue project has no clear file structure; user says 'organize this project', 'fix the layout', 'split the CSS', 'refactor the styles', 'elements overlap', or 'not responsive'. Only handles layout — functionality (data fetching, interaction, state) needs separate implementation."
+description: "Use when building or refactoring page layouts — the output needs three-layer containers (outer/inner/child), zero margin on flex children, no fixed px, and files files split by page and component. Triggers: user wants to build a dashboard/admin panel/landing page; existing CSS overflows, overlaps, or breaks on resize; all styles are in one file; React/Vue project has no clear file structure; user says 'organize this project', 'fix the layout', 'split the code', 'refactor the styles', 'elements overlap', or 'not responsive'. Only handles layout and code organization — functionality (data fetching, interaction, state) needs separate implementation."
 ---
 
 # div-skill
 
-> 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
+> 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决前端代码（页面、组件、JS、CSS）的文件组织。
 
 ---
 
@@ -99,7 +99,7 @@ description: "Use when building or refactoring page layouts — the output needs
 
 ## 二、代码拆分规范 · Code Splitting
 
-按**页面 (Page)** 和**组件 (Component)** 拆分 CSS 文件，每个模块只写在自己的文件里。
+按**页面 (Page)** 和**组件 (Component)** 拆分前端代码。每个页面/组件拥有自己的文件（JS/TS、CSS/SCSS、模板一起拆分），不局限于 CSS。
 
 ```
 project/
