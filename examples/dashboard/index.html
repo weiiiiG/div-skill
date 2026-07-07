@@ -3,133 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard</title>
-  <link rel="stylesheet" href="src/styles/main.css" />
+  <title>Dashboard — DivSkill Example</title>
+  <link rel="stylesheet" href="components/NavBar.css" />
+  <link rel="stylesheet" href="components/Sidebar.css" />
+  <link rel="stylesheet" href="components/Card.css" />
+  <link rel="stylesheet" href="components/DataTable.css" />
+  <link rel="stylesheet" href="pages/dashboard.css" />
 </head>
 <body>
+  <!-- 外层 -->
   <div class="app">
-    <div class="app__inner">
+    <!-- 内层 -->
+    <div class="app-inner">
 
-      <!-- NavBar -->
+      <!-- 子容器：导航栏 -->
       <header class="navbar">
-        <div class="navbar__inner">
-          <div class="navbar__brand">
-            <div class="navbar__logo"></div>
-            <span class="navbar__title">DivSkill</span>
+        <div class="navbar-body">   <!-- 内层 -->
+          <div class="navbar-left"> <!-- 子容器 -->
+            <div class="navbar-logo">D</div>
+            <span class="navbar-title">DivSkill</span>
           </div>
-          <div class="navbar__avatar">JD</div>
+          <div class="navbar-right"><!-- 子容器 -->
+            <div class="navbar-avatar">JD</div>
+          </div>
         </div>
       </header>
 
-      <!-- Body -->
-      <div class="app__body">
-        <div class="app__body-inner">
+      <!-- 子容器：主体区域 -->
+      <div class="body-area">
+        <div class="body-outer">    <!-- 外层 -->
+          <div class="body-inner">  <!-- 内层 -->
 
-          <!-- Sidebar -->
-          <aside class="sidebar">
-            <div class="sidebar__inner">
-              <div class="sidebar__heading">Navigation</div>
-              <nav class="sidebar__nav">
-                <a href="#" class="sidebar__link sidebar__link--active">Dashboard</a>
-                <a href="#" class="sidebar__link">Analytics</a>
-                <a href="#" class="sidebar__link">Users</a>
-                <a href="#" class="sidebar__link">Settings</a>
-                <a href="#" class="sidebar__link">Projects</a>
-                <a href="#" class="sidebar__link">Reports</a>
-              </nav>
-            </div>
-          </aside>
-
-          <!-- Main Content -->
-          <main class="main">
-            <div class="main__inner">
-
-              <!-- Stat Cards Grid -->
-              <section class="stats-section">
-                <div class="stats-section__inner">
-                  <article class="stat-card">
-                    <div class="stat-card__inner">
-                      <span class="stat-card__label">Total Users</span>
-                      <span class="stat-card__value">2,543</span>
-                      <span class="stat-card__change stat-card__change--up">+12% this week</span>
-                    </div>
-                  </article>
-                  <article class="stat-card">
-                    <div class="stat-card__inner">
-                      <span class="stat-card__label">Revenue</span>
-                      <span class="stat-card__value">$12,432</span>
-                      <span class="stat-card__change stat-card__change--up">+8.2% this week</span>
-                    </div>
-                  </article>
-                  <article class="stat-card">
-                    <div class="stat-card__inner">
-                      <span class="stat-card__label">Active Now</span>
-                      <span class="stat-card__value">142</span>
-                      <span class="stat-card__change stat-card__change--down">-3% this hour</span>
-                    </div>
-                  </article>
+            <!-- 子容器：侧边栏 -->
+            <aside class="sidebar">
+              <div class="sidebar-outer"><!-- 外层 -->
+                <div class="sidebar-inner"><!-- 内层 -->
+                  <div class="sidebar-heading">Main</div>
+                  <nav class="sidebar-nav">
+                    <div class="sidebar-link active">Dashboard</div>
+                    <div class="sidebar-link">Analytics</div>
+                    <div class="sidebar-link">Users</div>
+                    <div class="sidebar-link">Settings</div>
+                  </nav>
                 </div>
-              </section>
+              </div>
+            </aside>
 
-              <!-- Data Table -->
-              <section class="table-section">
-                <div class="table-section__inner">
-                  <div class="table-wrapper">
-                    <table class="data-table">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Email</th>
-                          <th>Status</th>
-                          <th>Role</th>
-                          <th>Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td>Alice Johnson</td>
-                          <td>alice@example.com</td>
-                          <td><span class="badge badge--active">Active</span></td>
-                          <td>Admin</td>
-                          <td><button class="btn btn--sm">Edit</button></td>
-                        </tr>
-                        <tr>
-                          <td>Bob Smith</td>
-                          <td>bob@example.com</td>
-                          <td><span class="badge badge--active">Active</span></td>
-                          <td>Editor</td>
-                          <td><button class="btn btn--sm">Edit</button></td>
-                        </tr>
-                        <tr>
-                          <td>Carol White</td>
-                          <td>carol@example.com</td>
-                          <td><span class="badge badge--inactive">Inactive</span></td>
-                          <td>Viewer</td>
-                          <td><button class="btn btn--sm">Edit</button></td>
-                        </tr>
-                        <tr>
-                          <td>David Brown</td>
-                          <td>david@example.com</td>
-                          <td><span class="badge badge--active">Active</span></td>
-                          <td>Admin</td>
-                          <td><button class="btn btn--sm">Edit</button></td>
-                        </tr>
-                        <tr>
-                          <td>Eve Davis</td>
-                          <td>eve@example.com</td>
-                          <td><span class="badge badge--pending">Pending</span></td>
-                          <td>Editor</td>
-                          <td><button class="btn btn--sm">Edit</button></td>
-                        </tr>
-                      </tbody>
-                    </table>
+            <!-- 子容器：主内容 -->
+            <main class="main">
+              <div class="main-outer">  <!-- 外层 -->
+                <div class="main-inner"><!-- 内层 -->
+
+                  <div class="page-header">
+                    <h1>Dashboard</h1>
                   </div>
+
+                  <!-- 3列指标卡片 -->
+                  <div class="metrics-grid">
+                    <article class="stat-card">
+                      <div class="stat-card-outer"><!-- 外层 -->
+                        <div class="stat-card-body"><!-- 内层 -->
+                          <div class="stat-card-label">Revenue</div>
+                          <div class="stat-card-value">$48,250</div>
+                          <div class="stat-card-change up">+12.5%</div>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="stat-card">
+                      <div class="stat-card-outer">
+                        <div class="stat-card-body">
+                          <div class="stat-card-label">Users</div>
+                          <div class="stat-card-value">2,847</div>
+                          <div class="stat-card-change up">+8.3%</div>
+                        </div>
+                      </div>
+                    </article>
+                    <article class="stat-card">
+                      <div class="stat-card-outer">
+                        <div class="stat-card-body">
+                          <div class="stat-card-label">Orders</div>
+                          <div class="stat-card-value">1,842</div>
+                          <div class="stat-card-change down">-3.1%</div>
+                        </div>
+                      </div>
+                    </article>
+                  </div>
+
+                  <!-- 数据表格 -->
+                  <div class="table-card">
+                    <div class="table-card-body"><!-- 内层 -->
+                      <div class="table-header">
+                        <h3>Recent Orders</h3>
+                      </div>
+                      <div class="table-scroll">
+                        <table>
+                          <colgroup>
+                            <col style="width:22%">
+                            <col style="width:24%">
+                            <col style="width:16%">
+                            <col style="width:14%">
+                            <col style="width:24%">
+                          </colgroup>
+                          <thead>
+                            <tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th>Actions</th></tr>
+                          </thead>
+                          <tbody>
+                            <tr><td>Alice Johnson</td><td>alice@example.com</td><td>Admin</td><td><span class="status active">Active</span></td><td>Edit</td></tr>
+                            <tr><td>Bob Smith</td><td>bob@example.com</td><td>Editor</td><td><span class="status active">Active</span></td><td>Edit</td></tr>
+                            <tr><td>Carol Wang</td><td>carol@example.com</td><td>Viewer</td><td><span class="status pending">Pending</span></td><td>Edit</td></tr>
+                            <tr><td>David Kim</td><td>david@example.com</td><td>Admin</td><td><span class="status inactive">Inactive</span></td><td>Edit</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
-              </section>
+              </div>
+            </main>
 
-            </div>
-          </main>
-
+          </div>
         </div>
       </div>
 

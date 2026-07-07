@@ -1,179 +1,309 @@
 # DivSkill
 
-> **Div**ine **Skill** of CSS Layout — A Container Hierarchy Architecture specification and CSS file organization standard for building robust, overflow-free, responsive page layouts.
->
-> **Div**ine **Skill** 的 CSS 布局之道 — 一套容器层级架构规范和 CSS 文件组织标准，用于构建稳健、无溢出、响应式的页面布局。
+<p align="center">
+  <a href="#en">🇬🇧 English</a> · <a href="#zh">🇨🇳 中文</a>
+</p>
 
 ---
 
-## Overview · 概述
+<h2 align="center" id="en">DivSkill — CSS Containerization & Code Splitting</h2>
 
-DivSkill defines two complementary specifications in a single [SKILL.md](SKILL.md) that together form a complete CSS architecture:
-
-**DivSkill 在单个 [SKILL.md](SKILL.md) 中定义了两个互补的规范，共同构成完整的 CSS 架构：**
-
-### 1. Container Hierarchy Architecture · 容器层级架构
-A three-layer nested container pattern that ensures all containers fill the viewport, content never overflows, and elements never overlap when shrinking. From outside to inside: **Outer Container → Inner Container → Child Container**.
-
-一种从外到内、层层递进的容器嵌套模式。确保所有容器撑满视口、内容不溢出、缩小时不重叠。由外到内：**外层容器 → 内层容器 → 子容器**。
-
-### 2. CSS File Organization · CSS 文件组织
-A layered file structure that prevents monolithic CSS files: **Design Tokens → Base Styles → Component Styles → Page Styles**, aggregated through a single entry point.
-
-一种分层文件结构，避免将全部 CSS 塞进一个文件：**设计令牌 → 基础样式 → 组件样式 → 页面样式**，通过单一入口文件聚合。
+<p align="center">
+  <b>Div</b>ine <b>Skill</b> of CSS Layout — Containerize elements with a three-layer structure, split code by page and component.
+</p>
 
 ---
 
-## Core Principles · 核心原则
+### The Problem
 
-### Three-Layer Structure · 三层结构
+Two common pains in frontend CSS:
+
+1. **Container chaos** — elements overflow, overlap, or don't fill the viewport; fixed `px` values break on different screen sizes
+2. **Monolithic CSS** — all styles dumped into one `<style>` block or one CSS file, impossible to maintain as the project grows
+
+### The Solution
+
+DivSkill solves both with two simple specifications:
+
+#### 1. Container Hierarchy Architecture
+
+A three-layer nesting pattern that eliminates overflow and fills the viewport:
 
 ```
-Outer Container       (width/height, background, border, position, decoration)
-  └── Inner Container  (flex/grid layout, padding/gap, height:100%)
-      ├── Child A      (overflow control, content alignment)
-      ├── Child B
-      └── Child C
+Outer Container      (width/height, background, border — NO flex/grid, NO padding/gap)
+  └── Inner Container (flex/grid layout, height:100%, padding, gap)
+      └── Child Container(s) (overflow control, content alignment — NO margin)
 ```
 
-| Layer · 层级 | Responsibilities · 职责 | Forbidden · 禁止 |
-|---|---|---|
-| **Outer · 外层** | Width/height, background, border, `position`, decoration | `display:flex/grid`, `padding/gap`, `float` |
-| **Inner · 内层** | `display:flex/grid`, `padding/gap`, `height:100%` | Background, border, decoration |
-| **Child · 子容器** | `overflow:hidden`, content alignment with `display:flex` | `padding/gap`, `margin` |
+**The iron rules:**
 
-### The Iron Rules · 铁律
+| Rule | Description |
+|---|---|
+| Root | `height:100vh; width:100vw; overflow:hidden` |
+| No fixed px | Use `flex:0 0 auto + min-height`, `clamp()`, `1fr` |
+| No margin on children | All spacing via `gap` on parent (including icons) |
+| Outer never does layout | No `display:flex/grid`, no `padding/gap`, no `float` on outer containers |
+| Inner always has flex+gap | `padding` alone is NOT enough — must have `display:flex/grid` |
+| Shrink protection | `min-width:0` / `min-height:0` on all flex/grid children |
+| Overflow protection | 4 layers: root → card → panel → text |
+| Table fixed layout | `table-layout:fixed` |
+| Absolute positioning | Explicit `z-index`, decoration only, not for layout |
 
-1. **Root** — `height:100vh; width:100vw; overflow:hidden`
-2. **No fixed px** — use `flex: 0 0 auto + min-height`, `clamp()`, `fr` units
-3. **No margin on flex/grid children** — use `gap` on parent
-4. **Every inner container MUST have `display:flex/grid + gap`** — `padding` alone is insufficient
-5. **`min-width:0` / `min-height:0`** on all flex/grid children
-6. **`overflow:hidden`** on cards/panels, **`table-layout:fixed`** on tables
-7. **`text-overflow:ellipsis`** on overflowing text
-8. **Explicit `z-index`** on absolutely positioned elements
-9. **Outer containers: NO `display:flex/grid`, NO `padding/gap`, NO `float`**
+**Example — Card component:**
+```html
+<section class="card">                <!-- Outer: background, border-radius (NO flex) -->
+  <div class="card-body">            <!-- Inner: flex column + padding + gap -->
+    <div class="card-title">Title</div>  <!-- Child: overflow control, NO margin -->
+    <div class="card-value">Value</div>  <!-- Child -->
+  </div>
+</section>
+```
+```css
+.card { border-radius: 8px; overflow: hidden; background: #fff; }          /* Outer */
+.card-body { display: flex; flex-direction: column; padding: 16px; gap: 8px; } /* Inner */
+.card-title, .card-value { overflow: hidden; text-overflow: ellipsis; }      /* Children */
+```
+
+#### 2. Code Splitting by Page & Component
+
+Split CSS by **page** and **component** — each module writes only to its own file:
+
+```
+project/
+├── index.html
+├── pages/                  # One CSS file per page
+│   ├── dashboard.css
+│   └── settings.css
+└── components/             # One CSS file per component
+    ├── NavBar.css
+    ├── Sidebar.css
+    ├── Card.css
+    └── DataTable.css
+```
+
+**Rules:**
+- One CSS file per page, one per component
+- Component styles go ONLY in `components/ComponentName.css`
+- Page layout styles go ONLY in `pages/pagename.css`
+- Never write component styles inside page CSS, or vice versa
+- HTML directly links what it needs (`<link href="components/NavBar.css">`)
 
 ---
 
-## Quick Start · 快速开始
-
-### Minimal Example · 最小示例
+### Quick Start
 
 ```html
 <!DOCTYPE html>
 <html>
 <head>
-  <style>
-    /* Root: three-layer */
-    .app { height: 100vh; width: 100vw; overflow: hidden; }           /* Outer */
-    .app-inner { display: flex; flex-direction: column; height: 100%; } /* Inner */
-
-    /* Nav: three-layer */
-    .nav { flex: 0 0 auto; }                                 /* Child for positioning */
-    .nav-outer { background: #1e293b; }                       /* Outer */
-    .nav-inner { display: flex; align-items: center;
-                 height: 100%; padding: 0 20px; gap: 16px; }  /* Inner */
-    .nav-title { overflow: hidden; text-overflow: ellipsis;
-                 white-space: nowrap; }                       /* Child */
-
-    /* Content: fills remaining space */
-    .content { flex: 1; min-height: 0; }                      /* Child */
-    .content-outer { height: 100%; }                          /* Outer */
-    .content-inner { display: flex; flex-direction: column;
-                     height: 100%; padding: 24px; gap: 24px;
-                     overflow-y: auto; }                      /* Inner */
-  </style>
+  <link rel="stylesheet" href="components/NavBar.css">
+  <link rel="stylesheet" href="components/Card.css">
+  <link rel="stylesheet" href="pages/dashboard.css">
 </head>
 <body>
-  <div class="app">         <!-- 外层 -->
-    <div class="app-inner"> <!-- 内层 -->
-      <header class="nav">  <!-- 子容器 -->
-        <div class="nav-outer">   <!-- 外层 -->
-          <div class="nav-inner"> <!-- 内层 -->
-            <span class="nav-title" style="color:#fff">DivSkill</span>
+  <!-- Three-layer root -->
+  <div class="app">            <!-- Outer: viewport fill -->
+    <div class="app-inner">   <!-- Inner: flex column -->
+      <header class="navbar"> <!-- Container positioned by parent -->
+        <div class="navbar-outer">   <!-- Outer: background -->
+          <div class="navbar-inner"> <!-- Inner: flex row -->
+            <span>Logo</span>
           </div>
         </div>
       </header>
-      <div class="content"> <!-- 子容器 -->
-        <div class="content-outer">   <!-- 外层 -->
-          <div class="content-inner"> <!-- 内层 -->
-            <h1>Hello, DivSkill!</h1>
-            <p>Content area fills the remaining space below the nav.</p>
+      <main class="content">  <!-- flex:1 fills remaining space -->
+        <div class="content-outer">
+          <div class="content-inner">
+            <h1>Dashboard</h1>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   </div>
 </body>
 </html>
 ```
 
-### With File Organization · 使用文件组织
+---
+
+### Why DivSkill?
+
+| Before ❌ | After ✅ |
+|---|---|
+| `.header { height: 56px; }` — breaks when zoomed | `.header { flex: 0 0 auto; min-height: 44px; }` |
+| `.card-label { margin-bottom: 4px; }` — spacing not controlled by parent | Parent `gap: 8px`, children have no margin |
+| All CSS in one `<style>` block — impossible to maintain | Split into `pages/` and `components/` files |
+| `.sidebar { width: 240px; }` — overflows on small screens | `.sidebar { flex: 0 0 clamp(200px, 20vw, 320px); }` |
+
+---
+
+### Examples
+
+| Example | Type | Features |
+|---|---|---|
+| [Dashboard](examples/dashboard/) | Multi-file | Nav, sidebar, stat cards, data table. Demonstrates both containerization + code splitting. |
+| [Landing Page](examples/landing-page/) | Single HTML | Hero + feature cards. Containerization with decorative backgrounds. |
+| [Settings Page](examples/settings-page/) | Single HTML | Form + modal. Layout + z-index overlay pattern. |
+
+---
+
+### Specification
+
+See [SKILL.md](./SKILL.md) for the full spec (bilingual).
+
+---
+
+<br>
+<hr>
+<br>
+
+<h2 align="center" id="zh">DivSkill — 元素的容器化与代码拆分</h2>
+
+<p align="center">
+  <b>Div</b>ine <b>Skill</b> 的 CSS 布局之道 — 用三层结构容器化元素，按页面和组件拆分代码。
+</p>
+
+---
+
+### 痛点
+
+前端 CSS 的两个常见问题：
+
+1. **容器混乱** — 元素溢出、重叠、撑不满视口；固定 `px` 值在不同屏幕尺寸下错位
+2. **CSS 巨石** — 全部样式塞在一个 `<style>` 块或一个 CSS 文件中，项目越大越难维护
+
+### 解决方案
+
+DivSkill 通过两个简单的规范解决这两个问题：
+
+#### 1. 容器层级架构
+
+一种三层嵌套模式，杜绝溢出、填满视口：
+
+```
+外层容器      (宽高、背景、边框 — 无 flex/grid，无 padding/gap)
+  └── 内层容器 (flex/grid 布局、height:100%、padding、gap)
+      └── 子容器 (溢出控制、内容对齐 — 无 margin)
+```
+
+**铁律：**
+
+| 规则 | 说明 |
+|---|---|
+| 根容器 | `height:100vh; width:100vw; overflow:hidden` |
+| 无固定 px | 使用 `flex:0 0 auto + min-height`、`clamp()`、`1fr` |
+| 子项无 margin | 所有间距通过父容器 `gap`（包括图标） |
+| 外层不做布局 | 无 `display:flex/grid`、无 `padding/gap`、无 `float` |
+| 内层必有 flex+gap | 只有 `padding` 不够 — 必须有 `display:flex/grid` |
+| 收缩保护 | 所有 flex/grid 子项加 `min-width:0` / `min-height:0` |
+| 溢出保护 | 4 层：根容器 → 卡片 → 面板 → 文本 |
+| 表格固定布局 | `table-layout:fixed` |
+| 绝对定位 | 显式 `z-index`，仅用于装饰，不可用于布局 |
+
+**示例 — 卡片组件：**
+```html
+<section class="card">                <!-- 外层：背景、圆角（无 flex） -->
+  <div class="card-body">            <!-- 内层：flex 列 + padding + gap -->
+    <div class="card-title">标题</div>  <!-- 子容器：溢出控制，无 margin -->
+    <div class="card-value">值</div>    <!-- 子容器 -->
+  </div>
+</section>
+```
+```css
+.card { border-radius: 8px; overflow: hidden; background: #fff; }          /* 外层 */
+.card-body { display: flex; flex-direction: column; padding: 16px; gap: 8px; } /* 内层 */
+.card-title, .card-value { overflow: hidden; text-overflow: ellipsis; }      /* 子容器 */
+```
+
+#### 2. 按页面和组件拆分代码
+
+按**页面**和**组件**拆分 CSS — 每个模块只写自己的文件：
 
 ```
 project/
-├── index.html              # <link rel="stylesheet" href="src/styles/main.css">
-└── src/styles/
-    ├── main.css            # @import aggregator
-    ├── tokens/             # CSS custom properties
-    ├── base/               # Reset + global
-    ├── components/         # One file per component
-    └── pages/              # One file per page
+├── index.html
+├── pages/                  # 一个页面一个 CSS 文件
+│   ├── dashboard.css
+│   └── settings.css
+└── components/             # 一个组件一个 CSS 文件
+    ├── NavBar.css
+    ├── Sidebar.css
+    ├── Card.css
+    └── DataTable.css
+```
+
+**规则：**
+- 一个页面一个 CSS 文件，一个组件一个 CSS 文件
+- 组件样式只能写在 `components/组件名.css` 中
+- 页面布局样式只能写在 `pages/页面名.css` 中
+- 禁止在页面 CSS 中写组件样式，反之亦然
+- HTML 直接引用需要的文件（`<link href="components/NavBar.css">`）
+
+---
+
+### 快速开始
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" href="components/NavBar.css">
+  <link rel="stylesheet" href="components/Card.css">
+  <link rel="stylesheet" href="pages/dashboard.css">
+</head>
+<body>
+  <!-- 三层结构根容器 -->
+  <div class="app">            <!-- 外层：撑满视口 -->
+    <div class="app-inner">   <!-- 内层：flex 列 -->
+      <header class="navbar"> <!-- 由父容器定位 -->
+        <div class="navbar-outer">   <!-- 外层：背景 -->
+          <div class="navbar-inner"> <!-- 内层：flex 行 -->
+            <span>Logo</span>
+          </div>
+        </div>
+      </header>
+      <main class="content">  <!-- flex:1 撑满剩余空间 -->
+        <div class="content-outer">
+          <div class="content-inner">
+            <h1>Dashboard</h1>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</body>
+</html>
 ```
 
 ---
 
-## Examples · 示例
+### 为什么用 DivSkill？
 
-| Example · 示例 | Type · 类型 | Features · 特性 |
+| 使用前 ❌ | 使用后 ✅ |
+|---|---|
+| `.header { height: 56px; }` — 缩放时溢出 | `.header { flex: 0 0 auto; min-height: 44px; }` |
+| `.card-label { margin-bottom: 4px; }` — 间距不受父容器控制 | 父容器 `gap: 8px`，子项无 margin |
+| 所有 CSS 在一个 `<style>` 块 | 拆分到 `pages/` + `components/` |
+| `.sidebar { width: 240px; }` — 小屏溢出 | `.sidebar { flex: 0 0 clamp(200px, 20vw, 320px); }` |
+
+---
+
+### 示例
+
+| 示例 | 类型 | 特性 |
 |---|---|---|
-| [Dashboard](examples/dashboard/) | Multi-file | Full dashboard with nav, sidebar, cards, data table. Demonstrates both container hierarchy + file organization. |
-| [Landing Page](examples/landing-page/) | Single HTML | Marketing page with hero section and feature cards. Demonstrates container hierarchy with decorative backgrounds. |
-| [Settings Page](examples/settings-page/) | Single HTML | Settings form with modal dialog. Demonstrates form layout + modal overlay with z-index. |
+| [Dashboard](examples/dashboard/) | 多文件 | 导航、侧栏、统计卡片、数据表。展示容器化 + 代码拆分。 |
+| [Landing Page](examples/landing-page/) | 单 HTML | Hero + 特性卡片。带装饰背景的容器化。 |
+| [Settings Page](examples/settings-page/) | 单 HTML | 表单 + 模态框。布局 + z-index 弹层模式。 |
 
 ---
 
-## Why DivSkill? · 为什么用 DivSkill？
+### 规范文档
 
-### Before · 使用前
-
-```css
-/* ❌ Everything in one file */
-.header { height: 56px; }
-.card { padding: 20px; }
-.card-label { margin-bottom: 4px; }
-.card-value { margin-top: 8px; }
-/* What happens when text overflows? What about 1024px width? */
-```
-
-### After · 使用后
-
-```css
-/* ✅ Structured, maintainable, resilient */
-/* Root fills viewport, cards hide overflow, gap replaces margin */
-.app { height: 100vh; overflow: hidden; }
-.card { overflow: hidden; }
-.card-body { display: flex; flex-direction: column; gap: 8px; padding: 20px; }
-```
-
-**Benefits · 收益：**
-- Zero overflow surprises across viewport sizes · 各尺寸视口无溢出
-- Predictable three-layer debugging · 可预测的三层调试
-- No margin-induced spacing bugs · 无 margin 引起的间距 bug
-- Components are truly reusable · 组件真正可复用
-- Design tokens enable one-stop theming · 设计令牌实现一站式主题化
+完整规范见 [SKILL.md](./SKILL.md)（中英双语）。
 
 ---
 
-## Specification · 规范文档
-
-完整规范请阅读 [SKILL.md](SKILL.md)（中英双语）。
-
-The full specification is in [SKILL.md](SKILL.md) (bilingual Chinese/English).
-
----
-
-## License · 许可
+### License · 许可
 
 MIT
