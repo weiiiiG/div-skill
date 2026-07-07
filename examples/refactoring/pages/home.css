@@ -1,0 +1,15 @@
+/* pages/home.css — 页面布局 */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+body{font-family:sans-serif}
+
+#app{height:100vh;width:100vw;overflow:hidden}
+#app-inner{display:flex;flex-direction:column;height:100%}
+
+.wrap{flex:1;min-height:0}
+.wrap-inner{display:flex;height:100%}
+
+.main{flex:1;min-width:0}
+.main-inner{display:flex;flex-direction:column;height:100%;padding:24px;gap:16px;overflow-y:auto}
+
+.page{display:none}
+.page.active{display:block}

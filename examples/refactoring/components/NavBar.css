@@ -1,0 +1,5 @@
+/* components/NavBar.css */
+.nav{flex:0 0 auto;background:#1a1a2e;color:#fff}
+.nav-inner{display:flex;align-items:center;height:100%;padding:0 24px;gap:16px}
+.nav h2{font-size:18px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{background:#ef4444;color:#fff;font-size:12px;padding:2px 8px;border-radius:10px;margin-left:auto}

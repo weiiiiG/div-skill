@@ -24,7 +24,7 @@
 | 场景 | 说明 |
 |---|---|
 | **新建页面** | 从零开始构建仪表盘、后台、着陆页、设置页 —— 直接按三层结构组织容器、按页面/组件拆分 CSS |
-| **存量项目改造** | 已有代码布局混乱、溢出频发、CSS 集中在一个文件 —— 先评估缺陷再逐步容器化和拆分 |
+| **存量项目改造** | 已有代码布局混乱、溢出频发、CSS 集中在一个文件 —— 先评估缺陷再逐步容器化和拆分。参考[重构示例](examples/refactoring/) |
 | **React 项目** | 组件缺少统一布局规范、样式散落、目录结构混乱 —— 按 layout/pages/components/hooks/routes/stores/api 分层 |
 | **Vue 项目** | 模板中容器嵌套混乱、样式内嵌在 SFC、缺少文件组织 —— 分离 .vue 和 .scss、按 composables/router/stores 分层 |
 | **团队规范** | 多人协作时 CSS 风格不统一、review 成本高 —— 用速查清单统一约束，新人上手即遵循规范 |
@@ -85,8 +85,7 @@ project/
 | 示例 | 类型 | 特性 |
 |---|---|---|
 | [Dashboard](examples/dashboard/) | HTML/CSS | 导航、侧栏、统计卡片、数据表 |
-| [Landing Page](examples/landing-page/) | HTML/CSS | Hero + 特性卡片 |
-| [Settings Page](examples/settings-page/) | HTML/CSS | 表单 + 模态框弹层 |
+| [重构示例](examples/refactoring/) | HTML/CSS | 从单文件拆分，含计数器+导航+通知状态 |
 | [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
 | [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
 
@@ -114,7 +113,7 @@ Two common pains in frontend CSS:
 | Scenario | Description |
 |---|---|
 | **New project** | Build a dashboard, admin panel, landing page from scratch — use three-layer containers, split CSS by page/component |
-| **Legacy refactor** | Existing code has overflow issues, monolithic CSS — evaluate defects, containerize and split step by step |
+| **Legacy refactor** | Existing code has overflow issues, monolithic CSS — evaluate defects, containerize and split step by step. See [refactoring example](examples/refactoring/) |
 | **React project** | Components lack layout rules, styles scattered, messy structure — organize into layout/pages/components/hooks/routes/stores/api |
 | **Vue project** | Template nesting chaos, styles embedded in SFC — separate .vue and .scss, use composables/router/stores layers |
 | **Team standard** | Multiple devs, inconsistent CSS, high review cost — use checklist for unified rules, new hires follow standard from day one |
@@ -173,8 +172,7 @@ project/
 | Example | Type | Features |
 |---|---|---|
 | [Dashboard](examples/dashboard/) | HTML/CSS | Nav, sidebar, stat cards, data table |
-| [Landing Page](examples/landing-page/) | HTML/CSS | Hero + feature cards |
-| [Settings Page](examples/settings-page/) | HTML/CSS | Form + modal overlay |
+| [Refactoring](examples/refactoring/) | HTML/CSS | Split from single file, counter+navigation+state |
 | [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
 | [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
 

@@ -1,0 +1,6 @@
+/* components/Sidebar.css */
+.side{flex:0 0 clamp(200px,20vw,280px);background:#f8fafc;border-right:1px solid #e2e8f0;overflow:hidden}
+.side-inner{display:flex;flex-direction:column;height:100%;padding:16px;gap:4px;overflow-y:auto}
+.side a{display:flex;align-items:center;padding:10px 12px;color:#475569;cursor:pointer;border-radius:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.side a:hover{background:#e2e8f0}
+.side a.active{background:#6366f1;color:#fff}
