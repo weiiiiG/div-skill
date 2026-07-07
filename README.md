@@ -1,10 +1,10 @@
 # div-skill
 
-> **Div**ine **Skill** of CSS — two specs that together define how to structure frontend code in any web project:
+> **Div**ine **Skill** of CSS — a frontend container and code organization specification:
 > * **Container Hierarchy:** a three-layer pattern (outer→inner→child) that fills the viewport, prevents overflow, and eliminates margin-based spacing bugs.
 > * **Code Splitting:** split code by page and component (JS, CSS, templates together), each page/component owns its own files — no more monolithic blobs.
 >
-> 一套 CSS 布局规范，包含两个核心：
+> 一套前端容器与布局规范，包含两个核心：
 > * **容器层级架构**：外层→内层→子容器三层结构，撑满视口、杜绝溢出、消灭 margin 间距 bug。
 > * **代码拆分**：按页面和组件拆分前端代码（JS、CSS、模板一起拆分），每个页面/组件拥有自己的文件。
 
