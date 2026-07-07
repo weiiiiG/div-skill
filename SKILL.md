@@ -5,7 +5,7 @@ description: Use when building CSS layouts for web pages — dashboards, landing
 
 # DivSkill
 
-> **Div**ine **Skill** of CSS Layout — 元素的容器化与代码拆分的精细化。
+> **Div**ine **Skill** of CSS — 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
 >
 > 两个核心：① 用三层结构撑满所有容器、杜绝溢出；② 按页面和组件拆分 CSS 文件，每个模块只写自己的文件。
 

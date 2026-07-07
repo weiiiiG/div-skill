@@ -2,7 +2,7 @@
 
 <h1>div-skill</h1>
 
-<blockquote><b>Div</b>ine <b>Skill</b> of CSS Layout — Containerize elements with three-layer structure, split code by page and component.</blockquote>
+<blockquote><b>Div</b>ine <b>Skill</b> of CSS — solves layout at two levels: <b>containerization</b> for page element layout, <b>code splitting</b> for CSS file organization.<br><br>解决两层的布局问题：<b>容器化</b>解决页面元素的布局，<b>代码拆分</b>解决 CSS 文件的"布局"。</blockquote>
 
 <hr>
 
