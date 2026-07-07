@@ -1,24 +1,33 @@
 <div>
+
 <h1>div-skill</h1>
+
 <blockquote><b>Div</b>ine <b>Skill</b> of CSS Layout — Containerize elements with three-layer structure, split code by page and component.</blockquote>
+
 <hr>
 
+<input type="checkbox" id="lang-switch" hidden>
+
 <div align="center">
-<input type="radio" name="l" id="le" checked hidden>
-<input type="radio" name="l" id="lz" hidden>
-<label for="le" id="label-en"><b>ENGLISH</b></label>
+
+<label for="lang-switch" id="en-label"><b>ENGLISH</b></label>
 <span> · </span>
-<label for="lz" id="label-zh">中文</label>
+<label for="lang-switch" id="zh-label">中文</label>
+
 </div>
 
-<div id="en">
+<!-- English content -->
+<div id="en-content">
+
 <h3>The Problem</h3>
 <p>Two common pains in frontend CSS:</p>
 <ol>
 <li><b>Container chaos</b> — elements overflow, overlap, or don't fill the viewport</li>
 <li><b>Monolithic CSS</b> — all styles in one <code>&lt;style&gt;</code> block, impossible to maintain</li>
 </ol>
+
 <h3>The Solution</h3>
+
 <h4>1. Container Hierarchy</h4>
 <p>A three-layer nesting pattern:</p>
 <pre>
@@ -26,6 +35,7 @@ Outer Container      (width/height, background, border — NO flex/grid, NO padd
   └── Inner Container (flex/grid layout, height:100%, padding, gap)
       └── Child Container(s) (overflow control, content alignment — NO margin)
 </pre>
+
 <table>
 <tr><th>#</th><th>Rule</th></tr>
 <tr><td>1</td><td>Root: <code>height:100vh; width:100vw; overflow:hidden</code></td></tr>
@@ -38,6 +48,7 @@ Outer Container      (width/height, background, border — NO flex/grid, NO padd
 <tr><td>8</td><td><code>text-overflow:ellipsis</code> on overflowing text</td></tr>
 <tr><td>9</td><td>Absolutely positioned elements: explicit <code>z-index</code>, decoration only</td></tr>
 </table>
+
 <h4>2. Code Splitting</h4>
 <p>Split CSS by page and component:</p>
 <pre>
@@ -52,12 +63,14 @@ project/
     ├── Card.css
     └── DataTable.css
 </pre>
+
 <ul>
 <li>One CSS file per page, one per component</li>
 <li>Component styles go ONLY in <code>components/ComponentName.css</code></li>
 <li>Page layout goes ONLY in <code>pages/pagename.css</code></li>
 <li>HTML <code>&lt;link&gt;</code>s each file directly (no aggregator)</li>
 </ul>
+
 <h3>Examples</h3>
 <table>
 <tr><th>Example</th><th>Type</th><th>Features</th></tr>
@@ -65,20 +78,27 @@ project/
 <tr><td><a href="examples/landing-page/">Landing Page</a></td><td>Single HTML</td><td>Hero + feature cards</td></tr>
 <tr><td><a href="examples/settings-page/">Settings Page</a></td><td>Single HTML</td><td>Form + modal overlay</td></tr>
 </table>
+
 <h3>Specification</h3>
 <p>See <a href="SKILL.md">SKILL.md</a>.</p>
+
 <h3>License</h3>
 <p>MIT</p>
+
 </div>
 
-<div id="zh">
+<!-- Chinese content -->
+<div id="zh-content">
+
 <h3>痛点</h3>
 <p>前端 CSS 的两个常见问题：</p>
 <ol>
 <li><b>容器混乱</b> — 元素溢出、重叠、撑不满视口</li>
 <li><b>CSS 巨石</b> — 全部样式塞在一个 <code>&lt;style&gt;</code> 块中，无法维护</li>
 </ol>
+
 <h3>解决方案</h3>
+
 <h4>1. 容器层级架构</h4>
 <p>三层嵌套模式：</p>
 <pre>
@@ -86,6 +106,7 @@ project/
   └── 内层容器 (flex/grid 布局、height:100%、padding、gap)
       └── 子容器 (溢出控制、内容对齐 — 无 margin)
 </pre>
+
 <table>
 <tr><th>#</th><th>规则</th></tr>
 <tr><td>1</td><td>根容器：<code>height:100vh; width:100vw; overflow:hidden</code></td></tr>
@@ -98,6 +119,7 @@ project/
 <tr><td>8</td><td>文本溢出加 <code>text-overflow:ellipsis</code></td></tr>
 <tr><td>9</td><td>绝对定位元素加显式 <code>z-index</code>，仅用于装饰</td></tr>
 </table>
+
 <h4>2. 代码拆分</h4>
 <p>按页面和组件拆分 CSS：</p>
 <pre>
@@ -112,12 +134,14 @@ project/
     ├── Card.css
     └── DataTable.css
 </pre>
+
 <ul>
 <li>一个页面一个 CSS 文件，一个组件一个 CSS 文件</li>
 <li>组件样式只能写在 <code>components/组件名.css</code> 中</li>
 <li>页面布局只能写在 <code>pages/页面名.css</code> 中</li>
 <li>HTML 直接 <code>&lt;link&gt;</code> 引用各文件（无聚合入口）</li>
 </ul>
+
 <h3>示例</h3>
 <table>
 <tr><th>示例</th><th>类型</th><th>特性</th></tr>
@@ -125,21 +149,25 @@ project/
 <tr><td><a href="examples/landing-page/">Landing Page</a></td><td>单 HTML</td><td>Hero + 特性卡片</td></tr>
 <tr><td><a href="examples/settings-page/">Settings Page</a></td><td>单 HTML</td><td>表单 + 模态框弹层</td></tr>
 </table>
+
 <h3>规范文档</h3>
 <p>见 <a href="SKILL.md">SKILL.md</a>。</p>
+
 <h3>许可</h3>
 <p>MIT</p>
+
 </div>
 
 <style>
-#zh { display: none; }
-#lz:checked ~ #en { display: none; }
-#lz:checked ~ #zh { display: block; }
-#lz:checked ~ div label[for="lz"] { font-weight: bold; }
-#lz:checked ~ div label[for="le"] { font-weight: normal; }
-label[for="le"] { font-weight: bold; cursor: pointer; color: #0366d6; }
-label[for="lz"] { cursor: pointer; color: #0366d6; }
-label:hover { text-decoration: underline; }
+#zh-content { display: none; }
+#lang-switch:checked ~ #en-content { display: none; }
+#lang-switch:checked ~ #zh-content { display: block; }
+label[for="lang-switch"] { color: #0366d6; cursor: pointer; }
+label[for="lang-switch"]:hover { text-decoration: underline; }
+#lang-switch:not(:checked) ~ div #en-label { font-weight: bold; }
+#lang-switch:not(:checked) ~ div #zh-label { font-weight: normal; }
+#lang-switch:checked ~ div #en-label { font-weight: normal; }
+#lang-switch:checked ~ div #zh-label { font-weight: bold; }
 </style>
 
 </div>
