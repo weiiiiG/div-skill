@@ -179,7 +179,131 @@ project/
 
 ---
 
-## 三、反例对照 · Anti-Patterns
+## 三、存量项目评估与重构 · Evaluation & Refactoring
+
+> 对已有代码先评估结构缺陷，然后进行容器化和代码拆分。
+
+### 3.1 评估流程
+
+拿到一个已有的 HTML/CSS 项目后，按以下顺序检查：
+
+```
+① 审查 HTML 结构
+   └── 找到所有容器元素（div/section/main/aside/header/footer）
+   └── 检查是否有三层结构（外层→内层→子容器）
+   └── 标记缺失层级的容器
+
+② 审查 CSS 问题
+   └── 搜索 height/width 固定 px → 标记为需替换
+   └── 搜索 grid-template-columns 固定 px → 标记为需替换
+   └── 搜索 margin-bottom/margin-top/margin-left → 标记为需替换为 gap
+   └── 搜索 outer 容器上的 display:flex/grid → 标记为需拆分为 inner
+   └── 检查 inner 容器是否有 gap → 标记缺失 gap 的
+   └── 搜索 overflow:hidden → 标记缺失的卡片/面板
+
+③ 审查代码拆分
+   └── CSS 是否全部在一个文件中？→ 需要拆分
+   └── 组件样式是否散落在页面 CSS 中？→ 需要提取
+   └── 是否有全局设计变量？→ 可提取为 shared tokens
+```
+
+### 3.2 评估清单
+
+```
+□ 根容器有 height:100vh; width:100vw; overflow:hidden?
+□ 每个区块是三层结构（outer/inner/child）?
+□ 有固定 px 的 layout 尺寸?（height/width/grid-template）
+□ 有 margin 在 flex/grid 子项上?（含图标间距）
+□ outer 容器有 display:flex/grid/float?
+□ inner 容器缺少 display+gap?（padding 单独不够）
+□ 缺少 min-width:0 / min-height:0?
+□ 卡片/面板缺少 overflow:hidden?
+□ 文本缺少 text-overflow:ellipsis?
+□ 全部 CSS 在单个文件中?
+□ 组件样式混在页面 CSS 中?
+```
+
+### 3.3 重构流程
+
+按顺序执行，每一步完成后进入下一步：
+
+```
+Step 1: 容器化 — 修复三层结构
+   ├── 根容器：添加 height:100vh + width:100vw + overflow:hidden
+   ├── 拆分容器：没有 inner 的加 inner，没有 outer 的加 outer
+   └── 删除 outer 上的 display:flex/grid，放到 inner 上
+
+Step 2: 容器化 — 修复尺寸
+   ├── 将 layout 固定 px 替换为 flex:0 0 auto + min-height
+   ├── 将 grid track 固定 px 替换为 clamp()
+   └── 将固定宽度替换为 clamp() 或 1fr
+
+Step 3: 容器化 — 修复间距
+   ├── 将所有 margin-bottom/top/left/right 替换为父容器 gap
+   └── 在每个 inner 容器上添加 display:flex/grid + gap
+
+Step 4: 容器化 — 修复保护
+   ├── 在所有 flex/grid 子项加 min-width:0 + min-height:0
+   ├── 在卡片/面板加 overflow:hidden
+   ├── 在文本加 text-overflow:ellipsis + overflow:hidden + white-space:nowrap
+   └── 表格加 table-layout:fixed
+
+Step 5: 代码拆分
+   ├── 识别组件：导航栏、侧边栏、卡片、表格等
+   ├── 为每个组件创建 components/ComponentName.css
+   ├── 将组件样式从原文件移到对应组件 CSS 文件
+   ├── 创建 pages/pagename.css 放页面布局样式
+   ├── 更新 HTML：删除原 <style> 或原 CSS 引用
+   └── 在 HTML 中添加各文件的 <link>
+```
+
+### 3.4 重构示例
+
+**重构前（典型问题代码）：**
+```html
+<style>
+  .header { height: 56px; background: #1e293b; display: flex; align-items: center; padding: 0 20px; }
+  .header-title { font-size: 18px; font-weight: 700; color: #fff; margin-right: 16px; }
+  .sidebar { width: 240px; background: #fff; padding: 16px; }
+  .main { padding: 24px; }
+  .card { background: #fff; padding: 20px; border-radius: 8px; }
+  .card-title { font-size: 16px; margin-bottom: 8px; }
+  .card-desc { font-size: 14px; color: #666; margin-top: 4px; }
+</style>
+```
+
+**重构过程：**
+
+| 问题 | 定位 | 修复方式 |
+|---|---|---|
+| `height: 56px` | header | `flex: 0 0 auto; min-height: 44px` |
+| `display: flex + padding` 在 header | outer 混用 | 拆为 `.header-outer(背景)` + `.header-inner(flex+padding)` |
+| `margin-right: 16px` | header-title | header-inner 加 `gap: 16px`，删除 margin |
+| `width: 240px` | sidebar | `flex: 0 0 clamp(200px, 20vw, 280px)` |
+| `margin-bottom: 8px` | card-title | card-body 加 `gap: 8px`，删除 margin |
+| `margin-top: 4px` | card-desc | card-body 已用 gap，删除 margin |
+| 全部 CSS 在一个 `<style>` | 无拆分 | 拆为 `components/NavBar.css` + `components/Sidebar.css` + `components/Card.css` + `pages/home.css` |
+
+**重构后：**
+```css
+/* components/NavBar.css */
+.header-outer { background: #1e293b; }
+.header-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
+.header-title { font-size: 18px; font-weight: 700; color: #fff; }
+
+/* components/Sidebar.css */
+.sidebar { flex: 0 0 clamp(200px, 20vw, 280px); }
+.sidebar-inner { display: flex; flex-direction: column; height: 100%; padding: 16px; gap: 12px; }
+
+/* components/Card.css */
+.card { overflow: hidden; }
+.card-body { display: flex; flex-direction: column; padding: 20px; gap: 8px; }
+.card-title, .card-desc { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+```
+
+---
+
+## 四、反例对照 · Anti-Patterns
 
 | 反例 | 问题 | 正确做法 |
 |---|---|---|
@@ -195,7 +319,7 @@ project/
 
 ---
 
-## 四、速查清单 · Checklist
+## 五、速查清单 · Checklist
 
 - [ ] 根容器 `height: 100vh; width: 100vw; overflow: hidden`
 - [ ] 每个区块：外层 → 内层 → 子容器 三层结构
@@ -213,7 +337,7 @@ project/
 
 ---
 
-## 五、常见违规借口 · Rationalizations
+## 六、常见违规借口 · Rationalizations
 
 | 借口 | 为什么是错的 |
 |---|---|
