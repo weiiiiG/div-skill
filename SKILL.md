@@ -302,7 +302,77 @@ project/
 □ 常量配置收拢在 constants/？
 ```
 
-### 3.4 重构流程
+### 3.4 文件归类决策
+
+重构时按以下规则判断每个文件应属于哪个层级：
+
+**① 组件归类（.jsx /.vue）**
+
+```
+组件用于展示导航/侧栏/页脚?
+  → 是 → layout/（应用框架，所有页面共用）
+  
+组件是路由对应的页面?
+  → 是 → pages/（一个路由一个页面）
+  
+组件可在多处复用?
+  → 是 → components/（共享组件，无路由依赖）
+  
+组件只在一个页面内使用且不复用?
+  → pages/页面名/components/（页面私有组件）
+```
+
+**② 逻辑归类（hooks / composables）**
+
+```
+逻辑涉及 React 状态/副作用?
+  → 是 → hooks/（如 useAuth、useFetch、useForm）
+  
+逻辑涉及 Vue 组合式 API?
+  → 是 → composables/（如 useAuth、useFetch、useForm）
+
+仅为纯函数计算，无框架依赖?
+  → utils/（如 formatDate、validateEmail）
+```
+
+**③ 数据层归类**
+
+```
+直接调用后端 API?
+  → api/（如 api/dashboard.js、api/auth.js）
+
+管理跨组件共享状态?
+  → stores/（如 useUserStore、useDashboardStore）
+
+请求 + 状态混合?
+  → api/ 封装请求，stores/ 消费 api/ 返回的数据
+```
+
+**④ 配置/类型归类**
+
+```
+TypeScript 接口/类型？
+  → types/（如 types/dashboard.ts、types/user.ts）
+
+应用级常量（枚举、路由路径、API 端点）？
+  → constants/（如 constants/api.js、constants/index.js）
+
+环境变量/配置文件？
+  → 项目根目录（.env、vite.config.js）
+```
+
+**⑤ 常见归类错误**
+
+| 错误做法 | 问题 | 正确 |
+|---|---|---|
+| 页面 A 的组件放在 `components/` | 看起来通用，实际只有一页用 | 放在 `pages/A/components/` |
+| API 调用写在组件内 | 无法复用、测试困难 | 提取到 `api/`，组件调用 |
+| 工具函数写在 hooks 中 | 无端引入框架依赖 | 纯函数放 `utils/` |
+| 类型定义内联在组件中 | 无法跨文件复用 | 提取到 `types/` |
+| 路由守卫写在页面组件里 | 分散、难以维护 | 写在 `routes/` 统一管理 |
+| store 中写 API 请求逻辑 | store 变得臃肿 | store 只管理状态，请求在 `api/` |
+
+### 3.5 重构流程
 
 按顺序执行，每一步完成后进入下一步：
 
@@ -336,7 +406,7 @@ Step 5: 代码拆分
    └── 在 HTML 中添加各文件的 <link>
 ```
 
-### 3.5 重构示例
+### 3.6 重构示例
 
 **重构前（典型问题代码）：**
 ```html
