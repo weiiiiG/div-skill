@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="src/styles/main.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="app__inner">
+
+      <!-- NavBar -->
+      <header class="navbar">
+        <div class="navbar__inner">
+          <div class="navbar__brand">
+            <div class="navbar__logo"></div>
+            <span class="navbar__title">DivSkill</span>
+          </div>
+          <div class="navbar__avatar">JD</div>
+        </div>
+      </header>
+
+      <!-- Body -->
+      <div class="app__body">
+        <div class="app__body-inner">
+
+          <!-- Sidebar -->
+          <aside class="sidebar">
+            <div class="sidebar__inner">
+              <div class="sidebar__heading">Navigation</div>
+              <nav class="sidebar__nav">
+                <a href="#" class="sidebar__link sidebar__link--active">Dashboard</a>
+                <a href="#" class="sidebar__link">Analytics</a>
+                <a href="#" class="sidebar__link">Users</a>
+                <a href="#" class="sidebar__link">Settings</a>
+                <a href="#" class="sidebar__link">Projects</a>
+                <a href="#" class="sidebar__link">Reports</a>
+              </nav>
+            </div>
+          </aside>
+
+          <!-- Main Content -->
+          <main class="main">
+            <div class="main__inner">
+
+              <!-- Stat Cards Grid -->
+              <section class="stats-section">
+                <div class="stats-section__inner">
+                  <article class="stat-card">
+                    <div class="stat-card__inner">
+                      <span class="stat-card__label">Total Users</span>
+                      <span class="stat-card__value">2,543</span>
+                      <span class="stat-card__change stat-card__change--up">+12% this week</span>
+                    </div>
+                  </article>
+                  <article class="stat-card">
+                    <div class="stat-card__inner">
+                      <span class="stat-card__label">Revenue</span>
+                      <span class="stat-card__value">$12,432</span>
+                      <span class="stat-card__change stat-card__change--up">+8.2% this week</span>
+                    </div>
+                  </article>
+                  <article class="stat-card">
+                    <div class="stat-card__inner">
+                      <span class="stat-card__label">Active Now</span>
+                      <span class="stat-card__value">142</span>
+                      <span class="stat-card__change stat-card__change--down">-3% this hour</span>
+                    </div>
+                  </article>
+                </div>
+              </section>
+
+              <!-- Data Table -->
+              <section class="table-section">
+                <div class="table-section__inner">
+                  <div class="table-wrapper">
+                    <table class="data-table">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Email</th>
+                          <th>Status</th>
+                          <th>Role</th>
+                          <th>Actions</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td>Alice Johnson</td>
+                          <td>alice@example.com</td>
+                          <td><span class="badge badge--active">Active</span></td>
+                          <td>Admin</td>
+                          <td><button class="btn btn--sm">Edit</button></td>
+                        </tr>
+                        <tr>
+                          <td>Bob Smith</td>
+                          <td>bob@example.com</td>
+                          <td><span class="badge badge--active">Active</span></td>
+                          <td>Editor</td>
+                          <td><button class="btn btn--sm">Edit</button></td>
+                        </tr>
+                        <tr>
+                          <td>Carol White</td>
+                          <td>carol@example.com</td>
+                          <td><span class="badge badge--inactive">Inactive</span></td>
+                          <td>Viewer</td>
+                          <td><button class="btn btn--sm">Edit</button></td>
+                        </tr>
+                        <tr>
+                          <td>David Brown</td>
+                          <td>david@example.com</td>
+                          <td><span class="badge badge--active">Active</span></td>
+                          <td>Admin</td>
+                          <td><button class="btn btn--sm">Edit</button></td>
+                        </tr>
+                        <tr>
+                          <td>Eve Davis</td>
+                          <td>eve@example.com</td>
+                          <td><span class="badge badge--pending">Pending</span></td>
+                          <td>Editor</td>
+                          <td><button class="btn btn--sm">Edit</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </main>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>

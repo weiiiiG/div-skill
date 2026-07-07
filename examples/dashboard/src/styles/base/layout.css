@@ -1,0 +1,22 @@
+.app {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+.app__inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.app__body {
+  flex: 1;
+  min-height: 0;
+}
+
+.app__body-inner {
+  display: flex;
+  height: 100%;
+}

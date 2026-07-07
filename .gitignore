@@ -1,0 +1,17 @@
+# DivSkill .gitignore
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Claude
+.claude/
+
+# Test artifacts
+*.output

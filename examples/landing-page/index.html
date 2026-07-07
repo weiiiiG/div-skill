@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DivSkill — Build Faster. Ship Smarter.</title>
+  <style>
+    /* RESET */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    /* ===== ROOT ===== */
+    html, body {
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* ===== PAGE: outermost wrapper ===== */
+
+    /* 外层: full-viewport background */
+    .page-outer {
+      background: #0f172a;
+      height: 100%;
+      color: #e2e8f0;
+    }
+
+    /* 内层: flex column — entire page layout */
+    .page-inner {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      gap: 0;
+    }
+
+    /* ================================================================
+       NAV SECTION
+       ================================================================ */
+
+    /* 子容器: fixed at top of flex column */
+    .nav-section {
+      flex: 0 0 auto;
+      min-width: 0;
+      min-height: 0;
+    }
+
+    /* 外层: background and bottom border only */
+    .nav-outer {
+      background: #1e293b;
+      border-bottom: 1px solid #334155;
+    }
+
+    /* 内层: flex row — logo | links | cta */
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      padding: 0 clamp(16px, 4vw, 48px);
+      gap: 24px;
+    }
+
+    /* 子容器: logo */
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #f8fafc;
+      white-space: nowrap;
+    }
+
+    .nav-logo-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      color: #60a5fa;
+      font-size: 1.5rem;
+    }
+
+    /* 子容器: centered links */
+    .nav-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: clamp(16px, 3vw, 32px);
+      overflow: hidden;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .nav-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: #f8fafc;
+    }
+
+    /* 子容器: CTA button */
+    .nav-cta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      min-width: 0;
+    }
+
+    .nav-cta button {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 8px 20px;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+
+    .nav-cta button:hover {
+      background: #2563eb;
+    }
+
+    /* ================================================================
+       HERO SECTION
+       ================================================================ */
+
+    /* 子容器: fills remaining space */
+    .hero-section {
+      flex: 1 1 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* 外层: gradient background — fills entire hero area */
+    .hero-outer {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      height: 100%;
+      position: relative;
+    }
+
+    /* 内层: flex column — center all content vertically + horizontally */
+    .hero-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: clamp(24px, 5vh, 64px) clamp(16px, 4vw, 48px);
+      gap: clamp(16px, 3vh, 32px);
+      text-align: center;
+    }
+
+    /* 子容器: headline */
+    .hero-title {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      min-width: 0;
+      max-width: 720px;
+    }
+
+    .hero-title h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      color: #f8fafc;
+      text-align: center;
+    }
+
+    .hero-title .highlight {
+      color: #60a5fa;
+    }
+
+    /* 子容器: subtext */
+    .hero-subtext {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+      min-width: 0;
+      max-width: 560px;
+    }
+
+    .hero-subtext p {
+      font-size: clamp(1rem, 2vw, 1.125rem);
+      color: #94a3b8;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    /* 子容器: button group */
+    .hero-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      overflow: hidden;
+      min-width: 0;
+    }
+
+    .hero-btn-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .hero-btn-primary {
+      background: #3b82f6;
+      color: #fff;
+      border: none;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+
+    .hero-btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-1px);
+    }
+
+    .hero-btn-secondary {
+      background: transparent;
+      color: #e2e8f0;
+      border: 1px solid #475569;
+      padding: 12px 32px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: #64748b;
+    }
+
+    .hero-footnote {
+      font-size: 0.75rem;
+      color: #64748b;
+      text-align: center;
+    }
+
+    /* ================================================================
+       CARDS SECTION
+       ================================================================ */
+
+    /* 子容器: fixed at bottom of flex column */
+    .cards-section {
+      flex: 0 0 auto;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    /* 外层: background and top border only */
+    .cards-outer {
+      background: #1e293b;
+      border-top: 1px solid #334155;
+    }
+
+    /* 内层: flex row — evenly spaced cards */
+    .cards-inner {
+      display: flex;
+      justify-content: center;
+      gap: clamp(16px, 2vw, 24px);
+      padding: clamp(20px, 3vh, 32px) clamp(16px, 4vw, 48px);
+    }
+
+    /* 子容器: individual card (NO padding, NO margin — spacing via parent gap) */
+    .card {
+      display: flex;
+      min-width: 0;
+      min-height: 0;
+      overflow: hidden;
+      flex: 1 1 clamp(200px, 25vw, 280px);
+      max-width: 320px;
+    }
+
+    /* 外层: card background and border-radius */
+    .card-outer {
+      background: #0f172a;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+      width: 100%;
+    }
+
+    /* 内层: flex column — icon, title, description */
+    .card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    /* 子容器: icon area */
+    .card-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex: 0 0 auto;
+      min-width: 48px;
+      min-height: 48px;
+      background: #1e3a5f;
+      border-radius: 12px;
+      font-size: 1.5rem;
+    }
+
+    /* 子容器: card title */
+    .card-title {
+      display: flex;
+      overflow: hidden;
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #f8fafc;
+      min-width: 0;
+      max-width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    /* 子容器: card description */
+    .card-desc {
+      display: flex;
+      overflow: hidden;
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.5;
+      min-width: 0;
+    }
+
+    /* ================================================================
+       DECORATIVE BACKGROUND ELEMENT (hero glow)
+       ================================================================ */
+
+    /* 子容器: decorative glow — absolutely positioned within hero-outer */
+    .hero-glow {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .hero-glow::before {
+      content: '';
+      display: block;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(59, 130, 246, 0.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 外层: full-viewport background wrapper -->
+  <div class="page-outer">
+
+    <!-- 内层: flex column — page-level layout -->
+    <div class="page-inner">
+
+      <!-- ============================================================
+      NAV SECTION
+      ============================================================ -->
+
+      <!-- 子容器: nav positioning in page flex column -->
+      <header class="nav-section">
+
+        <!-- 外层: background and border -->
+        <div class="nav-outer">
+
+          <!-- 内层: flex row — logo | links | cta -->
+          <div class="nav-inner">
+
+            <!-- 子容器: logo -->
+            <div class="nav-logo">
+              <span class="nav-logo-icon">&#9670;</span>
+              <span>DivSkill</span>
+            </div>
+
+            <!-- 子容器: centered navigation links -->
+            <nav class="nav-links">
+              <a href="#">Features</a>
+              <a href="#">Solutions</a>
+              <a href="#">Pricing</a>
+              <a href="#">Resources</a>
+            </nav>
+
+            <!-- 子容器: CTA button -->
+            <div class="nav-cta">
+              <button>Get Started</button>
+            </div>
+
+          </div>
+        </div>
+      </header>
+
+      <!-- ============================================================
+      HERO SECTION
+      ============================================================ -->
+
+      <!-- 子容器: hero fills remaining vertical space -->
+      <main class="hero-section">
+
+        <!-- 外层: gradient background -->
+        <div class="hero-outer">
+
+          <!-- decorative glow (sub-container with position:absolute) -->
+          <div class="hero-glow"></div>
+
+          <!-- 内层: flex column — vertically + horizontally centered -->
+          <div class="hero-inner">
+
+            <!-- 子容器: headline -->
+            <div class="hero-title">
+              <h1>Build Faster.<br><span class="highlight">Ship Smarter.</span></h1>
+            </div>
+
+            <!-- 子容器: subtext -->
+            <div class="hero-subtext">
+              <p>The all-in-one platform that helps teams build, deploy, and scale modern applications with confidence.</p>
+            </div>
+
+            <!-- 子容器: buttons -->
+            <div class="hero-buttons">
+              <div class="hero-btn-row">
+                <button class="hero-btn-primary">Start Free Trial</button>
+                <button class="hero-btn-secondary">Watch Demo</button>
+              </div>
+              <span class="hero-footnote">No credit card required &middot; 14-day free trial</span>
+            </div>
+
+          </div>
+        </div>
+      </main>
+
+      <!-- ============================================================
+      CARDS SECTION
+      ============================================================ -->
+
+      <!-- 子容器: cards at bottom of page -->
+      <section class="cards-section">
+
+        <!-- 外层: background and border -->
+        <div class="cards-outer">
+
+          <!-- 内层: flex row — card layout -->
+          <div class="cards-inner">
+
+            <!-- 子容器: card 1 — Lightning Fast -->
+            <article class="card">
+              <!-- 外层: card background + border-radius -->
+              <div class="card-outer">
+                <!-- 内层: flex column — icon, title, desc -->
+                <div class="card-inner">
+                  <!-- 子容器: icon -->
+                  <div class="card-icon">&#9889;</div>
+                  <!-- 子容器: title -->
+                  <h3 class="card-title">Lightning Fast</h3>
+                  <!-- 子容器: description -->
+                  <p class="card-desc">Optimized build pipelines that cut deployment times by up to 60%.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 子容器: card 2 — Secure by Default -->
+            <article class="card">
+              <div class="card-outer">
+                <div class="card-inner">
+                  <div class="card-icon">&#128274;</div>
+                  <h3 class="card-title">Secure by Default</h3>
+                  <p class="card-desc">Enterprise-grade security built into every layer of the stack.</p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 子容器: card 3 — Real-time Analytics -->
+            <article class="card">
+              <div class="card-outer">
+                <div class="card-inner">
+                  <div class="card-icon">&#128200;</div>
+                  <h3 class="card-title">Real-time Analytics</h3>
+                  <p class="card-desc">Actionable insights and dashboards that drive better decisions.</p>
+                </div>
+              </div>
+            </article>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+</body>
+</html>
