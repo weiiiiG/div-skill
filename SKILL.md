@@ -712,6 +712,27 @@ import './NavBar.scss'     /* 或通过 <style src> 引入 */
 <style src="./NavBar.scss" scoped></style>
 ```
 
+**也支持内联 `<style scoped>`：**
+```vue
+<!-- NavBar.vue — 内联 scoped 样式同样有效 -->
+<template>
+  <header class="navbar">
+    <div class="navbar-inner">
+      <span class="navbar-title">{{ title }}</span>
+    </div>
+  </header>
+</template>
+
+<style scoped>
+/* 规则不变：三层结构 + 零 margin + 无固定 px */
+.navbar { flex: 0 0 auto; background: #1e293b; }
+.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
+.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>
+```
+
+> 无论使用独立 `.scss` 文件还是内联 `<style scoped>`，容器层级的三层结构、零 margin、无固定 px 等规则同样适用。关键在样式内容本身，而非文件位置。
+
 ```scss
 /* NavBar.scss — 三层结构 + 零 margin */
 .navbar { flex: 0 0 auto; background: #1e293b; }
