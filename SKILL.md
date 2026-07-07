@@ -563,40 +563,16 @@ function NavBar() {
 | Tailwind | `*.css` | 类名写于 JSX，三层结构不变 |
 
 > 规则不变，仅文件扩展名和引用方式不同。无论使用哪种 CSS，容器层级的三层结构和零 margin 规则同样适用。
-      <div className={styles['navbar-inner']}>
-        <span className={styles['navbar-title']}>App</span>
-      </div>
-    </header>
-  );
-}
-```
-
-```css
-/* NavBar.module.css — 三层结构 + 零 margin */
-.navbar { flex: 0 0 auto; background: #1e293b; }
-.navbar-inner { display: flex; align-items: center; height: 100%; padding: 0 20px; gap: 16px; }
-.navbar-title { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-```
-
-**方式 B — 全局 CSS（传统引入）：**
-```jsx
-import './NavBar.css';
-```
-
-```
-src/components/NavBar/NavBar.css     /* 全局 CSS，类名需 BEM */
-src/components/NavBar/NavBar.jsx
-```
 
 ### 4.3 React 中的规则映射
 
 | div-skill 规则 | React 中的体现 |
 |---|---|
-| 外层无 display:flex | JSX 外层 `<div>` 只有 className + background，内层再加 flex |
-| 零 margin 在子项 | JSX 中 gap 写在父容器 style/className 上，子组件不设 margin-bottom |
-| 代码拆分 | 每个组件目录：`Component.jsx` + `Component.module.css` |
-| 页面布局 | `App.module.css` 定义根容器 + grid layout |
-| 文本溢出 | CSS Module 中写 `text-overflow: ellipsis` |
+| 外层无 display:flex | JSX 中外层元素只有 className + background，内层再加 flex |
+| 零 margin 在子项 | 用父容器 gap，子组件不设 margin |
+| 代码拆分 | layout/pages/components/hooks/routes/stores/api/utils/types |
+| 页面布局 | App.scss 定义根容器 + grid layout |
+| 文本溢出 | 组件 .scss 中写 `text-overflow: ellipsis` |
 
 ### 4.4 React 评估清单
 

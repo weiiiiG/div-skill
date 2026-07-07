@@ -101,13 +101,34 @@ StatCard（标签 + 数值 + 变化）、DataTable（行 + 状态徽章）。
 
 ```
 src/
+├── layout/
+│   ├── AppShell.vue + AppShell.scss    # 根布局，router-view
+│   ├── NavBar.vue + NavBar.scss        # 导航栏
+│   └── Sidebar.vue + Sidebar.scss      # 侧边栏
+├── pages/
+│   └── Dashboard.vue + Dashboard.scss  # Dashboard 页面
+├── components/
+│   ├── Card.vue + Card.scss            # 共享卡片组件
+│   └── DataTable.vue + DataTable.scss  # 共享表格组件
+├── composables/
+│   └── useAuth.js                      # 组合式函数
+├── router/
+│   └── index.js                        # Vue Router 配置
+├── stores/
+│   └── dashboard.js                    # Pinia 状态管理
+├── api/
+│   └── users.js                        # API 请求层
+├── utils/
+│   └── format.js                       # 工具函数
+├── types/
+│   └── index.ts                        # TypeScript 类型
+├── constants/
+│   └── index.js                        # 常量配置
+├── styles/
+│   └── _variables.scss                 # 全局样式变量
+├── App.vue + App.scss                  # 根容器
 ├── main.js
-├── App.vue + App.scss
-└── components/
-    ├── NavBar/     NavBar.vue + NavBar.scss
-    ├── Sidebar/    Sidebar.vue + Sidebar.scss
-    ├── StatCard/   StatCard.vue + StatCard.scss
-    └── DataTable/  DataTable.vue + DataTable.scss
+└── index.css                           # 全局 reset
 ```
 
 ### 运行

@@ -98,13 +98,34 @@ StatCard（标签 + 数值 + 变化）、DataTable（行 + 状态徽章）。使
 
 ```
 src/
+├── layout/
+│   ├── AppShell.jsx + AppShell.scss    # 根布局，路由出口
+│   ├── NavBar.jsx + NavBar.scss        # 导航栏
+│   └── Sidebar.jsx + Sidebar.scss      # 侧边栏
+├── pages/
+│   └── Dashboard.jsx + Dashboard.scss  # Dashboard 页面
+├── components/
+│   ├── Card.jsx + Card.scss            # 共享卡片组件
+│   └── DataTable.jsx + DataTable.scss  # 共享表格组件
+├── hooks/
+│   └── useAuth.js                      # 认证 hook
+├── routes/
+│   └── index.jsx                       # 路由定义
+├── stores/
+│   └── useDashboardStore.js            # Zustand 状态管理
+├── api/
+│   └── users.js                        # API 请求层
+├── utils/
+│   └── format.js                       # 工具函数
+├── types/
+│   └── index.ts                        # TypeScript 类型
+├── constants/
+│   └── index.js                        # 常量配置
+├── styles/
+│   └── _variables.scss                 # 全局样式变量
+├── App.jsx + App.scss                  # 根容器
 ├── main.jsx
-├── App.jsx + App.scss
-└── components/
-    ├── NavBar/     NavBar.jsx + NavBar.scss
-    ├── Sidebar/    Sidebar.jsx + Sidebar.scss
-    ├── StatCard/   StatCard.jsx + StatCard.scss
-    └── DataTable/  DataTable.jsx + DataTable.scss
+└── index.css                           # 全局 reset
 ```
 
 ### 运行
