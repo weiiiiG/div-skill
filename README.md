@@ -35,6 +35,16 @@
 
 > div-skill **只解决布局问题**（容器结构 + CSS 文件组织）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
 
+### 重构安全承诺
+
+对已有项目做容器化和代码拆分时，div-skill 遵循**只动结构、不动功能**的原则：
+
+1. **改前摸底** — 先读取项目代码，理清目录结构、数据流、状态联动、路由和依赖关系，画出完整文件树
+2. **只改布局** — 只添加/调整容器层级、拆分 CSS 文件、替换固定 px 为响应式单位、替换 margin 为 gap。**不修改** JavaScript 逻辑、API 调用、状态管理、组件 props、路由配置
+3. **改后验证** — 验证页面渲染、交互功能、数据流、路由跳转、import 路径均正常后，才确认重构完成
+
+> 参考[重构示例](examples/refactoring/)：一个带计数器、导航、通知徽章的页面，重构后 JS 代码零改动，所有交互功能保持不变。
+
 ### 解决方案
 
 #### 1. 容器层级架构
@@ -121,6 +131,18 @@ Two common pains in frontend CSS:
 | **React project** | Components lack layout rules, styles scattered, messy structure — organize into layout/pages/components/hooks/routes/stores/api |
 | **Vue project** | Template nesting chaos, styles embedded in SFC — separate .vue and .scss, use composables/router/stores layers |
 | **Team standard** | Multiple devs, inconsistent CSS, high review cost — use checklist for unified rules, new hires follow standard from day one |
+
+> div-skill handles **layout only** (container structure + CSS file organization). Functionality (data fetching, interaction logic, state management) needs separate implementation.
+
+### Refactoring Safety Guarantee
+
+When containerizing and splitting code for an existing project, div-skill follows a **structure-only, no-functional-change** principle:
+
+1. **Assess first** — read the project, analyze directory structure, data flow, state linkage, routes, and dependencies before touching any code
+2. **Layout only** — adjust containers, split CSS files, replace fixed px with responsive units, replace margin with gap. **Do not change** JavaScript logic, API calls, state management, component props, or route configs
+3. **Verify after** — confirm rendering, interaction, data flow, routing, and import paths all work before considering the refactoring complete
+
+> See the [refactoring example](examples/refactoring/): a page with counter, navigation, and notification badge — zero JS changes after refactoring, all interactions preserved.
 
 ### The Solution
 
