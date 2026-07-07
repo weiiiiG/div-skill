@@ -4,87 +4,11 @@
 >
 > 解决两层的布局问题：**容器化**解决页面元素的布局，**代码拆分**解决 CSS 文件的"布局"。
 
----
-
-- [ENGLISH](#english) · [中文](#中文)
+> ⚠️ div-skill **只解决布局问题**（容器结构 + CSS 文件组织）。页面功能（数据请求、交互逻辑、业务状态等）需要另行实现。
 
 ---
 
-## ENGLISH
-
-### The Problem
-
-Two common pains in frontend CSS:
-
-1. **Container chaos** — elements overflow, overlap, or don't fill the viewport
-2. **Monolithic CSS** — all styles in one `<style>` block, impossible to maintain
-
-### The Solution
-
-#### 1. Container Hierarchy
-
-A three-layer nesting pattern:
-
-```
-Outer Container      (width/height, background, border — NO flex/grid, NO padding/gap)
-  └── Inner Container (flex/grid layout, height:100%, padding, gap)
-      └── Child Container(s) (overflow control, content alignment — NO margin)
-```
-
-**Rules:**
-
-| # | Rule |
-|---|---|
-| 1 | Root: `height:100vh; width:100vw; overflow:hidden` |
-| 2 | No fixed px on layout — use `min-height`, `clamp()`, `1fr` (including grid tracks) |
-| 3 | No margin on flex/grid children — all spacing via parent `gap` (icons too) |
-| 4 | Outer container NEVER has `display:flex/grid`, `padding/gap`, or `float` |
-| 5 | Inner container MUST have `display:flex/grid + gap` — padding alone is a violation |
-| 6 | `min-width:0` / `min-height:0` on all flex/grid children |
-| 7 | `overflow:hidden` on cards, `table-layout:fixed` on tables |
-| 8 | `text-overflow:ellipsis` on overflowing text |
-| 9 | Absolutely positioned elements: explicit `z-index`, decoration only |
-
-#### 2. Code Splitting
-
-Split CSS by page and component:
-
-```
-project/
-├── index.html
-├── pages/                  # One CSS file per page
-│   ├── dashboard.css
-│   └── settings.css
-└── components/             # One CSS file per component
-    ├── NavBar.css
-    ├── Sidebar.css
-    ├── Card.css
-    └── DataTable.css
-```
-
-**Rules:**
-- One CSS file per page, one per component
-- Component styles go ONLY in `components/ComponentName.css`
-- Page layout goes ONLY in `pages/pagename.css`
-- HTML `<link>`s each file directly (no aggregator)
-
-### Examples
-
-| Example | Type | Features |
-|---|---|---|
-| [Dashboard](examples/dashboard/) | HTML/CSS | Nav, sidebar, stat cards, data table |
-| [Landing Page](examples/landing-page/) | HTML/CSS | Hero + feature cards |
-| [Settings Page](examples/settings-page/) | HTML/CSS | Form + modal overlay |
-| [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
-| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
-
-### Specification
-
-See [SKILL.md](./SKILL.md).
-
-### License
-
-MIT
+- [中文](#中文) · [ENGLISH](#english)
 
 ---
 
@@ -161,5 +85,83 @@ project/
 见 [SKILL.md](./SKILL.md)。
 
 ### 许可
+
+MIT
+
+---
+
+## ENGLISH
+
+### The Problem
+
+Two common pains in frontend CSS:
+
+1. **Container chaos** — elements overflow, overlap, or don't fill the viewport
+2. **Monolithic CSS** — all styles in one `<style>` block, impossible to maintain
+
+### The Solution
+
+#### 1. Container Hierarchy
+
+A three-layer nesting pattern:
+
+```
+Outer Container      (width/height, background, border — NO flex/grid, NO padding/gap)
+  └── Inner Container (flex/grid layout, height:100%, padding, gap)
+      └── Child Container(s) (overflow control, content alignment — NO margin)
+```
+
+**Rules:**
+
+| # | Rule |
+|---|---|
+| 1 | Root: `height:100vh; width:100vw; overflow:hidden` |
+| 2 | No fixed px on layout — use `min-height`, `clamp()`, `1fr` (including grid tracks) |
+| 3 | No margin on flex/grid children — all spacing via parent `gap` (icons too) |
+| 4 | Outer container NEVER has `display:flex/grid`, `padding/gap`, or `float` |
+| 5 | Inner container MUST have `display:flex/grid + gap` — padding alone is a violation |
+| 6 | `min-width:0` / `min-height:0` on all flex/grid children |
+| 7 | `overflow:hidden` on cards, `table-layout:fixed` on tables |
+| 8 | `text-overflow:ellipsis` on overflowing text |
+| 9 | Absolutely positioned elements: explicit `z-index`, decoration only |
+
+#### 2. Code Splitting
+
+Split CSS by page and component:
+
+```
+project/
+├── index.html
+├── pages/                  # One CSS file per page
+│   ├── dashboard.css
+│   └── settings.css
+└── components/             # One CSS file per component
+    ├── NavBar.css
+    ├── Sidebar.css
+    ├── Card.css
+    └── DataTable.css
+```
+
+**Rules:**
+- One CSS file per page, one per component
+- Component styles go ONLY in `components/ComponentName.css`
+- Page layout goes ONLY in `pages/pagename.css`
+- HTML `<link>`s each file directly (no aggregator)
+
+### Examples
+
+| Example | Type | Features |
+|---|---|---|
+| [Dashboard](examples/dashboard/) | HTML/CSS | Nav, sidebar, stat cards, data table |
+| [Landing Page](examples/landing-page/) | HTML/CSS | Hero + feature cards |
+| [Settings Page](examples/settings-page/) | HTML/CSS | Form + modal overlay |
+| [React Dashboard](examples/react-dashboard/) | React + Sass | layout/pages/components/routes/stores/hooks/api |
+| [Vue Dashboard](examples/vue-dashboard/) | Vue 3 + Sass | layout/pages/components/router/stores/composables/api |
+
+### Specification
+
+See [SKILL.md](./SKILL.md).
+
+### License
 
 MIT
