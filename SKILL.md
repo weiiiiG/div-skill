@@ -122,14 +122,25 @@ project/
 
 ### 存量项目评估流程
 
+> ⚠️ **重构的铁则：只动结构，不动功能。** 以下内容在拆分过程中**绝对不能改变**：
+> - HTML 元素的内容、属性、事件绑定
+> - JavaScript/TypeScript 的函数逻辑、API 调用、状态管理
+> - React 的 hooks 调用顺序、组件 props 接口
+> - Vue 的 template 指令、computed/watch 逻辑、props 定义
+> - 路由配置、状态管理 store 的结构
+> - 任何与功能行为相关的代码
+
 ```
 ① HTML 结构审查：有外层→内层→子容器三层？标记缺失层级
+   ⚠️ 只添加 outer/inner 容器，不改动原有内容元素
 ② CSS 审查：搜索 height/width/grid-template 固定 px → 标记
    margin-bottom/margin-top/margin-left → 标记为需替换为 gap
    outer 容器上的 display:flex/grid → 需拆分为 inner
+   ⚠️ 只改 CSS 类名和结构，不改 HTML 标签和属性
 ③ 项目结构审查：CSS 是否集中？组件/页面样式混合？→ 需要拆分
    hooks/composables 是否分离？API 调用集中？→ 需要拆分
    类型 inline？工具函数散落？→ 需要提取
+   ⚠️ 文件移入新目录后，更新 import 路径，不改内部逻辑
 ```
 
 ### 文件归类决策
@@ -153,10 +164,18 @@ project/
 
 ```
 Step 1 容器化 → 根容器 + 拆分三层结构 + 删除 outer 上的 flex/grid
+   ⚠️ 只在外层包裹容器，不改内部元素的内容和属性
 Step 2 修复尺寸 → 固定 px 替换为 min-height/clamp()/1fr
+   ⚠️ 只改 CSS 属性值，不改 HTML 结构和 JS 逻辑
 Step 3 修复间距 → margin 替换为父容器 gap
+   ⚠️ margin:0 auto 居中可以保留，其他 margin 替换为 gap
 Step 4 修复保护 → 加 min-width:0 / overflow:hidden / text-overflow / table-layout:fixed
+   ⚠️ 这些是新增保护性样式，不应删除或修改原有功能样式
 Step 5 代码拆分 → 组件提取到 components/、页面布局到 pages/
+   ⚠️ 拆完后验证：页面功能是否正常？交互是否一致？状态是否保留？
+```
+
+> 每完成一步，建议验证页面功能未受影响。拆分 CSS 不应该导致任何功能变化。
 ```
 
 ---
@@ -317,4 +336,5 @@ src/
 | "卡片内容少不用 overflow:hidden" | 未来内容更新后可能溢出 |
 | "一个文件更快" | 只在初期快，后续每次修改更慢 |
 | "后期再拆分" | 后期永远不会拆分 |
+| "重构时顺手优化了逻辑" | 重构只改结构，改逻辑应单独提交，混在一起无法排查问题 |
 | "组件样式写页面里方便" | 组件修改要改 N 个页面 |
