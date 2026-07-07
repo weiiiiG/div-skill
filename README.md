@@ -18,10 +18,10 @@
 
 ### 痛点
 
-前端 CSS 的两个常见问题：
+前端布局与代码组织的两个常见问题：
 
-1. **容器混乱** — 元素溢出、重叠、撑不满视口
-2. **CSS 巨石** — 全部样式塞在一个 `<style>` 块中，无法维护
+1. **容器混乱** — 元素溢出、重叠、撑不满视口；固定 px 在不同屏幕下错位
+2. **代码巨石** — 全部 HTML/CSS/JS 混在一个文件中，项目越大越难维护；组件没有独立文件，修改牵一发动全身
 
 ### 使用场景
 
@@ -117,10 +117,10 @@ MIT
 
 ### The Problem
 
-Two common pains in frontend CSS:
+Two common pains in frontend layout and code organization:
 
-1. **Container chaos** — elements overflow, overlap, or don't fill the viewport
-2. **Monolithic CSS** — all styles in one `<style>` block, impossible to maintain
+1. **Container chaos** — elements overflow, overlap, or don't fill the viewport; fixed px values break on different screen sizes
+2. **Code monolith** — all HTML/CSS/JS mixed in one file; components lack their own files, making changes risky and maintenance painful
 
 ### Usage Scenarios
 
