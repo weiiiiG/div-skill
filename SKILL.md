@@ -1,6 +1,6 @@
 ---
 name: div-skill
-description: "Use when: (1) building any page layout from scratch; (2) existing CSS has overflow, overlap, or viewport fill issues; (3) all styles dumped in one file needing split into pages/ and components/; (4) refactoring legacy project with disorganized structure. Triggers: elements overflowing, fixed px breaking on resize, margin-based spacing bugs, monolithic CSS, React/Vue project with no file organization."
+description: "Use when: building or refactoring CSS layouts for any web page — dashboards, admin panels, landing pages, settings forms; user reports overflow, elements not filling viewport, layout breaking on resize; all styles are in one giant file needing split; React/Vue project lacks clear file structure; user mentions container layout, CSS architecture, code splitting, or asks to organize/fix messy CSS. Triggers: 'build a dashboard', 'layout is broken', 'CSS is a mess', 'organize this project', 'fix the overflow', 'split the CSS', 'structure the components', 'refactor the styles', 'elements overlap', 'not responsive'."
 ---
 
 # div-skill
