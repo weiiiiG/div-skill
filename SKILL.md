@@ -37,14 +37,16 @@ description: "构建或重构页面布局时使用。产出需要：三层容器
 
 | # | 规则 | 正确做法 | 错误做法 |
 |---|---|---|---|
-| 1 | 无固定 px（含 grid track） | `min-height`、`clamp()`、`1fr` | `height:56px`、`grid-template-columns:240px 1fr` |
-| 2 | 子项间距 | 父容器 `gap` | 子项 `margin-*` |
-| 3 | 外层不做布局 | 外层纯背景，内层 flex/grid | outer 上写 `display:flex`/`padding` |
-| 4 | 内层必有 display+gap | `display:flex/grid + gap` | 只有 `padding` |
-| 5 | 防溢出 | `min-width:0`、`max-width:100%`、`overflow:hidden`、`box-sizing:border-box` | 省略 |
-| 6 | 表格 | `table-layout:fixed` + `width:100%` | `table-layout:auto` |
-| 7 | 文本溢出 | `text-overflow:ellipsis; overflow:hidden; white-space:nowrap` | 省略 |
-| 8 | 绝对定位 | 显式 `z-index`，仅用于装饰/弹层 | 用于布局排列 |
+| 1 | 无固定 px（含 grid track） | `min-height`、`clamp()`、`1fr`、`100%` | `height:56px`、`grid-template-columns:240px 1fr` |
+| 2 | 子项宽度不超父容器 | `width:100%`、`max-width:100%`、`flex:1`、`auto` | 子容器 `width:800px` 超出父容器视口 |
+| 3 | 容器使用相对大小 | `%`、`fr`、`vw`、`clamp()`、`auto`、`flex` 系数 | 布局宽度用 `px`、`rem` 固定值 |
+| 4 | 子项间距 | 父容器 `gap` | 子项 `margin-*` |
+| 5 | 外层不做布局 | 外层纯背景，内层 flex/grid | outer 上写 `display:flex`/`padding` |
+| 6 | 内层必有 display+gap | `display:flex/grid + gap` | 只有 `padding` |
+| 7 | 防溢出 | `min-width:0`、`max-width:100%`、`overflow:hidden`、`box-sizing:border-box` | 省略 |
+| 8 | 表格 | `table-layout:fixed` + `width:100%` | `table-layout:auto` |
+| 9 | 文本溢出 | `text-overflow:ellipsis; overflow:hidden; white-space:nowrap` | 省略 |
+| 10 | 绝对定位 | 显式 `z-index`，仅用于装饰/弹层 | 用于布局排列 |
 
 ### 溢出保护
 
@@ -59,6 +61,26 @@ description: "构建或重构页面布局时使用。产出需要：三层容器
   img, video, iframe { max-width: 100%; }          ← 媒体元素不撑破父容器
   * { box-sizing: border-box; }                    ← padding 和 border 不增加元素宽度
 ```
+
+### 子容器宽度约束
+
+所有子容器的宽度必须限制在父容器之内，不能超出父容器：
+
+```
+✓ width: 100%                ← 占满父容器宽度
+✓ max-width: 100%            ← 限制最大宽度不超过父容器
+✓ flex: 1                    ← flex 子项按比例分配父容器空间
+✓ flex: 0 0 clamp(200px,20vw,320px)  ← 固定宽度用 clamp 限制范围
+✓ width: auto                ← 由内容决定但受父容器约束
+✓ box-sizing: border-box     ← padding 不增加元素宽度
+
+✗ width: 800px               ← 固定 px 超出父容器时溢出
+✗ min-width: 600px           ← 在窄屏下强制撑宽导致溢出
+✗ padding + width: 100% 无 box-sizing  ← 实际宽度超过 100%
+```
+
+> 在 flex/grid 容器中，子项的 `width:100%` 受父容器 `min-width:0` 保护，确保子项可收缩。
+> 所有子容器默认都应假设父容器宽度有限，不应假设外部视口大小。
 
 ### 响应式适配
 
@@ -398,6 +420,8 @@ src/
 - [ ] 外层无 `display:flex/grid`/`padding`/`gap`/`float`
 - [ ] 内层有 `display:flex/grid + gap`（padding 不够）
 - [ ] 无固定 px（含 grid track，装饰性除外）
+- [ ] 容器使用相对大小（`%` / `fr` / `vw` / `clamp()` / `flex` 系数）
+- [ ] 子容器宽度不超过父容器（`max-width:100%`、`flex:1`、无超出父容器的 px 值）
 - [ ] 无 `margin` 在 flex/grid 子项（含图标）
 - [ ] flex 子项有 `min-width:0`/`min-height:0`
 - [ ] 全局 `box-sizing:border-box` 已设定
@@ -416,6 +440,7 @@ src/
 | 借口 | 为什么是错的 |
 |---|---|
 | "nav 高度 56px 没问题" | 页面需适配不同字号/缩放 |
+| "子容器 width:600px 不会超，因为内容就那么大" | 屏幕缩小时子容器不收缩，会撑破父容器 |
 | "颜色只是微调，不影响功能" | 重构只改结构，颜色改变属于视觉功能变化，应单独处理 |
 | "子容器加 padding 方便" | padding 属于内层，子容器只 overflow |
 | "图标 margin-left 而已" | 图标也是 flex 子项，用父容器 gap |
