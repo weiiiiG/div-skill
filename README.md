@@ -39,9 +39,11 @@
 
 对已有项目做容器化和代码拆分时，div-skill 遵循**只动结构、不动功能**的原则：
 
-1. **改前摸底** — 先读取项目代码，理清目录结构、数据流、状态联动、路由和依赖关系，画出完整文件树
-2. **只改布局** — 只添加/调整容器层级、拆分代码文件、替换固定 px 为响应式单位、替换 margin 为 gap。**不修改** JavaScript 逻辑、API 调用、状态管理、组件 props、路由配置
-3. **改后验证** — 验证页面渲染、交互功能、数据流、路由跳转、import 路径均正常后，才确认重构完成
+1. **改前摸底** — 先读取项目代码，理清目录结构、数据流、状态联动、路由和依赖关系。截图记录当前页面视觉效果（颜色、字体、布局），作为改后对比依据
+2. **只改布局** — 只添加/调整容器层级、拆分代码文件、替换固定 px 为响应式单位（`clamp`/`fr`/`%`）、替换 margin 为 `gap`。**不修改** JavaScript 逻辑、API 调用、状态管理、组件 props、路由配置、颜色值、字体族、背景图路径
+3. **保持库不变** — 不得擅自替换或移除项目正在使用的 UI 组件库（Ant Design、Element UI、Bootstrap、Tailwind、Material UI 等）
+4. **宽度约束** — 子容器宽度不超过父容器，使用相对大小（`%`/`fr`/`clamp`），容器整体不需要横向滚动条即可完整显示
+5. **改后验证** — 验证视觉效果一致、无溢出、交互功能、数据流、路由跳转、import 路径均正常后，才确认重构完成
 
 > 参考[重构示例](examples/refactoring/)：一个带计数器、导航、通知徽章的页面，重构后 JS 代码零改动，所有交互功能保持不变。
 
@@ -138,9 +140,11 @@ Two common pains in frontend layout and code organization:
 
 When containerizing and splitting code for an existing project, div-skill follows a **structure-only, no-functional-change** principle:
 
-1. **Assess first** — read the project, analyze directory structure, data flow, state linkage, routes, and dependencies before touching any code
-2. **Layout only** — adjust containers, split code files, replace fixed px with responsive units, replace margin with gap. **Do not change** JavaScript logic, API calls, state management, component props, or route configs
-3. **Verify after** — confirm rendering, interaction, data flow, routing, and import paths all work before considering the refactoring complete
+1. **Assess first** — read the project, analyze directory structure, data flow, state linkage, routes, dependencies. Screenshot current visual state (colors, fonts, layout) for before/after comparison
+2. **Layout only** — adjust containers, split code files, replace fixed px with responsive units (`clamp`/`fr`/`%`), replace margin with `gap`. **Do not change** JavaScript logic, API calls, state management, component props, route configs, color values, font families, or background image paths
+3. **Preserve libraries** — do not replace or remove UI component libraries (Ant Design, Element UI, Bootstrap, Tailwind, Material UI, etc.)
+4. **Width constraints** — child containers must not exceed parent width, use relative sizing (`%`/`fr`/`clamp`); no horizontal scrollbar needed to view full content
+5. **Verify after** — confirm visual consistency, no overflow, interaction, data flow, routing, and import paths all work before considering the refactoring complete
 
 > See the [refactoring example](examples/refactoring/): a page with counter, navigation, and notification badge — zero JS changes after refactoring, all interactions preserved.
 
