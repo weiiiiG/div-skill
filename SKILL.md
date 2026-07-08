@@ -41,15 +41,23 @@ description: "构建或重构页面布局时使用。产出需要：三层容器
 | 2 | 子项间距 | 父容器 `gap` | 子项 `margin-*` |
 | 3 | 外层不做布局 | 外层纯背景，内层 flex/grid | outer 上写 `display:flex`/`padding` |
 | 4 | 内层必有 display+gap | `display:flex/grid + gap` | 只有 `padding` |
-| 5 | 防溢出 | `min-width:0` 在 flex 子项、`overflow:hidden` 在卡片 | 省略 |
-| 6 | 表格 | `table-layout:fixed` | `table-layout:auto` |
+| 5 | 防溢出 | `min-width:0`、`max-width:100%`、`overflow:hidden`、`box-sizing:border-box` | 省略 |
+| 6 | 表格 | `table-layout:fixed` + `width:100%` | `table-layout:auto` |
 | 7 | 文本溢出 | `text-overflow:ellipsis; overflow:hidden; white-space:nowrap` | 省略 |
 | 8 | 绝对定位 | 显式 `z-index`，仅用于装饰/弹层 | 用于布局排列 |
 
 ### 溢出保护
 
 ```
-.root { overflow: hidden; } → .card { overflow: hidden; } → .panel { overflow-y: auto; } → .text { text-overflow: ellipsis; ... }
+水平溢出保护链：
+  html,body { overflow-x: hidden; }                ← 禁止页面水平滚动
+  .card, .panel { overflow: hidden; }              ← 容器内部溢出隐藏
+  .scroll-area { overflow-x: auto; }               ← 需要滚动的区域
+  table { table-layout: fixed; width: 100%; }      ← 表格列宽由布局决定
+  th, td { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }  ← 单元格内容截断
+  .flex-item { min-width: 0; }                     ← flex 子项允许收缩
+  img, video, iframe { max-width: 100%; }          ← 媒体元素不撑破父容器
+  * { box-sizing: border-box; }                    ← padding 和 border 不增加元素宽度
 ```
 
 ### 响应式适配
@@ -143,13 +151,19 @@ project/
 > - Vue 的 template 指令、computed/watch 逻辑、props 定义
 > - 路由配置、状态管理 store 的结构
 > - 任何与功能行为相关的代码
+> - ⚠️ **CSS 颜色和视觉效果：重构时只改结构和单位，不改颜色值、渐变、阴影、圆角大小、字体族、背景图路径**
 
 #### 第一步：改前摸底
 
 动手改代码之前，先理清项目全貌：
 
 ```
-① 目录结构 → 画出完整文件树，标记每个文件的职责
+① 视觉效果快照 →
+   用浏览器 DevTools 检查当前页面的颜色、渐变、阴影、圆角、字体、背景图
+   截图保存关键页面的视觉状态，作为改后对比依据
+   ⚠️ 特别注意：hover、active、focus 等交互状态的样式也需要记录
+
+② 目录结构 → 画出完整文件树，标记每个文件的职责
 
 ② 数据流 →
    React: 状态在哪里定义？(Context/Zustand/Redux) → 流向哪些组件？
@@ -221,12 +235,18 @@ Step 5 代码拆分 → 组件提取到 components/、页面布局到 pages/
    ⚠️ 拆完后验证：页面功能是否正常？交互是否一致？状态是否保留？
 
 Step 6 改后验证 →
-   ① 页面渲染：打开页面，确认布局正常、无溢出、无空白页
-   ② 交互功能：点击、输入、跳转等操作是否与改前一致
-   ③ 数据流：状态管理、API 请求、props 传递是否正常
-   ④ 路由：页面跳转、路由守卫、懒加载是否正常
-   ⑤ import 路径：所有 import 引用是否更新到新路径
-   ⑥ 回归：运行项目现有测试，确认无失败用例
+   ① 视觉效果对比：对照改前截图，逐项检查颜色、渐变、阴影、圆角、字体、背景图是否一致
+      用浏览器 DevTools 检查 hover/active/focus 等交互状态样式是否丢失
+      ⚠️ CSS 颜色值、字体族、背景图路径不应因重构而改变
+   ② 溢出检查：缩放到最小视口宽度（320px），确认无水平滚动条、无元素溢出视口
+      table 列宽是否被内容撑破？flex 子项是否因未设 min-width:0 而溢出？
+      box-sizing:border-box 是否已应用？
+   ③ 页面渲染：打开页面，确认布局正常、无空白页
+   ④ 交互功能：点击、输入、跳转等操作是否与改前一致
+   ⑤ 数据流：状态管理、API 请求、props 传递是否正常
+   ⑥ 路由：页面跳转、路由守卫、懒加载是否正常
+   ⑦ import 路径：所有 import 引用是否更新到新路径
+   ⑧ 回归：运行项目现有测试，确认无失败用例
 
    ⚠️ 验证不通过则回退到修改前状态，排查问题后重试。不要在生产环境直接重构。
 ```
@@ -380,8 +400,11 @@ src/
 - [ ] 无固定 px（含 grid track，装饰性除外）
 - [ ] 无 `margin` 在 flex/grid 子项（含图标）
 - [ ] flex 子项有 `min-width:0`/`min-height:0`
-- [ ] 卡片 `overflow:hidden`，表格 `table-layout:fixed`
+- [ ] 全局 `box-sizing:border-box` 已设定
+- [ ] 图片/视频/iframe 有 `max-width:100%`
+- [ ] 卡片 `overflow:hidden`，表格 `table-layout:fixed`+`width:100%`
 - [ ] 文本 `text-overflow:ellipsis`
+- [ ] 重构时不改变颜色值、渐变、阴影、圆角、字体族、背景图路径
 - [ ] 一个页面一个 CSS 文件，一个组件一个 CSS 文件
 - [ ] 组件样式不进页面 CSS，页面布局不进组件 CSS
 - [ ] 完整项目结构：layout/pages/components/hooks(or composables)/routes/stores/api/utils/types/constants/assets/styles/__tests__
@@ -393,6 +416,7 @@ src/
 | 借口 | 为什么是错的 |
 |---|---|
 | "nav 高度 56px 没问题" | 页面需适配不同字号/缩放 |
+| "颜色只是微调，不影响功能" | 重构只改结构，颜色改变属于视觉功能变化，应单独处理 |
 | "子容器加 padding 方便" | padding 属于内层，子容器只 overflow |
 | "图标 margin-left 而已" | 图标也是 flex 子项，用父容器 gap |
 | "min-width:0 不写也能跑" | 加长文本时溢出，排查困难 |
