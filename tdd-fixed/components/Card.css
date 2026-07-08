@@ -1,0 +1,15 @@
+/* ===== Card 组件 ===== */
+
+/* 外层：宽高自适应，不超过父容器 */
+.card {
+  width: 100%;                    /* 填满父容器 */
+  max-width: 900px;               /* Fix #2: 废除固定 900px，设上限 */
+  margin: 0 auto;
+  background: #ddd;
+  overflow: hidden;               /* 卡片溢出保护 */
+}
+
+/* 内层：内容填充 */
+.card-body {
+  padding: 20px;
+}

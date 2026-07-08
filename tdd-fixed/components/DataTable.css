@@ -1,0 +1,21 @@
+/* ===== DataTable 组件 ===== */
+
+/* 外层：水平滚动保护 */
+.data-table-wrapper {
+  overflow-x: auto;               /* 窄屏时可横向滚动，不破坏布局 */
+}
+
+/* 表格：固定布局，列宽不随内容膨胀 */
+.data-table {
+  width: 100%;
+  table-layout: fixed;            /* Fix #3: 列宽固定分配 */
+  border-collapse: collapse;
+}
+
+/* 单元格：长文本截断 */
+.data-table td {
+  white-space: nowrap;            /* 保持单行 */
+  overflow: hidden;               /* Fix #4: 溢出隐藏 */
+  text-overflow: ellipsis;        /* Fix #4: 省略号 */
+  padding: 10px;
+}

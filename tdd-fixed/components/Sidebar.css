@@ -1,0 +1,14 @@
+/* ===== Sidebar 组件 ===== */
+
+/* 外层：宽度自适应，不随 flex 压缩 */
+.sidebar {
+  width: clamp(180px, 20vw, 300px);  /* Fix #1: 废除固定 300px */
+  background: #eee;
+  flex-shrink: 0;
+  overflow: hidden;                   /* 侧栏溢出保护 */
+}
+
+/* 内层：内容填充 */
+.sidebar-body {
+  padding: 16px;
+}
