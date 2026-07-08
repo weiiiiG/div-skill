@@ -44,9 +44,9 @@ description: "构建或重构页面布局时使用。产出需要：三层容器
 | 5 | 外层不做布局 | 外层纯背景，内层 flex/grid | outer 上写 `display:flex`/`padding` |
 | 6 | 内层必有 display+gap | `display:flex/grid + gap` | 只有 `padding` |
 | 7 | 防溢出 | `min-width:0`、`max-width:100%`、`overflow:hidden`、`box-sizing:border-box` | 省略 |
-| 8 | 表格 | `table-layout:fixed` + `width:100%` | `table-layout:auto` |
-| 9 | 文本溢出 | `text-overflow:ellipsis; overflow:hidden; white-space:nowrap` | 省略 |
-| 10 | 绝对定位 | 显式 `z-index`，仅用于装饰/弹层 | 用于布局排列 |
+| 8 | 定位方式 | 子容器用 `position:relative` 参考父容器定位；浮层/弹窗用 `position:fixed/absolute` 加 `z-index` | `position:absolute` 做布局排列 |
+| 9 | 布局方法 | 优先用 `flex`、`grid`、`auto` 布局；子容器用 `position:relative` 相对于父容器 | `float`、`position:absolute` 做普通布局 |
+| 10 | 文本溢出 | `text-overflow:ellipsis; overflow:hidden; white-space:nowrap` | 省略 |
 
 ### 溢出保护
 
@@ -95,6 +95,19 @@ description: "构建或重构页面布局时使用。产出需要：三层容器
 | `overflow-y:auto` + `overflow:hidden` | 内容滚动但不破坏布局 |
 
 > 如需断点响应式（如移动端折叠侧栏），在媒体查询中调整 grid-template 或 display 即可，容器层级结构不变。
+
+### 定位原则
+
+```
+✓ 子容器用 position: relative     ← 相对于父容器定位，不脱离文档流
+✓ 父容器用 display: flex/grid     ← 自动排列子元素，无需手动定位
+✓ margin: auto / align-self       ← 子容器在 flex 中自我对齐
+✓ position: absolute/fixed        ← 仅用于弹层/模态框/装饰效果，加显式 z-index
+
+✗ position: absolute 做三栏布局   ← 无法自适应，层级混乱，应使用 flex/grid
+✗ float: left/right 做布局        ← 已过时，应使用 flex/grid
+✗ top/left + px 手动定位元素      ← 不响应式，应使用 flex/grid 排列
+```
 
 ### 示例：导航栏
 
@@ -421,6 +434,9 @@ src/
 - [ ] 外层无 `display:flex/grid`/`padding`/`gap`/`float`
 - [ ] 内层有 `display:flex/grid + gap`（padding 不够）
 - [ ] 无固定 px（含 grid track，装饰性除外）
+- [ ] 定位方式：子容器 `position:relative` 相对于父容器，不用 `absolute`/`float` 做布局
+- [ ] 布局优先用 `flex` / `grid` / `auto`，不用 `position:absolute` / `float` 排列元素
+- [ ] 绝对定位元素仅用于弹层/装饰，有显式 `z-index`
 - [ ] 容器使用相对大小（`%` / `fr` / `vw` / `clamp()` / `flex` 系数）
 - [ ] 子容器宽度不超过父容器（`max-width:100%`、`flex:1`、无超出父容器的 px 值）
 - [ ] 无 `margin` 在 flex/grid 子项（含图标）
