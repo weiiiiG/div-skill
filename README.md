@@ -65,13 +65,14 @@
 |---|---|
 | 1 | 根容器：`height:100vh; width:100vw; overflow:hidden` |
 | 2 | 无固定 px 布局（含 grid track）— 用 `min-height`、`clamp()`、`1fr` |
-| 3 | 子项无 margin — 所有间距用父容器 `gap`（图标也一样） |
-| 4 | 外层容器不能用 `display:flex/grid`、`padding/gap`、`float` |
-| 5 | 内层容器必须有 `display:flex/grid + gap` — 只有 padding 算违规 |
-| 6 | 所有 flex/grid 子项加 `min-width:0` / `min-height:0` |
-| 7 | 卡片 `overflow:hidden`，表格 `table-layout:fixed` |
-| 8 | 文本溢出加 `text-overflow:ellipsis` |
-| 9 | 绝对定位元素加显式 `z-index`，仅用于装饰 |
+| 3 | 子容器宽度不超父容器 — 用 `max-width:100%`、`flex:1`、相对大小 |
+| 4 | 子项无 margin — 所有间距用父容器 `gap`（图标也一样） |
+| 5 | 外层容器不能用 `display:flex/grid`、`padding/gap`、`float` |
+| 6 | 内层容器必须有 `display:flex/grid + gap` — 只有 padding 算违规 |
+| 7 | 所有 flex/grid 子项加 `min-width:0` / `min-height:0`；卡片 `overflow:hidden` |
+| 8 | 表格 `table-layout:fixed`，文本 `text-overflow:ellipsis` |
+| 9 | 定位用 `position:relative`，布局用 flex/grid，不用 `absolute`/`float` |
+| 10 | 绝对定位元素加显式 `z-index`，仅用于装饰 |
 
 #### 2. 代码拆分
 
@@ -166,13 +167,14 @@ Outer Container      (width/height, background, border — NO flex/grid, NO padd
 |---|---|
 | 1 | Root: `height:100vh; width:100vw; overflow:hidden` |
 | 2 | No fixed px on layout — use `min-height`, `clamp()`, `1fr` (including grid tracks) |
-| 3 | No margin on flex/grid children — all spacing via parent `gap` (icons too) |
-| 4 | Outer container NEVER has `display:flex/grid`, `padding/gap`, or `float` |
-| 5 | Inner container MUST have `display:flex/grid + gap` — padding alone is a violation |
-| 6 | `min-width:0` / `min-height:0` on all flex/grid children |
-| 7 | `overflow:hidden` on cards, `table-layout:fixed` on tables |
-| 8 | `text-overflow:ellipsis` on overflowing text |
-| 9 | Absolutely positioned elements: explicit `z-index`, decoration only |
+| 3 | Child width must NOT exceed parent — use `max-width:100%`, `flex:1`, relative units |
+| 4 | No margin on flex/grid children — all spacing via parent `gap` (icons too) |
+| 5 | Outer container NEVER has `display:flex/grid`, `padding/gap`, or `float` |
+| 6 | Inner container MUST have `display:flex/grid + gap` — padding alone is a violation |
+| 7 | `min-width:0` / `min-height:0` on all flex/grid children; `overflow:hidden` on cards |
+| 8 | `table-layout:fixed` on tables; `text-overflow:ellipsis` on overflowing text |
+| 9 | Use `position:relative`, layout via flex/grid — NOT `absolute`/`float` for layout |
+| 10 | Absolutely positioned elements: explicit `z-index`, decoration only |
 
 #### 2. Code Splitting
 
