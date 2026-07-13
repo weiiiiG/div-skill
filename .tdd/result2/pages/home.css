@@ -1,0 +1,24 @@
+/* ===== Page layout ===== */
+
+/* Outer container: background/positioning only, NO display:flex/grid/padding/gap */
+.page-outer {
+  min-height: 100vh;
+  background: #f1f5f9;
+}
+
+/* Inner container: flex/grid layout + padding + gap */
+.page-inner {
+  /* Page-level inner container: minimal wrapper */
+}
+
+/* ===== Content area ===== */
+
+/* Outer container: background/positioning only */
+.content-outer {
+  /* No background needed; inherits from page-outer */
+}
+
+/* Inner container: padding */
+.content-inner {
+  padding: 20px;
+}

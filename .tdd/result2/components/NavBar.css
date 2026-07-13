@@ -1,0 +1,23 @@
+/* ===== NavBar ===== */
+
+/* Outer container: background/positioning only, NO display:flex/grid/padding/gap */
+.navbar-outer {
+  height: 56px;
+  background: #1e293b;
+}
+
+/* Inner container: flex/grid layout + padding + gap */
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  height: 100%;
+  color: #fff;
+}
+
+/* Child container: overflow control + alignment, NO margin */
+.navbar-item {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}

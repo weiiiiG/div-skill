@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Test</title>
+  <link rel="stylesheet" href="components/NavBar.css">
+  <link rel="stylesheet" href="components/Card.css">
+  <link rel="stylesheet" href="pages/home.css">
+</head>
+<body>
+  <!-- Outer container: background/positioning only, NO flex/grid/padding/gap -->
+  <div class="page-outer">
+    <!-- Inner container: flex/grid + padding + gap -->
+    <div class="page-inner">
+
+      <!-- ===== NavBar ===== -->
+      <!-- Outer: background/positioning only -->
+      <nav class="navbar-outer">
+        <!-- Inner: flex + padding + gap -->
+        <div class="navbar-inner">
+          <!-- Child: overflow/alignment, NO margin -->
+          <span class="navbar-item">App</span>
+        </div>
+      </nav>
+
+      <!-- ===== Content area ===== -->
+      <!-- Outer: background/positioning only -->
+      <div class="content-outer">
+        <!-- Inner: padding -->
+        <div class="content-inner">
+
+          <!-- ===== Card ===== -->
+          <!-- Outer: background/border/radius only -->
+          <div class="card-outer">
+            <!-- Inner: flex column + padding + gap -->
+            <div class="card-inner">
+              <!-- Child containers: NO margin -->
+              <h3 class="card-title">Title</h3>
+              <p class="card-text">Content here.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
